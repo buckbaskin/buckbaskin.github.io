@@ -1,3 +1,5 @@
 *.db
 
 *.map
+
+bower_components/
