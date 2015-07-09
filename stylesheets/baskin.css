@@ -1,3 +1,38 @@
 body {
     font-family: 'Ubuntu', sans-serif;
 }
+
+.card {
+    background-color: #efefef;
+
+    height:120px;
+    margin-bottom: 15px;
+
+    padding: 10px;
+    padding-top: 0px;
+    position: relative;
+
+    border-style: solid;
+    border-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-color: #f0f0f0;
+    border-right-color: #f0f0f0;
+    border-top-color: #f0f0f0;
+    border-left-color: #f0f0f0;
+
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    overflow: hidden;
+}
+.card p {
+    margin-left: 10px;
+}
+.badge {
+    margin-right: 10px;
+}
+a {
+    color: #000;
+}
+a:hover {
+    color: #000;
+}
