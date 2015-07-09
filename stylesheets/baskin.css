@@ -3,10 +3,10 @@ body {
 }
 
 .card {
-    background-color: #f8f8f8;
+    background-color: #efefef;
 
-    margin-left: 10px;
-    margin-right: 10px;
+    height:120px;
+    margin-bottom: 15px;
 
     padding: 10px;
     padding-top: 0px;
@@ -19,4 +19,20 @@ body {
     border-right-color: #f0f0f0;
     border-top-color: #f0f0f0;
     border-left-color: #f0f0f0;
+
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    overflow: hidden;
+}
+.card p {
+    margin-left: 10px;
+}
+.badge {
+    margin-right: 10px;
+}
+a {
+    color: #000;
+}
+a:hover {
+    color: #000;
 }
