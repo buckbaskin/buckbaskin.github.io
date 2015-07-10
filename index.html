@@ -30,46 +30,83 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-baskin">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header" style="height:62px;">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <div class="navbar-header">
+          <button type="button" style="background-color:#fff;" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img alt="Buck Baskin" src="images/sail-loft64.png" height="32px" width="32px"></a>
+          <!-- <img alt="Buck Baskin" src="images/sail-loft64.png" height="32px" width="32px"> -->
+          <div class="navbar-brand code" style="color:#fff;">Buck Baskin</div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="http://buckbaskin.github.io" style="height:62px;">buckbaskin.github.io<span class="sr-only">(current)</span></a></li>
-            <li><a href="http://buckbaskin.com" style="height:62px;">buckbaskin.com<span class="sr-only">(current)</span></a></li>
-            <li><a href="http://buckbask.in" style="height:62px;">buckbask.in</a></li>
+            <li class="active"><a href="http://buckbaskin.github.io">buckbaskin.github.io<span class="sr-only">(current)</span></a></li>
+            <li><a href="http://buckbaskin.com">buckbaskin.com<span class="sr-only">(current)</span></a></li>
+            <li><a href="http://buckbask.in">buckbask.in</a></li>
+            <li><a href="">Projects</a></li>
+            <li><a href="http://perseturtle.wordpress.com">Blog</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
     </nav>
-    <div class="content container">
-      <div class="jumbotron">
-        <h1>Hello, world!</h1>
-        <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <div class="content">
+      <div class="row" style="margin-left:0px;margin-right:0px;">
+        <div class="col-xs-10 col-xs-offset-1 col-md-7">
+          <div class="jumbotron" style="height:100%">
+            <h1 style="text-align:left;">Project of the Week</h1>
+            <h1 style="font-family:monospace;text-align:right;"><a href="https://github.com/buckbaskin/wordbuck">wordbuck</a></h1>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;I am creating an interpreter written in the Scheme programming language. It is inspired by an interpreter for a Java like language that I did a few months ago, but the language is going to be different. I'm calling it Javaish for now, mostly because it is going to be object oriented, but I plan to change it a lot. I'm currently working on the parser, but I'm hoping to move to the interpreter soon.</p>
+          </div>
+        </div>
+        <div class="card-holder col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-3">
+          <!-- insert html here -->
+          <div class="card">
+            <h3><a href="https://github.com/buckbaskin/RoboCodeGit/tree/master/src/arc">Fractal</a></h3>
+            <span class="badge">Java</span>
+            <span class="badge">Robocode</span>
+            <span class="badge">AI</span>
+            <span class="badge">Data</span>
+            <p>A platform for testing out artificial intelligence</p>
+          </div>
+          <div class="card">
+            <h3><a href="https://github.com/buckbaskin/Insight">Insight</a></h3>
+            <span class="badge">Python</span>
+            <span class="badge">Twitter</span>
+            <span class="badge">PageRank</span>
+            <p>Stream Twitter data to analyze and enhance how people interact</p>
+          </div>
+          <div class="card">
+            <h3><a href="https://github.com/buckbaskin/aithealgorithms">AI Algorithms</a></h3>
+            <span class="badge">A*</span>
+            <span class="badge">Reinforcement Learning</span>
+            <p>Flexible planning, search, minimax, learning</p>
+          </div>
+          <div class="card">
+            <h3><a href="https://github.com/buckbaskin/augmented_odom">Augmented Odom</a></h3>
+            <span class="badge">C++</span><span class="badge">Robotics</span><span class="badge">ROS</span>
+            <p>Integrate wheel odometry and Imu data to improve localization</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-      var pageTracker = _gat._getTracker("UA-64767971-1");
-      pageTracker._trackPageview();
-    } catch(err) {}
-    </script>
+      <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-64767971-1");
+        pageTracker._trackPageview();
+      } catch(err) {}
+      </script>
     <!-- <script>
       $(document).ready(function() {
         // This command is used to initialize some elements and make them work properly
