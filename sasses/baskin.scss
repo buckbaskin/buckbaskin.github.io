@@ -1,6 +1,6 @@
 @import 'pages/home';
 
-$buck-main: rgba(0,0,0,0);
+$buck-main: #006799;
 $buck-light-text: #669ACC;
 $buck-dark-text: #003466;
 $buck-seco: #CC3400;
@@ -9,20 +9,36 @@ $buck-comp: #FF9200;
 
 $buck-dark: #0f0f0f;
 
+
+$nav-back: $buck-main;
+$nav-front: #fff;
+$nav-link-front: #fff;
+$nav-link-front-hover: #000;
+
+$body-back: #fff;
+
+$card-back: #fff;
+$card-border: #ddd;
+$card-shadow: #ccc;
+
 body {
   font-family: 'Ubuntu', sans-serif;
-  background-color: $buck-dark;
+  background-color: $body-back;
 }
 .navbar-baskin {
-  color: $buck-main;
-  background-color: $buck-main;
+  color: $nav-front;
+  background-color: $nav-back;
+  border-radius: 0px;
 }
 .code {
   font-family: 'monospace', sans-serif;
 }
 
 .card {
-  background-color: #efefef;
+  background-color: $card-back;
+  color: $buck-light-text;
+
+  box-shadow: 5px 5px 20px $card-shadow;
 
   height:120px;
   margin-bottom: 15px;
@@ -31,13 +47,13 @@ body {
   padding-top: 0px;
   position: relative;
 
-  border-style: solid;
-  border-width: 1px;
+  /* border-style: solid;
+  border-width: 2px;
   border-top-left-radius: 5px;
-  border-bottom-color: #f0f0f0;
-  border-right-color: #f0f0f0;
-  border-top-color: #f0f0f0;
-  border-left-color: #f0f0f0;
+  border-bottom-color: $card-border;
+  border-right-color: $card-border;
+  border-top-color: $card-back;
+  border-left-color: $card-back; */
 
   text-overflow: ellipsis;
   /* Required for text-overflow to do anything */
@@ -46,16 +62,31 @@ body {
 .card p {
   margin-left: 10px;
 }
+.jumbotron { 
+  p {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  h1 {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
 .badge {
   margin-right: 10px;
 }
 a {
-  color: $buck-light-text;
+  color: $buck-dark-text;
 }
 a:hover {
   color: #000;
 }
 
+.nav>li>a {
+  color: $nav-link-front;
+  background-color: $nav-back;
+}
 .nav>li>a:hover {
-  background-color: $buck-light-text;
+  color: $nav-link-front-hover;
+  background-color: #fff;
 }
