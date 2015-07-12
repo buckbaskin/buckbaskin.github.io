@@ -1,6 +1,7 @@
 @import 'pages/home';
 
 $buck-main: #237abd;
+$nav-text: #fff;
 
 $old-boostrap: #2c3e50;
 
@@ -9,11 +10,15 @@ $old-boostrap: #2c3e50;
 }
 
 .navbar .nav > li > a {
-  color: #fff;
+  color: $nav-text;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+  color: $nav-text;
 }
 
 .navbar-baskin .navbar-brand {
-  color: #fff;
+  color: $nav-text;
 }
 
 .navbar-shrink {
