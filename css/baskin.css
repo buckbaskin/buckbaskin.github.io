@@ -7,4 +7,14 @@
 .navbar-baskin .navbar-brand {
   color: #fff; }
 
+header {
+  background-color: #237abd; }
+
+hr.star-light:after {
+  color: #fff;
+  background-color: #237abd; }
+
+#about {
+  background-color: #237abd; }
+
 /*# sourceMappingURL=baskin.css.map */

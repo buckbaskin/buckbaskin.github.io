@@ -1,28 +1,11 @@
 @import 'pages/home';
 
-$buck-main: #006799;
-$buck-light-text: #669ACC;
-$buck-dark-text: #003466;
-$buck-seco: #CC3400;
-$buck-thir: #FF4900;
-$buck-comp: #FF9200;
+$buck-main: #237abd;
 
-$buck-dark: #0f0f0f;
-
-
-$nav-back: $buck-main;
-$nav-front: #fff;
-$nav-link-front: #fff;
-$nav-link-front-hover: #000;
-
-$body-back: #fff;
-
-$card-back: #fff;
-$card-border: #ddd;
-$card-shadow: #ccc;
+$old-boostrap: #2c3e50;
 
 .navbar-baskin {
-  background-color: #2c3e50;
+  background-color: $old-boostrap;
 }
 
 .navbar .nav > li > a {
@@ -31,4 +14,20 @@ $card-shadow: #ccc;
 
 .navbar-baskin .navbar-brand {
   color: #fff;
+}
+
+.navbar-shrink {
+}
+
+header {
+  background-color: $buck-main;
+}
+
+hr.star-light:after {
+    color: #fff;
+    background-color: $buck-main;
+}
+
+#about {
+  background-color: $buck-main;
 }
