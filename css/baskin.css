@@ -76,4 +76,12 @@ header .intro-text .name {
 hr.vertical {
   transform: rotate(90deg); }
 
+.white {
+  padding-left: 30px;
+  padding-right: 10px;
+  color: #fff; }
+
+a, a:hover, a:focus, a:active {
+  color: #fff; }
+
 /*# sourceMappingURL=baskin.css.map */
