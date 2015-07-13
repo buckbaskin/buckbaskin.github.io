@@ -5,6 +5,14 @@ $nav-text: #fff;
 
 $old-boostrap: #2c3e50;
 
+body {
+  font-family: "Lato";
+}
+
+h1 {
+  font-family: "Source Code Pro";
+}
+
 .navbar-baskin {
   background-color: $old-boostrap;
 }
@@ -17,8 +25,13 @@ $old-boostrap: #2c3e50;
   color: $nav-text;
 }
 
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: $nav-text;
+}
+
 .navbar-baskin .navbar-brand {
   color: $nav-text;
+  font-family: "Source Code Pro";
 }
 
 .navbar-shrink {
@@ -29,10 +42,59 @@ header {
 }
 
 hr.star-light:after {
-    color: #fff;
-    background-color: $buck-main;
+  color: #fff;
+  background-color: $buck-main;
 }
 
 #about {
   background-color: $buck-main;
+}
+
+header .intro-text .name {
+  font-family: "Source Code Pro";
+}
+
+.image { 
+  position: relative; 
+  width: 100%;
+}
+.small-image { 
+  position: relative; 
+  width: 100%;
+  font-size: .75em;
+}
+.image h2 { 
+   position: absolute; 
+   top: 60px; 
+   left: 10px; 
+   width: 100%; 
+   margin: 10px;
+}
+.image p {
+  position: absolute; 
+  top: 250px; 
+  left: 10px; 
+  width: 100%; 
+  margin: 10px;
+}
+.small-image h2 {
+  position: absolute; 
+  top: 30px;
+  left: 10px; 
+  width: 100%; 
+  margin: 10px;
+}
+.small-image p {
+  position: absolute; 
+  top: 70px; 
+  left: 10px; 
+  width: 100%; 
+  margin: 10px;
+}
+.mono {
+  font-family: "Source Code Pro";
+}
+
+hr.vertical {
+  transform: rotate(90deg);
 }
