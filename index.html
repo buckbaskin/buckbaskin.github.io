@@ -1,115 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="description" content="Buck Baskin : The Site">
 
-  <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Latest compiled JavaScript -->
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-
-    <!-- material design css
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/md/material-fullpalette.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/md/ripples.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/md/roboto.css">
-    <!-- material design js
-    <script type="text/javascript" href="/javascripts/md/material.js"></script>
-    <script type="text/javascript" href="/javascripts/md/ripples.js"></script>
-    <!-- end md -->
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/baskin.css">
-    
     <title>Buck Baskin</title>
-  </head>
 
-  <body>
-    <nav class="navbar navbar-baskin">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" style="background-color:#fff;" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <!-- <img alt="Buck Baskin" src="images/sail-loft64.png" height="32px" width="32px"> -->
-          <div class="navbar-brand code" style="color:#fff;">Buck Baskin</div>
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- My CSS -->
+    <link href="css/baskin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-baskin">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">Buck Baskin</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">Projects</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="http://buckbaskin.github.io">buckbaskin.github.io<span class="sr-only">(current)</span></a></li>
-            <li><a href="">Projects</a></li>
-            <li><a href="http://perseturtle.wordpress.com">Blog</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container -->
+        <!-- /.container-fluid -->
     </nav>
-    <div class="content">
-      <div class="row" style="margin-left:0px;margin-right:0px;">
-        <div class="col-xs-10 col-xs-offset-1 col-md-7">
-          <div class="jumbotron" style="height:100%">
-            <h1 style="text-align:left;">Project of the Week</h1>
-            <h1 style="font-family:monospace;text-align:right;"><a href="https://github.com/buckbaskin/wordbuck">wordbuck</a></h1>
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;I am creating an interpreter written in the Scheme programming language. It is inspired by an interpreter for a Java like language that I did a few months ago, but the language is going to be different. I'm calling it Javaish for now, mostly because it is going to be object oriented, but I plan to change it a lot. I'm currently working on the parser, but I'm hoping to move to the interpreter soon.</p>
-          </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">Buck Baskin</span>
+                        <hr class="star-light">
+                        <span class="skills">Developer and occasional artist</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-holder col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-3">
-          <!-- insert html here -->
-          <div class="card">
-            <h3><a href="https://github.com/buckbaskin/RoboCodeGit/tree/master/src/arc">Fractal</a></h3>
-            <span class="badge">Java</span>
-            <span class="badge">Robocode</span>
-            <span class="badge">AI</span>
-            <span class="badge">Data</span>
-            <p>A platform for testing out artificial intelligence</p>
-          </div>
-          <div class="card">
-            <h3><a href="https://github.com/buckbaskin/Insight">Insight</a></h3>
-            <span class="badge">Python</span>
-            <span class="badge">Twitter</span>
-            <span class="badge">PageRank</span>
-            <p>Stream Twitter data to analyze and enhance how people interact</p>
-          </div>
-          <div class="card">
-            <h3><a href="https://github.com/buckbaskin/aithealgorithms">AI Algorithms</a></h3>
-            <span class="badge">A*</span>
-            <span class="badge">Reinforcement Learning</span>
-            <p>Flexible planning, search, minimax, learning</p>
-          </div>
-          <div class="card">
-            <h3><a href="https://github.com/buckbaskin/augmented_odom">Augmented Odom</a></h3>
-            <span class="badge">C++</span><span class="badge">Robotics</span><span class="badge">ROS</span>
-            <p>Integrate wheel odometry and Imu data to improve localization</p>
-          </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="mono">Current Programming Projects</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 portfolio-item">
+                    <a href="https://github.com/buckbaskin/wordbuck" class="portfolio-link" data-toggle="modal">
+                        <div class="image">
+                            <img src="img/portfolio/blank_space.png" class="img-responsive" alt="">
+                            <h2 style="color:#237abd">Project of<br />the Week:</h2>
+                            <h2 style="color:#237abd;text-align:right;"><span class="mono" style="text-align:right;"><br /><br /><br />wordbuck</span></h2>
+                            <p style="color:#237abd">An interpreter for a Java-like language written in Scheme</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6" style="border-left:solid #888;">
+                    <div class="col-sm-6 portfolio-item">
+                        <a href="https://github.com/buckbaskin/RoboCodeGit" class="portfolio-link" data-toggle="modal">
+                            <div class="small-image">
+                                <img src="img/portfolio/blank_space.png" class="img-responsive" alt="">
+                                <h2><span class="mono" style="color:#237abd;">Robocode</span></h2>
+                                <p style="color:#237abd;">A playground for testing<br /> out artificial intelligence</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 portfolio-item">
+                        <a href="https://github.com/buckbaskin/augmented_odom" class="portfolio-link" data-toggle="modal">
+                            <div class="small-image">
+                                <img src="img/portfolio/blank_space.png" class="img-responsive" alt="">
+                                <h2><span class="mono" style="color:#237abd;">Augmented Odom</span></h2>
+                                <p style="color:#237abd;"><br />Integrated IMU and wheel odometry localization</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 portfolio-item">
+                        <a href="https://github.com/buckbaskin/Insight
+                        +" class="portfolio-link" data-toggle="modal">
+                            <div class="small-image">
+                                <img src="img/portfolio/blank_space.png" class="img-responsive" alt="">
+                                <h2><span class="mono" style="color:#237abd;">Insight</span></h2>
+                                <p style="color:#237abd;">Study information flow to undersand how people engage with social media.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 portfolio-item">
+                        <a href="https://github.com/buckbaskin/aiTheAlgorithms" class="portfolio-link" data-toggle="modal">
+                            <div class="small-image">
+                                <img src="img/portfolio/blank_space.png" class="img-responsive" alt="">
+                                <h2><span class="mono" style="color:#237abd;">Artificial Intelligence</span></h2>
+                                <p style="color:#237abd;"><br />Search, planning and reinforcement learning</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="mono">About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>I'm a computer science major by degree, and a software developer by profession, hobby and passion. I'm particularly interested in artificial intelligence and robotics, especially where they intersect.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>I'm also a mechanical engineer, and in that mix I design 3D models of robots and other hardware that I am building. My next personal project is to build a quadcopter powered by a Raspberry Pi, Arduino and ROS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-offset-3 col-md-6">
+                        <h3 class="mono">Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://github.com/buckbaskin" class="white">Github</a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/beBaskin" class="white">Twitter</a>
+                            </li>
+                            <li>
+                                <a href="https://perseturtle.wordpress.com" class="white">Wordpress</a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/williambaskin" class="white">LinkedIn</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
     </div>
 
-      <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-      <script type="text/javascript">
-      try {
-        var pageTracker = _gat._getTracker("UA-64767971-1");
-        pageTracker._trackPageview();
-      } catch(err) {}
-      </script>
-    <!-- <script>
-      $(document).ready(function() {
-        // This command is used to initialize some elements and make them work properly
-        $.material.init();
-      });
-    </script> -->
-  </body>
-  </html>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/freelancer.js"></script>
+
+</body>
+
+</html>
