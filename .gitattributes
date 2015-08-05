@@ -1,0 +1,7 @@
+js/* linguist-vendored=true
+*.less linguist-vendored=true
+font-awesome/* linguist-vendored=true
+*.css linguist-vendored=true
+baskin.css linguist-vendored=false
+*.svg linguist-vendored=true
+*.json linguist-vendored=true
