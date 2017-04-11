@@ -10,7 +10,7 @@ function setupGeolocation(navigator) {
         console.log(position.coords.latitude, position.coords.longitude);
 
         var img = document.getElementById("unique");
-        if (img === undefined) {
+        if (img === undefined || img === null || !img) {
             var img_block = document.getElementById("img_here");
             var img = new Image();
             img.id = "unique";
