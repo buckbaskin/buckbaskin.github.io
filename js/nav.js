@@ -6,10 +6,15 @@ function setupGeolocation(navigator) {
         $("#longitude").html("" + position.coords.longitude);
         $("#commentary").html("The Geolocation Javascript Loaded.");
         console.log(position.coords.latitude, position.coords.longitude);
+
+        var img_block = document.getElementById("img_here");
+        var img = new Image();
+        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=300x300&sensor=false";
+        img_block.appendChild(img);
     }
 
-    function geoError() {
-        $("#commentary").html("There was an error loading the Geolocation.");
+    function geoError(error) {
+        $("#commentary").html("There was an error loading the Geolocation.\n"+error.code+"\n"+error.message);
     }
 
     var geo_options = {
@@ -26,7 +31,6 @@ function setup() {
 }
 
 if ("geolocation" in navigator) {
-    console.log("Run Geolocation Setup");
     setupGeolocation(window.navigator);
 }
 setup();
