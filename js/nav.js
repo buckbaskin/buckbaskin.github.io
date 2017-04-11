@@ -4,6 +4,7 @@ function setupGeolocation(navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
         $("#latitude").html("" + position.coords.latitude);
         $("#longitude").html("" + position.coords.longitude);
+        $("#commentary").html("The Geolocation Javascript Loaded.");
         console.log(position.coords.latitude, position.coords.longitude);
     });
 }
