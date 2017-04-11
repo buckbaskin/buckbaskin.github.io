@@ -9,7 +9,12 @@ function setupGeolocation(navigator) {
     });
 }
 
+function setup() {
+    $("#setupRan").html("Javascript Setup ran");
+}
+
 if ("geolocation" in navigator) {
     console.log("Run Geolocation Setup");
     setupGeolocation(window.navigator);
 }
+setup();
