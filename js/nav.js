@@ -9,7 +9,10 @@ function setupGeolocation(navigator) {
 
         var img_block = document.getElementById("img_here");
         var img = new Image();
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=300x300&sensor=false";
+        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + 
+            position.coords.latitude + "," + 
+            position.coords.longitude + 
+            "&zoom=15&size=300x300&sensor=false";
         img_block.appendChild(img);
     }
 
