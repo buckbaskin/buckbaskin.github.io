@@ -9,14 +9,21 @@ function setupGeolocation(navigator) {
         $("#commentary").html("The Geolocation Javascript Loaded.");
         console.log(position.coords.latitude, position.coords.longitude);
 
-        var img_block = document.getElementById("img_here");
-        var img = new Image();
+        var img = document.getElementById("unique");
+        if (img === undefined) {
+            var img_block = document.getElementById("img_here");
+            var img = new Image();
+            img.id = "unique";
+            img_block.appendChild(img);
+            img = document.getElementById("unique");
+        }
+        var img_src ="https://maps.googleapis.com/maps/api/staticmap?center=41.5024294,-81.6082778&zoom=18&size=300x300&sensor=false";
+        console.log("img.src 1", img_src);
         img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + 
             latitude + "," + 
             longitude + 
-            "&zoom=15&size=300x300&sensor=false";
-        console.log('img.src', img.src);
-        img_block.appendChild(img);
+            "&zoom=18&size=300x300&sensor=false";
+        console.log('img.src 2', img.src);
     }
 
     function geoError(error) {
