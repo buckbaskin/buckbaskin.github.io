@@ -2,17 +2,20 @@ console.log('Load nav.js');
 
 function setupGeolocation(navigator) {
     function geoSuccess(position) {
-        $("#latitude").html("" + position.coords.latitude);
-        $("#longitude").html("" + position.coords.longitude);
+        var latitude  = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        $("#latitude").html("" + latitude);
+        $("#longitude").html("" + longitude);
         $("#commentary").html("The Geolocation Javascript Loaded.");
         console.log(position.coords.latitude, position.coords.longitude);
 
         var img_block = document.getElementById("img_here");
         var img = new Image();
         img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + 
-            position.coords.latitude + "," + 
-            position.coords.longitude + 
+            latitude + "," + 
+            longitude + 
             "&zoom=15&size=300x300&sensor=false";
+        console.log('img.src', img.src);
         img_block.appendChild(img);
     }
 
