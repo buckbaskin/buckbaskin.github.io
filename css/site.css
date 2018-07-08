@@ -22,12 +22,12 @@ body {
         font-style: italic;
         src: url("fonts/Bitter-Italic.otf") format("opentype");
     }
-    font-family: "Bitter", serif;
+    font: "Bitter", serif;
 }
 h1, h2, h3, h4, h5, h6 {
     @font-face {
         font-family: "Simplifica";
         src: url("fonts/simplifica.ttf") format("ttf");
     }
-    font-family: "Simplifica", sans-serif;
+    font: "Simplifica", sans-serif;
 }
