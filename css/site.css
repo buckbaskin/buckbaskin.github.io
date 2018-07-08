@@ -1,0 +1,33 @@
+body {
+    @font-face {
+        font-family: "Bitter";
+        src: url("fonts/Bitter-Regular.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "Bitter";
+        font-weight: bold;
+        src: url("fonts/Bitter-Bold.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "Bitter";
+        font-weight: bold;
+        font-style: italic;
+        src: url("fonts/Bitter-BoldItalic.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "Bitter";
+        font-style: italic;
+        src: url("fonts/Bitter-Italic.otf") format("opentype");
+    }
+    font-family: "Bitter", serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    @font-face {
+        font-family: "Simplifica";
+        src: url("fonts/simplifica.ttf") format("ttf");
+    }
+    font-family: "Simplifica", sans-serif;
+}
