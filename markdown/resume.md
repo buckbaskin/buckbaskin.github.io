@@ -34,7 +34,7 @@ Senior Project: Multi-Robot Mapping for Search and Rescue
 
 ## Employment
 
-### Robotics Perception Engineer - Starsky Robotics
+### Robotics Perception Engineer - *Starsky Robotics*
 
 June 2018 - Current
 
