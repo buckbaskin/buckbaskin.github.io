@@ -23,8 +23,8 @@
 }
 @font-face {
     font-family: "Simplifica";
-    src: url("/css/fonts/simplifica.woff") format("woff"),
-    url("/css/fonts/simplifica.ttf") format("ttf");
+    src: url("css/fonts/simplifica.woff") format("woff"),
+    url("css/fonts/simplifica.ttf") format("ttf");
 }
 body {
     font: "Bitter", serif;
