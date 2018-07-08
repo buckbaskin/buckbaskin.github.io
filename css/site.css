@@ -1,35 +1,35 @@
+@font-face {
+    font-family: "Bitter";
+    src: url("fonts/Bitter-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Bitter";
+    font-weight: bold;
+    src: url("fonts/Bitter-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Bitter";
+    font-weight: bold;
+    font-style: italic;
+    src: url("fonts/Bitter-BoldItalic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Bitter";
+    font-style: italic;
+    src: url("fonts/Bitter-Italic.otf") format("opentype");
+}
+@font-face {
+    font-family: "Simplifica";
+    src: url("/css/fonts/simplifica.woff") format("woff"),
+    url("/css/fonts/simplifica.ttf") format("ttf");
+}
 body {
-    @font-face {
-        font-family: "Bitter";
-        src: url("fonts/Bitter-Regular.otf") format("opentype");
-    }
-
-    @font-face {
-        font-family: "Bitter";
-        font-weight: bold;
-        src: url("fonts/Bitter-Bold.otf") format("opentype");
-    }
-
-    @font-face {
-        font-family: "Bitter";
-        font-weight: bold;
-        font-style: italic;
-        src: url("fonts/Bitter-BoldItalic.otf") format("opentype");
-    }
-
-    @font-face {
-        font-family: "Bitter";
-        font-style: italic;
-        src: url("fonts/Bitter-Italic.otf") format("opentype");
-    }
     font: "Bitter", serif;
 }
 h1, h2, h3, h4, h5, h6 {
-    @font-face {
-        font-family: "Simplifica";
-        src: url("../css/fonts/simplifica.woff") format("woff"),
-        url("../css/fonts/simplifica.ttf") format("ttf");
-    }
     font: "Simplifica", sans-serif;
 }
 
