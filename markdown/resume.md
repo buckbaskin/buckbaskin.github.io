@@ -1,3 +1,10 @@
+---
+title: Buck Baskin's Resume
+header-includes:
+    <meta name="description" content="The resume for Buck Baskin, with links to
+    projects and coursework."/>
+---
+
 # Buck (William) Baskin
 
 - https://github.com/buckbaskin
