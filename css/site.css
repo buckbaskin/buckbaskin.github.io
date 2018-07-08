@@ -27,7 +27,12 @@ body {
 h1, h2, h3, h4, h5, h6 {
     @font-face {
         font-family: "Simplifica";
-        src: url("fonts/simplifica.ttf") format("ttf");
+        src: url("fonts/simplifica.woff") format("woff"),
+        url("fonts/simplifica.ttf") format("ttf");
     }
     font: "Simplifica", sans-serif;
+}
+
+h1 {
+    font: "Simplifica";
 }
