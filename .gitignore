@@ -7,3 +7,5 @@ bower_components/
 *.scssc
 
 startbootstrap-*/
+
+*.list
