@@ -3,6 +3,9 @@ Title: Buck (William) Baskin
 Slug: resume
 Template: resume
 ---
+<div class="skipprint">
+  <a href="https://buckbaskin.com/index.html">home</a> | <a href="{filename}/pages/resume.md">link</a>
+</div>
 
 - https://github.com/buckbaskin
 - mobile.wbaskin@gmail.com
