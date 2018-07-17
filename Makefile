@@ -64,6 +64,12 @@ help:
 html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
+messy:
+	$(PELICAN) $(INPUTDIR) -o $(BASEDIR) -s $(CONFFILE) $(PELICANOPTS)
+
+unmessy:
+	rm *.html
+
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
 

@@ -8,7 +8,7 @@ SITESUBTITLE = 'a blog by Buck Baskin'
 SITEURL = ''
 THEME = 'themes/simple'
 
-PATH = 'content'
+PATH = 'site'
 
 TIMEZONE = 'America/Los_Angeles'
 
