@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'Buck Baskin'
 SITENAME = 'Building and Breaking Things'
 SITESUBTITLE = ''
-SITEURL = ''
+SITEURL = '/blog'
 THEME = 'themes/simple'
 
 PATH = 'site'
@@ -27,4 +27,4 @@ LINKS = (('Pelican', 'http://getpelican.com/'),)
 DEFAULT_PAGINATION = False
 
 # Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
+RELATIVE_URLS = False
