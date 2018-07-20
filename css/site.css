@@ -21,3 +21,10 @@ body {
 .subtitle {
     front-size: 30px;
 }
+
+@media (max-width 460px) {
+    .title {
+        font-weight: bolder;
+        font-size: 60px;
+    }
+}
