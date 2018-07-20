@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Buck Baskin'
 SITENAME = 'Building and Breaking Things'
-SITESUBTITLE = 'a blog by Buck Baskin'
+SITESUBTITLE = ''
 SITEURL = ''
 THEME = 'themes/simple'
 
