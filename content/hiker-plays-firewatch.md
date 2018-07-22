@@ -6,7 +6,7 @@ Tags: Firewatch
 Summary: I've had the game Firewatch for a while, but I just started playing the game today. What makes the game particularly special to me now is that I spent last summer hiking the Appalachain Trail. Many aspects of the game bring back memories from that experience which I think is kind of amazing. This probably will spoil some of the game for you if you haven't already played. Day 1!
 ---
 
-[link](/blog/hiker-plays-firewatch.html)
+[link]({filename}/hiker-plays-firewatch.md)
 
 I've had the game Firewatch for a while, but I just started playing the game
 today. What makes the game particularly special to me now is that I spent last
