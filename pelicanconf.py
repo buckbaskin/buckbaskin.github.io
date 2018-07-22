@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Buck Baskin'
-SITENAME = 'Building and Breaking Things'
+SITENAME = 'Building and Breaking'
 SITESUBTITLE = ''
 SITEURL = '/blog'
 THEME = 'themes/simple'

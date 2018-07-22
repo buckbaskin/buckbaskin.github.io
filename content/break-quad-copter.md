@@ -5,8 +5,6 @@ Category: Breaking
 Summary: This has been a backburner project for a while; I'm now finally taking the time to take apart a quadcopter I've had for a while to see what goes into making it tick (and see if I can't mess with it a little bit too)
 ---
 
-[link]({filename}/break-quad-copter.md)
-
 This has been a backburner project for a while; I'm now finally taking the time to take apart a quadcopter I've had for a while to see what goes into making it tick (and see if I can't mess with it a little bit too).
 
 The first step in the project was to start removing screws until either the top or bottom shell of the quadcopter fell off. In this case, it turned out that the top shell was largely costmetic and came off after 18 screws, with one hidden in the battery compartment.

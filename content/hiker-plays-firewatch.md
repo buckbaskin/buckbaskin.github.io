@@ -6,8 +6,6 @@ Tags: Firewatch
 Summary: I've had the game Firewatch for a while, but I just started playing the game today. What makes the game particularly special to me now is that I spent last summer hiking the Appalachain Trail. Many aspects of the game bring back memories from that experience which I think is kind of amazing. This probably will spoil some of the game for you if you haven't already played. Day 1!
 ---
 
-[link]({filename}/hiker-plays-firewatch.md)
-
 I've had the game Firewatch for a while, but I just started playing the game
 today. What makes the game particularly special to me now is that I spent last
 summer hiking the Appalachain Trail. Many
@@ -16,7 +14,7 @@ kind of amazing (given that I'm sitting at a desk and clicking around with a
 mouse). This probably will spoil some of the game for you if you haven't already
 played.
 
-## Day 1 (Firewatch Land)
+### Day 1 (Firewatch Land)
 
 - My initial impression is that the story and setup is very impactful, way moreso
 than I expected from anything that I'd heard about the game.
@@ -41,7 +39,7 @@ some open world game where I want to rush to get to the next mini game.
 - I feel the desire to look around while I'm walking to make sure I'm not
 missing nice sights that I might never see again.
 
-## Day 2
+### Day 2
 
 - When waking up to the second day, the scene is set with a broken window and a
 "Volunteer to be a Lookout" poster. It's a perfect touch.
