@@ -7,9 +7,11 @@ body {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    overflow-wrap: break-word;
+}
+p {
     padding-left: 20px;
     padding-right: 20px;
-    overflow-wrap: break-word;
 }
 .code {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
@@ -31,4 +33,20 @@ li{
         font-weight: bolder;
         font-size: 100px;
     }
+}
+
+img {
+    width: 100%;
+    background-color: darkgrey;
+    clip-path: rectangle(100px 100px at 50% 50%);
+}
+
+pre {
+    /* I should code highlight with http://pygments.org/ */
+    background-color: #eff0f1;
+    padding: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 16px;
+    line-height: 20px;
 }

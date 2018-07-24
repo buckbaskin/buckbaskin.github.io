@@ -9,6 +9,7 @@ SITEURL = '/blog'
 THEME = 'themes/simple'
 
 PATH = 'site'
+STATIC_PATHS = ['img']
 
 TIMEZONE = 'America/Los_Angeles'
 
