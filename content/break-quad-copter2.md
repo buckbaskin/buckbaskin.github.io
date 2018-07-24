@@ -80,6 +80,8 @@ tick (a buck-boost converter somewhere?)
 
 For my notes, the black motors turn clockwise when you look at the gear.
 
+![Reading the voltage]({attach}img/measuring_motors.jpg)
+
 At 5% output power from the controller, the motors are measured at somewhere
 between 3.6V and 3.7V. Turning it up to 50% and leaving it for a little while
 actually caused the voltage to be measured at 3.4V. Going up to 100% made it
@@ -136,3 +138,5 @@ def kV(rpm, volts, amps, Rm):
 I'm going to leave for a bit to dig through my pile of electronics and see
 if I can't round up those Hall effect sensors I've been staring at for a while
 and dreaming of using for spying on motors without actually touching the motors.
+
+Casualties for this round: 1 small screw that was supposed to hold on a propeller.
