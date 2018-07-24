@@ -2,6 +2,7 @@
 Title: What's in a stepper?
 Date: 2018-07-19
 Category: Breaking
+Tags: stepper motor, reverse engineering
 ---
 
 For a lot of my life, the robots I worked with were pretty close to what CS wants from them: a stream of sensor data in, nicely organized in a common format across all sensors. To make things happen, I stream some outputs in another selection of formats. The sensor data changes and I repeat the loop. (Thanks ROS! It's pretty great and you should check it out.) While having an understanding of the dynamics of the robot and how each sensor generated its reading was helpful, most of that got summed up as: add some extra variance to the Kalman filter and we'll be ok. What happens if you want to get a little more involved in the hardware?
