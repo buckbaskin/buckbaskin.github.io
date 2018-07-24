@@ -42,6 +42,7 @@ img {
 }
 
 pre {
+    /* I should code highlight with http://pygments.org/ */
     background-color: #eff0f1;
     padding: 5px;
     margin-left: 20px;
