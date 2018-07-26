@@ -110,16 +110,16 @@ point, but I'd be interested in reading a little more into how I2C works.</p>
 the next corner holds the pins for connecting to the external sensors (compass?)
 via I2C. Then you get:</p>
 <ul>
-<li>#8 VLOGIC, the supply voltage for digital communication logic</li>
-<li>#10 REGOUT, a pin for a filter capactior (probably another component on the
+<li><code>08</code>VLOGIC, the supply voltage for digital communication logic</li>
+<li><code>10</code>REGOUT, a pin for a filter capactior (probably another component on the
 board)</li>
-<li>#11 FSYNC, used for synchronizing with frames for camera stabilization</li>
-<li>#12 INT, a digital out interrupt</li>
-<li>#13 VDD, power supply voltage</li>
-<li>#18 GND, power supply ground</li>
-<li>#20 CPOUT, used for connecting to a charge pump capacitor</li>
-<li>#23 Serial clock for I2C</li>
-<li>#24 Serial data for I2C</li>
+<li><code>11</code>FSYNC, used for synchronizing with frames for camera stabilization</li>
+<li><code>12</code>INT, a digital out interrupt</li>
+<li><code>13</code>VDD, power supply voltage</li>
+<li><code>18</code>GND, power supply ground</li>
+<li><code>20</code>CPOUT, used for connecting to a charge pump capacitor</li>
+<li><code>23</code>Serial clock for I2C</li>
+<li><code>24</code>Serial data for I2C</li>
 </ul>
 <p>The pins I'm most interested in are the REGOUT and CPOUT pins because they
 should guide me to identifying other parts on the board. Additionally, I'd like

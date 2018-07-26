@@ -3,6 +3,13 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 10px;
     padding-right: 10px;
 }
+header h2 {
+    padding: 0px;
+}
+header, footer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 body {
     font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
     font-size: 21px;
@@ -46,7 +53,7 @@ img {
     /* clip-path: rectangle(100px 100px at 50% 50%); */
 }
 
-pre {
+pre, code {
     /* I should code highlight with http://pygments.org/ */
     background-color: #eff0f1;
     padding: 5px;

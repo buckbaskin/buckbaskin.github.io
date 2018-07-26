@@ -3,6 +3,7 @@ Title: Tearing Down a Quadcopter: Part 3 - Reading a Circuit Board
 Date: 2018-07-25
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
+Summary: My background in electrical engineering involves the first 4 chapters of an electronics textbook I read on my phone when I had internet connection and power in town while hiking the Appalachian Trail. What can I figure out about how the circut board works for the quadcopter?
 ---
 
 My background in electrical engineering involves the first 4 chapters of an
@@ -93,16 +94,16 @@ Continuing counterclockwise in the order of the numbering system for the chip,
 the next corner holds the pins for connecting to the external sensors (compass?)
 via I2C. Then you get:
 
-- \#8 VLOGIC, the supply voltage for digital communication logic
-- \#10 REGOUT, a pin for a filter capactior (probably another component on the
+- `08`VLOGIC, the supply voltage for digital communication logic
+- `10`REGOUT, a pin for a filter capactior (probably another component on the
 board)
-- \#11 FSYNC, used for synchronizing with frames for camera stabilization
-- \#12 INT, a digital out interrupt
-- \#13 VDD, power supply voltage
-- \#18 GND, power supply ground
-- \#20 CPOUT, used for connecting to a charge pump capacitor
-- \#23 Serial clock for I2C
-- \#24 Serial data for I2C
+- `11`FSYNC, used for synchronizing with frames for camera stabilization
+- `12`INT, a digital out interrupt
+- `13`VDD, power supply voltage
+- `18`GND, power supply ground
+- `20`CPOUT, used for connecting to a charge pump capacitor
+- `23`Serial clock for I2C
+- `24`Serial data for I2C
 
 The pins I'm most interested in are the REGOUT and CPOUT pins because they
 should guide me to identifying other parts on the board. Additionally, I'd like
