@@ -1,6 +1,6 @@
 ---
 Title: Tearing Down a Quadcopter: Part 3 - Reading a Circuit Board
-Date: 2018-07-24
+Date: 2018-07-25
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
 ---
