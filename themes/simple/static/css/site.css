@@ -1,5 +1,7 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 body {
     font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
@@ -37,8 +39,11 @@ li{
 
 img {
     width: 100%;
+    max-width: 1040px;
+    margin-left: calc(-40px);
+    width: calc(100% + 80px);
     background-color: darkgrey;
-    clip-path: rectangle(100px 100px at 50% 50%);
+    /* clip-path: rectangle(100px 100px at 50% 50%); */
 }
 
 pre {
