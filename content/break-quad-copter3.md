@@ -109,7 +109,7 @@ The pins I'm most interested in are the REGOUT and CPOUT pins because they
 should guide me to identifying other parts on the board. Additionally, I'd like
 to figure out where on the circuit board I can find the ground plane.
 
-![Board and Schematic]({attach}img/mpu6050_combined_invert.png)
+![Board and Schematic]({attach}img/mpu6050_combined_invert.jpg)
 [link to datasheet](https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf)
 
 In the image above, one can see the various support capacitors marked, as well
