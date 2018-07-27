@@ -11,3 +11,6 @@ startbootstrap-*/
 *.list
 *.pyc
 *.zip
+static/*.zip
+static/*.jpg
+static/**/*.JPG

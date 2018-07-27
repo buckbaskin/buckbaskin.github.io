@@ -150,7 +150,7 @@ opening up the battery door, but to really see everything on the bottom of the
 board, I'm going to need to take out my handy dandy screw driver and lift the
 board of its vibration reduction mounts.
 
-More [next time]({filename}break-quadcopter4.md)!
+More [next time]({filename}break-quad-copter4.md)!
 
 I feel silly, but during this process, I realized that the board has an antenna.
 Now you know!
