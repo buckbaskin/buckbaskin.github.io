@@ -1,9 +1,8 @@
 ---
 Title: Tearing Down a Quadcopter: Part 4 - Reading Upside Down
-Date: 2018-07-24
+Date: 2018-07-26
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
-Status: Draft
 ---
 
 I decided to go for the full-break method of investigating the electronics, and
