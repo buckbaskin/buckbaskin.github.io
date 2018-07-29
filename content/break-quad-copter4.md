@@ -39,3 +39,5 @@ anything too exciting.
 I think that the short and boring conclusion now is that the board consists of
 an IMU and a microcontroller for reading it, and then the quadcopter is
 "balanced" by combining the input from the IMU and the controller.
+
+Go watch some [AvE](https://www.youtube.com/watch?v=k944AQRUNcQ)!
