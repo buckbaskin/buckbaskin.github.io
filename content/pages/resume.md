@@ -40,7 +40,7 @@ June 2018 - Current
 
 Computer vision systems for autonomous semi-trucks
 
-### Software Team Lead - Biorobotics Lab Autonomous Snowplow
+### Software Team Lead - *Biorobotics Lab Autonomous Snowplow*
 
 Fall 2014 - Spring 2018
 
@@ -53,7 +53,7 @@ Fall 2014 - Spring 2018
 - Led reconstruction of navigation systems using Python for prototyping, C++ for
   critical path nodes
 
-### Software Engineer - Markers Investor Relations
+### Software Engineer - *Markers Investor Relations*
 
 Fall 2016 - Spring 2017
 
@@ -64,7 +64,7 @@ Fall 2016 - Spring 2017
 - Integrated customer, business and technical feedback to quickly launch
   successful features
 
-### Software Engineering Intern - Google
+### Software Engineering Intern - *Google*
 
 Summer 2016
 
@@ -73,7 +73,7 @@ Summer 2016
   development velocity and reduce bugs by topologically sorting generation
   targets
 
-### Software Development Intern - Flashstarts Startup Accelerator
+### Software Development Intern - *Flashstarts Startup Accelerator*
 
 Summer 2015
 
@@ -99,7 +99,7 @@ Summer 2014
 
 ## Robotics Projects
 
-### 3D Printed Walking Robot - Hustlebug
+### 3D Printed Walking Robot - *Hustlebug*
 
 <!-- link title to Grabcad project -->
 
@@ -110,7 +110,7 @@ Fall 2017 - Spring 2018
 - Implementing onboard interpreter and sensor platform for easy programming in
   Python
 
-### Visual SLAM for 360 deg. Camera - Parakeet-SLAM
+### Visual SLAM for 360 deg. Camera - *Parakeet-SLAM*
 
 <!-- link title to Github project -->
 
