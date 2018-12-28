@@ -1,5 +1,5 @@
 ---
-Title: So You Like Data Sciance?
+Title: So You Like Data Science?
 Category: Building
 Tags: Data Science
 Date: 2018-09-05
