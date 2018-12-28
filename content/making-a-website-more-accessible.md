@@ -25,7 +25,7 @@ In all this, I try to take the time, when I make websites I aim to make them sim
 
 With accessibility designs in mind, a generated website makes it easy to add accessibility features across all pages.
 
-# Feature 1: A Skip Link
+# Feature: The Skip Link
 
 The first step is to add a skip link. This is a link that allows the screen reader to present an early option that goes directly to the main content (remember how I talked about focus on the content?). It's primary use is to skip navigation headers or other similar content if a sidebar is used and it's a good first step to help out those using screen readers. On my website, its primary function is going to be skipping the Building and Breaking title.
 
@@ -35,11 +35,11 @@ The first step is to add a skip link. This is a link that allows the screen read
 2. Add a link to the top of the page in the template that skips directly to the content labelled with the id `main`
 3. Add some css to hide it until it comes in focus
 
-## Step 1: Something to reference
+### Step 1: Something to reference
 
 I'm going to cheat on this step and use the existing `content` link that I already have in templates. I also think it's a little more descriptive, but I leave that up to you. At the time of writing (Git commit [b351ec1](https://github.com/buckbaskin/buckbaskin.github.io/commit/b351ec18568f7c9117870e2a2f4bf5cb5a205b2d)) I'm only using the content section in two templates, so I'm going to move that into the base template. If you take a look at the next Git commit (commit [0a4f4be](https://github.com/buckbaskin/buckbaskin.github.io/commit/0a4f4beb27a70136930bc771b18a5079dadb8db4)), you'll see the changes I made to generate a `content` section across every page on the site.
 
-## Step 2: A New Link
+### Step 2: A New Link
 
 The link Ben suggests looks something like:
 
@@ -47,10 +47,14 @@ The link Ben suggests looks something like:
 
 I'm going to add this to my base template above where I add the section. This way, all pages with a `content` section will also get the link. You can see this fast change in the commit [647b542](https://github.com/buckbaskin/buckbaskin.github.io/commit/647b5423c1b1a2911e47d49eec41e4ac7b4dd814).
 
-## Step 3: The CSS
+### Step 3: The CSS
 
 I'll admit this CSS comes pretty directly from Ben's post, so I recommend you go read up on it in the [skip link section](https://benrobertson.io/accessibility/designing-layouts-for-screen-readers#skip-link) of his blog post. The end result I settled on is shown in the commit [d6280ba](https://github.com/buckbaskin/buckbaskin.github.io/commit/d6280bac9856488a720e05ffa6b9daf9b75d6513).
 
+My CSS omits some portions of the suggested styling the link to keep it simpler and consistent with the site. I keep the CSS to put the link in the top left and have it fly above the other text. Mostly by accident, this styling shouldn't overlap the main title.
+
 # Conclusion
 
-Today I've taken my first (simple) steps to making my site more accessible, and I hope I've shown that it's easy to make your site more accessible too. You can find more of my work about accessibility by checking out the [accessibility tag feed](/blog/tag/accessibility.html). I'm also hoping to learn more by checking out an [accessibility reference](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference) by [Kayce Basques](https://developers.google.com/web/resources/contributors/kaycebasques) from Google.
+Today I've taken my first (simple) steps to making my site more accessible, and I hope I've shown that it's easy to make your site more accessible too. You can find more of my work about accessibility by checking out the [accessibility tag feed](/blog/tag/accessibility.html) and follow up as I add new accessibility features.
+
+I'm also hoping to learn more by checking out an [accessibility reference](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference) by [Kayce Basques](https://developers.google.com/web/resources/contributors/kaycebasques) from Google and continuing to read Ben Robertson's [blog](https://benrobertson.io/blog/).
