@@ -63,3 +63,24 @@ pre, code {
     font-size: 16px;
     line-height: 20px;
 }
+
+.skip {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    word-wrap: normal !important; /* Many screen reader and browser combinations announce broken words as they would appear visually. */
+}
+
+/* Display the link on focus. */
+.skip:focus {
+    clip: auto !important;
+    display: block;
+    height: auto;
+    left: 5px;
+    line-height: normal;
+    top: 5px;
+    width: auto;
+    z-index: 100000;
+}
