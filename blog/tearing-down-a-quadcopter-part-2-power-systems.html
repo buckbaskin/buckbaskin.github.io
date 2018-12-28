@@ -17,7 +17,8 @@ te.css" />
         <header id="banner" class="body">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-<section id="content" class="body">
+        <section id="content">
+<div class="body">
   <header>
     <h2 class="entry-title">Tearing Down a Quadcopter: Part 2 - Power Systems</h2>
  
@@ -143,7 +144,7 @@ specs because I haven't identified the motor yet). Supposedly I can <a href="htt
 properly</a>,
 but what I get when I measure it is something around 1 Ohm.</p>
 <p>The equation that comes out of this is (defined in Python because me):</p>
-<div class="highlight"><pre><span></span>def kV(rpm, volts, amps, Rm):
+<div class="highlight"><pre>def kV(rpm, volts, amps, Rm):
     return rpm / (volts - current * Rm)
 </pre></div>
 
@@ -153,7 +154,8 @@ if I can't round up those Hall effect sensors I've been staring at for a while
 and dreaming of using for spying on motors without actually touching the motors.</p>
 <p>Casualties for this round: 1 small screw that was supposed to hold on a propeller.</p>
   </div><!-- /.entry-content -->
-</section>
+</div>
+        </section><!-- /#content -->
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Building and Breaking - Making a Website More Accessible</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+
+
+    <meta name="tags" content="Accessibility" />
+
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <section id="content">
+<div class="body">
+  <header>
+    <h2 class="entry-title">Making a Website More Accessible</h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2018-12-28T00:00:00-08:00">
+      Fri 28 December 2018
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="category">
+        Category: <a href="/blog/category/building.html">Building</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="/blog/tag/accessibility.html">Accessibility</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/making-a-website-more-accessible.html" rel="bookmark"
+         title="Permalink to Making a Website More Accessible">link</a></p>
+    <p>In reading online, I've always preferred simple, fast-loading websites that are easy to read and don't get in my way from reading their content. In this blog post, I'm going to work on bringing that experience to people who use screen readers.</p>
+<h1>Motivational Rant</h1>
+<p>The thing I hate most, and it's worst on mobile, is a website that continually loads more BS and jumps the content around when I'm trying to read it. There are many news articles or interesting tech articles I've stopped reading, regardless of interest, because the website is unusable with ads and other things loading when I've already scrolled through multiple mobile screens of content.</p>
+<p>My second most hated experience is the triple-popup, usually on a website that wants me to use their app instead (top popup), wants me to agree to being tracked to read news or a blog post (bottom popup), and wants me to subscribe to a newsletter so they can track my email engagement too (overlay popup).</p>
+<p>In all this, I try to take the time, when I make websites I aim to make them simple, load quickly and primarily focused on content. One area that I can certainly learn to improve is accessibility, and I found an interesting article that talks about how to improve readability for screen readers.</p>
+<p><a href="https://benrobertson.io/accessibility/designing-layouts-for-screen-readers">link to the article</a></p>
+<p>With accessbility designs in mind, a generated website makes it easy to add accesssiblity features across all pages.</p>
+<h1>Feature 1: A Skip Link</h1>
+<p>The first step is to add a skip link. This is a link that allows the screen reader to present an early option that goes directly to the main content (remember how I talked about focus on the content?). It's primary use is to skip navigation headers or other similar content if a sidebar is used and it's a good first step to help out those using screen readers.</p>
+<h2>Steps</h2>
+<ol>
+<li>Add a main id to the correct pages in the template</li>
+<li>Add a link to the top of the page in the template that skips directly to the content labelled with the id <code>main</code></li>
+<li>Add some css to hide it until it comes in focus</li>
+</ol>
+<h2>Step 1</h2>
+<p>I'm going to cheat on this step and use the existing <code>content</code> link that I already have in templates. At the time of writing (Git commit <a href="https://github.com/buckbaskin/buckbaskin.github.io/commit/b351ec18568f7c9117870e2a2f4bf5cb5a205b2d">b351ec1</a>) I'm only using the content section in two templates, so I'm going to move that into the base template.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </section><!-- /#content -->
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
