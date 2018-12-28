@@ -33,7 +33,7 @@ p {
     front-size: 30px;
 }
 
-li{
+ul > li{
   list-style-type: none;
   /* padding-bottom: 10px; */
 }
