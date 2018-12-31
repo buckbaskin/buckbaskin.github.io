@@ -35,13 +35,15 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
         {% block content %}
         {% endblock %}
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
