@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Building and Breaking - Adding Card Support</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="Adding Card Support"></meta>
+    <meta name="description" content="<p>What are cards? How can I automate making a nicely rendered preview for the articles I write?</p>" />
+    <meta name="twitter:description" content="<p>What are cards? How can I automate making a nicely rendered preview for the articles I write?</p>"></meta>
+
+    <meta name="tags" content="Social Media" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Adding Card Support</h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2018-12-31T00:00:00-08:00">
+      Mon 31 December 2018
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="category">
+        Category: <a href="/blog/category/building.html">Building</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="/blog/tag/social-media.html">Social Media</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/adding-card-support.html" rel="bookmark"
+         title="Permalink to Adding Card Support">permalink</a></p>
+    <p>What are cards? How can I automate making a nicely rendered preview for the articles I write? If they're something I can add easily, it'll make it easier to share my work on social media without affecting the site itself.</p>
+<h1 id="what-are-cards-anyway">What are cards anyway?<a class="headerlink" href="#what-are-cards-anyway" title="Permanent link">&para;</a></h1>
+<p>They're nice previews that Twitter or other social media sites can use to dress up a link when it's shared. It provides extra information to hopefully make a user more likely to click the link.</p>
+<h1 id="can-i-automate-them">Can I automate them?<a class="headerlink" href="#can-i-automate-them" title="Permanent link">&para;</a></h1>
+<p>Yes. I found a helpful <a href="https://www.technorms.com/45925/create-shareable-website-facebook-twitter-sharing-tags">article</a> by Kyle Nazario. Funny enough, I couldn't find Kyle, but let me know if I missed an obvious link. Jinja templates' <code>{{ article.* }}</code> fields within the <code>{{ block head }}</code> allow for inserting the correct metadata on the article pages.</p>
+<h2 id="twitter-cards">Twitter Cards<a class="headerlink" href="#twitter-cards" title="Permanent link">&para;</a></h2>
+<p>Twitter cards work with the following tags, split between the base (where I can add universal information) and article pages, where I can fill in the complete metadata (creator, title, description, etc.).</p>
+<p>The base html extras are as follows:</p>
+<ul>
+<li><code>&lt;meta name="tag" content="tag data"&gt;</code></li>
+<li><code>&lt;meta name="twitter:card" content="summary"&gt;&lt;/meta&gt;</code></li>
+<li><code>&lt;meta name="twitter:site" content="@beBaskin"&gt;&lt;/meta&gt;</code></li>
+</ul>
+<p>The article html adds the following:</p>
+<ul>
+<li><code>&lt;meta name="twitter:creator" content="@beBaskin"&gt;&lt;/meta&gt;</code></li>
+<li><code>&lt;meta name="twitter:title" content="{{article.title}}"&gt;&lt;/meta&gt;</code></li>
+<li><code>&lt;meta name="description" content="{{article.summary}}" /&gt;</code></li>
+<li><code>&lt;meta name="twitter:description" content="{{article.summary}}"&gt;&lt;/meta&gt;</code></li>
+</ul>
+<p>This post is a little shorter than usual, but it adds an interesting feature that I enjoy.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
