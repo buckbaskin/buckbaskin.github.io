@@ -13,13 +13,14 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h2 class="entry-title">Making a Website More Accessible</h2>
+    <h1 id="main-title" class="entry-title">Making a Website More Accessible</h2>
  
   </header>
   <footer class="post-info">
@@ -39,39 +40,40 @@ te.css" />
   </footer><!-- /.post-info -->
   <div class="entry-content">
     <p><a href="/blog/making-a-website-more-accessible.html" rel="bookmark"
-         title="Permalink to Making a Website More Accessible">link</a></p>
+         title="Permalink to Making a Website More Accessible">permalink</a></p>
     <p>In reading online, I've always preferred simple, fast-loading websites that are easy to read and don't get in my way from reading their content. In this blog post, I'm going to work on bringing that experience to people who use screen readers.</p>
-<h1>Rant</h1>
-<h2>TL DR</h2>
+<h1 id="rant">Rant<a class="headerlink" href="#rant" title="Permanent link">&para;</a></h1>
+<h2 id="tl-dr">TL DR<a class="headerlink" href="#tl-dr" title="Permanent link">&para;</a></h2>
 <p>This section covers my motivation for why I spend time learning about how to make a better web site, and the short version is that I'm annoyed with common problems that I feel have simple solutions. As part of being a better web-creating citizen, I'd like to improve my ability to bring content to anyone and everyone who reads the site:</p>
-<h2>Longer Version, Skip at Will</h2>
+<h2 id="longer-version-skip-at-will">Longer Version, Skip at Will<a class="headerlink" href="#longer-version-skip-at-will" title="Permanent link">&para;</a></h2>
 <p>The thing I hate most, and it's worst on mobile, is a website that continually loads more BS and jumps the content around when I'm trying to read it. There are many news articles or interesting tech articles I've stopped reading, regardless of interest, because the website is unusable with ads and other things loading when I've already scrolled through multiple mobile screens of content.</p>
 <p>My second most hated experience is the triple-popup, usually on a website that wants me to use their app instead (top popup), wants me to agree to being tracked to read news or a blog post (bottom popup), and wants me to subscribe to a newsletter so they can track my email engagement too (overlay popup).</p>
 <p>In all this, I try to take the time, when I make websites I aim to make them simple, load quickly and primarily focused on content. One area that I can certainly learn to improve is accessibility, and I found an interesting <a href="https://benrobertson.io/accessibility/designing-layouts-for-screen-readers">article</a> that talks about how to improve readability for screen readers. The article is written by Ben Robertson, who has an entire <a href="https://benrobertson.io/blog/">blog</a> that covers accessibility topics. Go check out his work.</p>
 <p>With accessibility designs in mind, a generated website makes it easy to add accessibility features across all pages.</p>
-<h1>Feature: The Skip Link</h1>
+<h1 id="feature-the-skip-link">Feature: The Skip Link<a class="headerlink" href="#feature-the-skip-link" title="Permanent link">&para;</a></h1>
 <p>The first step is to add a skip link. This is a link that allows the screen reader to present an early option that goes directly to the main content (remember how I talked about focus on the content?). It's primary use is to skip navigation headers or other similar content if a sidebar is used and it's a good first step to help out those using screen readers. On my website, its primary function is going to be skipping the Building and Breaking title.</p>
-<h2>Steps</h2>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Add a main id to the correct pages in the template</li>
 <li>Add a link to the top of the page in the template that skips directly to the content labelled with the id <code>main</code></li>
 <li>Add some css to hide it until it comes in focus</li>
 </ol>
-<h3>Step 1: Something to reference</h3>
+<h3 id="step-1-something-to-reference">Step 1: Something to reference<a class="headerlink" href="#step-1-something-to-reference" title="Permanent link">&para;</a></h3>
 <p>I'm going to cheat on this step and use the existing <code>content</code> link that I already have in templates. I also think it's a little more descriptive, but I leave that up to you. At the time of writing (Git commit <a href="https://github.com/buckbaskin/buckbaskin.github.io/commit/b351ec18568f7c9117870e2a2f4bf5cb5a205b2d">b351ec1</a>) I'm only using the content section in two templates, so I'm going to move that into the base template. If you take a look at the next Git commit (commit <a href="https://github.com/buckbaskin/buckbaskin.github.io/commit/0a4f4beb27a70136930bc771b18a5079dadb8db4">0a4f4be</a>), you'll see the changes I made to generate a <code>content</code> section across every page on the site.</p>
-<h3>Step 2: A New Link</h3>
+<h3 id="step-2-a-new-link">Step 2: A New Link<a class="headerlink" href="#step-2-a-new-link" title="Permanent link">&para;</a></h3>
 <p>The link Ben suggests looks something like:</p>
 <p><code>&lt;a href="#content" class="skip"&gt;Skip to main content&lt;/a&gt;</code></p>
 <p>I'm going to add this to my base template above where I add the section. This way, all pages with a <code>content</code> section will also get the link. You can see this fast change in the commit <a href="https://github.com/buckbaskin/buckbaskin.github.io/commit/647b5423c1b1a2911e47d49eec41e4ac7b4dd814">647b542</a>.</p>
-<h3>Step 3: The CSS</h3>
+<h3 id="step-3-the-css">Step 3: The CSS<a class="headerlink" href="#step-3-the-css" title="Permanent link">&para;</a></h3>
 <p>I'll admit this CSS comes pretty directly from Ben's post, so I recommend you go read up on it in the <a href="https://benrobertson.io/accessibility/designing-layouts-for-screen-readers#skip-link">skip link section</a> of his blog post. The end result I settled on is shown in the commit <a href="https://github.com/buckbaskin/buckbaskin.github.io/commit/d6280bac9856488a720e05ffa6b9daf9b75d6513">d6280ba</a>.</p>
 <p>My CSS omits some portions of the suggested styling the link to keep it simpler and consistent with the site. I keep the CSS to put the link in the top left and have it fly above the other text. Mostly by accident, this styling shouldn't overlap the main title.</p>
-<h1>Conclusion</h1>
+<h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h1>
 <p>Today I've taken my first (simple) steps to making my site more accessible, and I hope I've shown that it's easy to make your site more accessible too. You can find more of my work about accessibility by checking out the <a href="/blog/tag/accessibility.html">accessibility tag feed</a> and follow up as I add new accessibility features.</p>
 <p>I'm also hoping to learn more by checking out an <a href="https://developers.google.com/web/tools/chrome-devtools/accessibility/reference">accessibility reference</a> by <a href="https://developers.google.com/web/resources/contributors/kaycebasques">Kayce Basques</a> from Google and continuing to read Ben Robertson's <a href="https://benrobertson.io/blog/">blog</a>.</p>
   </div><!-- /.entry-content -->
 </div>
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

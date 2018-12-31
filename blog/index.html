@@ -9,13 +9,28 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
   <h2>Articles</h2>
 
   <ul id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="/blog/making-a-website-more-accessible-part-2.html" rel="bookmark" title="Permalink to Making a Website More Accessible: Part 2">Making a Website More Accessible: Part 2</a>         <small><small><a href="/blog/category/building.html">Building</a>
+</small></small></h2> </header>
+      <footer class="post-info">
+        <time class="published" datetime="2018-12-30T00:00:00-08:00"> Sun 30 December 2018 </time>
+        <!--
+        <address class="vcard author">By
+          <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+        </address> -->
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>In this blog post, I'm going to work on bringing that experience to people who use screen readers by adding ARIA landmarks and roles.</p>
+        <a href="/blog/making-a-website-more-accessible-part-2.html" rel="bookmark" title="Permalink to Making a Website More Accessible: Part 2">Continue Reading</a>
+      </div><!-- /.entry-content -->
+    </article></li>
     <li><article class="hentry">
       <header> <h2 class="entry-title"><a href="/blog/making-a-website-more-accessible.html" rel="bookmark" title="Permalink to Making a Website More Accessible">Making a Website More Accessible</a>         <small><small><a href="/blog/category/building.html">Building</a>
 </small></small></h2> </header>
@@ -147,7 +162,8 @@ with the …</p>
       </div><!-- /.entry-content -->
     </article></li>
   </ul><!-- /#posts-list -->
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

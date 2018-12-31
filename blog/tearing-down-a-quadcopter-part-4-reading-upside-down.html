@@ -15,13 +15,14 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h2 class="entry-title">Tearing Down a Quadcopter: Part 4 - Reading Upside Down</h2>
+    <h1 id="main-title" class="entry-title">Tearing Down a Quadcopter: Part 4 - Reading Upside Down</h2>
  
   </header>
   <footer class="post-info">
@@ -43,19 +44,19 @@ te.css" />
   </footer><!-- /.post-info -->
   <div class="entry-content">
     <p><a href="/blog/tearing-down-a-quadcopter-part-4-reading-upside-down.html" rel="bookmark"
-         title="Permalink to Tearing Down a Quadcopter: Part 4 - Reading Upside Down">link</a></p>
+         title="Permalink to Tearing Down a Quadcopter: Part 4 - Reading Upside Down">permalink</a></p>
     <p>I decided to go for the full-break method of investigating the electronics, and
 while it worked out well to start, it's looking iffy going forward. After some
 early success looking at the chips on top of the board in the
 <a href="/blog/tearing-down-a-quadcopter-part-3-reading-a-circuit-board.html">last post</a>, I'm running into some more trouble
 with the bottom of the board.</p>
-<p><img alt="Bare quadcopter electronics" src="/blog/img/naked_quadcopter.jpg"></p>
+<p><img alt="Bare quadcopter electronics" src="/blog/img/naked_quadcopter.jpg" /></p>
 <p>For one, the text on the integrated circuits is a little less clear with less
 obvious branding. The easier to read of the two parts just has a part number,
 and the other one has a blurry logo that's hard to pin down and text that is
 relatively murky. I haven't been able to make much headway, but in the process
 I did learn that the 3 pin 2312 is probably a MOSFET rated to about 20 volts.</p>
-<p><img alt="The two chips in question" src="/blog/img/two_chips.jpg"></p>
+<p><img alt="The two chips in question" src="/blog/img/two_chips.jpg" /></p>
 <p>Of somewhat interesting note, the antenna from the other side of the board
 appears to connect via a via to the <code>20_GG7R2S 1</code> board.</p>
 <p>The rest of the 3 digit numbered parts appear to be resistors of various values.
@@ -73,7 +74,8 @@ an IMU and a microcontroller for reading it, and then the quadcopter is
 <p>Go watch some <a href="https://www.youtube.com/watch?v=k944AQRUNcQ">AvE</a>!</p>
   </div><!-- /.entry-content -->
 </div>
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

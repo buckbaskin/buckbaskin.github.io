@@ -9,10 +9,11 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <h2>Articles tagged with stepper motor</h2>
 
   <ul id="post-list">
@@ -31,7 +32,8 @@ te.css" />
       </div><!-- /.entry-content -->
     </article></li>
   </ul><!-- /#posts-list -->
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

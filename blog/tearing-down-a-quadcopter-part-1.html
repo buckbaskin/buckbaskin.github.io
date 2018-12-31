@@ -13,13 +13,14 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h2 class="entry-title">Tearing Down a Quadcopter: Part 1</h2>
+    <h1 id="main-title" class="entry-title">Tearing Down a Quadcopter: Part 1</h2>
  
   </header>
   <footer class="post-info">
@@ -39,7 +40,7 @@ te.css" />
   </footer><!-- /.post-info -->
   <div class="entry-content">
     <p><a href="/blog/tearing-down-a-quadcopter-part-1.html" rel="bookmark"
-         title="Permalink to Tearing Down a Quadcopter: Part 1">link</a></p>
+         title="Permalink to Tearing Down a Quadcopter: Part 1">permalink</a></p>
     <p>This has been a backburner project for a while; I'm now finally taking the time to take apart a quadcopter I've had for a while to see what goes into making it tick (and see if I can't mess with it a little bit too).</p>
 <p>The first step in the project was to start removing screws until either the top or bottom shell of the quadcopter fell off. In this case, it turned out that the top shell was largely costmetic and came off after 18 screws, with one hidden in the battery compartment.</p>
 <p>In the end, the wiring is relatively simple, with power coming from the batteries (and a charging port I'd forgotten existed). There are 18 leads from the main board, 2 to forward LEDs and each rotor has 2 leads for motor power and two for the LED.</p>
@@ -48,7 +49,8 @@ te.css" />
 <p>Net result? Minus a quadcopter with no propellers and some electronic leads that will probably break soon. Plus a good project with some reverse engineering of what's going on. Middle? I don't remember what its like to fly the quadcopter, so I don't remember much of what functionality I'm looking for.</p>
   </div><!-- /.entry-content -->
 </div>
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

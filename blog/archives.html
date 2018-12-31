@@ -9,13 +9,16 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <h1>Archives for Building and Breaking</h1>
 
 <dl>
+    <dt>Sun 30 December 2018</dt>
+    <dd><a href="/blog/making-a-website-more-accessible-part-2.html">Making a Website More Accessible: Part 2</a></dd>
     <dt>Fri 28 December 2018</dt>
     <dd><a href="/blog/making-a-website-more-accessible.html">Making a Website More Accessible</a></dd>
     <dt>Wed 05 September 2018</dt>
@@ -35,7 +38,8 @@ te.css" />
     <dt>Thu 19 July 2018</dt>
     <dd><a href="/blog/whats-in-a-stepper.html">What's in a stepper?</a></dd>
 </dl>
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

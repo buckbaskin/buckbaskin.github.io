@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Building and Breaking - Making a Website More Accessible: Part 2</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+
+
+    <meta name="tags" content="Accessibility" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Making a Website More Accessible: Part 2</h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2018-12-30T00:00:00-08:00">
+      Sun 30 December 2018
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="category">
+        Category: <a href="/blog/category/building.html">Building</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="/blog/tag/accessibility.html">Accessibility</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/making-a-website-more-accessible-part-2.html" rel="bookmark"
+         title="Permalink to Making a Website More Accessible: Part 2">permalink</a></p>
+    <p>In this blog post, I'm going to work on bringing that experience to people who use screen readers by adding ARIA landmarks and roles. ARIA stands for Accessible Rich Internet Applications. Landmarks are key points on the page common across many applications where a user might want to jump to easily. This work continues changes I'm making based on suggestions from Ben Robertson's blog post on <a href="https://benrobertson.io/accessibility/designing-layouts-for-screen-readers">accessbility for screen readers</a>.</p>
+<h1 id="feature-aria-roles">Feature: ARIA Roles<a class="headerlink" href="#feature-aria-roles" title="Permanent link">&para;</a></h1>
+<h2 id="potential-roles">Potential Roles<a class="headerlink" href="#potential-roles" title="Permanent link">&para;</a></h2>
+<p>For more information, see the W3.org <a href="https://www.w3.org/TR/wai-aria-1.1">ARIA doc</a>.</p>
+<ol>
+<li><code>banner</code> - Site info at the top of the page</li>
+<li><code>complementary</code> - Alternate information that could be useful. An example might be weather information on a web page about a baseball game</li>
+<li><code>contentinfo</code> - A region with additional information about the page, for example a copyright or privacy notice</li>
+<li><code>form</code> - The div containing the elements of a form, see also search</li>
+<li><code>main</code> - The main content of the page. I should probably use this as the canonical name instead of content.</li>
+<li><code>navigation</code> - Elements for getting around the page</li>
+<li><code>region</code> - An important section of the page</li>
+<li><code>search</code> - Self explanatory</li>
+</ol>
+<p>For me, I'm interested in banner and main. I might get into some of the other roles in the future, but right now my content tends to focus on a single topic and the navigation isn't too complicated. Ben's article also recommends header, section and the content class to go with the main role.</p>
+<h1 id="feature-aria-labels">Feature: ARIA Labels<a class="headerlink" href="#feature-aria-labels" title="Permanent link">&para;</a></h1>
+<p><a href="https://benrobertson.io/accessibility/designing-layouts-for-screen-readers#using-appropriate-aria-labels">Ben's post</a> also suggests using ARIA labels to help augment what the screen reader can provide. Recommended labels include "Primary Menu" for navigation and main-title ("Main Content") for the title. This feature is really part of making the ARIA roles and landmarks more helpful to the user.</p>
+<h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h1>
+<p>In conclusion, I've added some additional semantic labels to my templates that should make my pages more easy to navigate with a screen reader. It's been a fun experiment into making websites more accessible. I hope to learn more about accessibility and demonstrate it here. If there's something I'm missing or doing incorrectly, let me know on Twitter <a href="https://twitter.com/beBaskin">@beBaskin</a>.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

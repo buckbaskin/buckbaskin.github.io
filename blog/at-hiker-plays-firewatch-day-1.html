@@ -13,13 +13,14 @@ te.css" />
 
 <body id="index" class="home">
         <a href="#content" class="skip">Skip to main content</a>
-        <header id="banner" class="body">
+        <header id="banner" class="body" aria-label="Site Title">
                 <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
         </header><!-- /#banner -->
-        <section id="content">
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h2 class="entry-title">AT Hiker Plays Firewatch: Day 1</h2>
+    <h1 id="main-title" class="entry-title">AT Hiker Plays Firewatch: Day 1</h2>
  
   </header>
   <footer class="post-info">
@@ -39,7 +40,7 @@ te.css" />
   </footer><!-- /.post-info -->
   <div class="entry-content">
     <p><a href="/blog/at-hiker-plays-firewatch-day-1.html" rel="bookmark"
-         title="Permalink to AT Hiker Plays Firewatch: Day 1">link</a></p>
+         title="Permalink to AT Hiker Plays Firewatch: Day 1">permalink</a></p>
     <p>I've had the game Firewatch for a while, but I just started playing the game
 today. What makes the game particularly special to me now is that I spent last
 summer hiking the Appalachain Trail. Many
@@ -47,7 +48,7 @@ aspects of the game bring back memories from that experience which I think is
 kind of amazing (given that I'm sitting at a desk and clicking around with a
 mouse). This probably will spoil some of the game for you if you haven't already
 played.</p>
-<h3>Day 1 (Firewatch Land)</h3>
+<h3 id="day-1-firewatch-land">Day 1 (Firewatch Land)<a class="headerlink" href="#day-1-firewatch-land" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <p>My initial impression is that the story and setup is very impactful, way moreso
@@ -78,7 +79,7 @@ some open world game where I want to rush to get to the next mini game.</p>
 missing nice sights that I might never see again.</p>
 </li>
 </ul>
-<h3>Day 2</h3>
+<h3 id="day-2">Day 2<a class="headerlink" href="#day-2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <p>When waking up to the second day, the scene is set with a broken window and a
@@ -140,7 +141,8 @@ happening in the park   </p>
 </ul>
   </div><!-- /.entry-content -->
 </div>
-        </section><!-- /#content -->
+        </main><!-- /#content -->
+        </div>
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
                 Proudly powered by <a href="http://getpelican.com/">Pelican</a>.

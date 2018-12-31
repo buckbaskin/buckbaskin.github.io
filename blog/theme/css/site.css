@@ -84,3 +84,8 @@ pre, code {
     width: auto;
     z-index: 100000;
 }
+
+.headerlink {
+    padding-left: 0.25em;
+    text-decoration: none;
+}
