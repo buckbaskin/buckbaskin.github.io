@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block html_lang %}{{ article.lang }}{% endblock %}
 
-{% block title %}{{ SITENAME }} - {{ article.title }}{% endblock %}
+{% block title %}{{ article.title }} - {{ SITENAME }}{% endblock %}
 
 {% block head %}
   {{ super() }}
     <meta name="twitter:creator" content="@beBaskin"></meta>
-    <meta name="twitter:title" content="{{article.title}}"></meta>
+    <meta name="twitter:title" content="{{ article.title }} - {{ SITENAME }}"></meta>
   {% if article.description %}
     <meta name="description" content="{{article.description}}" />
     <meta name="twitter:description" content="{{article.description}}"></meta>
