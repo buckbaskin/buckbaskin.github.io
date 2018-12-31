@@ -1,5 +1,5 @@
 ---
-Title: Buck (William) Baskin
+Title: Buck Baskin
 Slug: resume
 Template: resume
 ---
@@ -45,7 +45,7 @@ Senior Project: Multi-Robot Mapping for Search and Rescue
 
 June 2018 - Current
 
-Computer vision systems for autonomous semi-trucks
+Vision algorithms for autonomous semi-trucks
 
 ### Software Team Lead - *Biorobotics Lab Autonomous Snowplow*
 
