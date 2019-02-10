@@ -6,13 +6,13 @@ Template: resume
 <div class="titleheight printonly">
 <ul class="nomargin">
 <li class="slideleft titleheight">https://github.com/buckbaskin</li>
-<li class="slideright titleheight">mobile.wbaskin@gmail.com</li>
+<li class="slideright titleheight"><img src="{attach}img/email.png" alt="email" height="21px"></li>
 </ul>
 </div>
 <div class="slidedone"></div>
 
 <div class="skipprint">
-  <a href="https://buckbaskin.com/index.html">home</a> | <a href="{filename}/pages/resume.md">link</a> | <a href="https://github.com/buckbaskin">Github</a> | <a href="mailto:mobile.wbaskin@gmail.com">email</a>
+  <a href="https://buckbaskin.com/index.html">home</a> | <a href="{filename}/pages/resume.md">link</a> | <a href="https://github.com/buckbaskin">Github</a> | <img src="{attach}img/email.png" alt="email" height="36px" style="margin-top: -5px; margin-bottom: -10px; width: auto; max-width: none; margin-left: 0px; margin-right: 0px;"> 
 </div>
 
 <hr>
