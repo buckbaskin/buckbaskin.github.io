@@ -6,9 +6,13 @@ h1, h2, h3, h4, h5, h6 {
 header h2 {
     padding: 0px;
 }
-header, footer {
+header {
     padding-left: 10px;
     padding-right: 10px;
+}
+footer {
+    padding-left: 20px;
+    padding-right: 20px; 
 }
 body {
     font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
