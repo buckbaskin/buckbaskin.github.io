@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+  <div style="padding-left: 10px;">
   {% block content_title %}
-  <h2>Articles</h2>
+  <!-- <h2>Articles</h2> -->
   {% endblock %}
+  </div>
 
   <ul id="post-list">
     {% for article in articles_page.object_list %}
