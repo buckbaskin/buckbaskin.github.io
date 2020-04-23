@@ -6,10 +6,14 @@
 
   <ul id="post-list">
     {% for article in articles_page.object_list %}
-    <li><article class="hentry">
+    <li><article class="hentry" style="clear: left;">
       <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a> {% if article.category %}
         <small><small><a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
         {% endif %}</small></small></h2> </header>
+      {% if article.image %}
+      <img alt="Article Preview" src="/blog/{{article.image}}"
+        class="previewimage">
+      {% endif %}
       <footer class="post-info">
         <time class="published" datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }} </time>
         <!--
@@ -19,7 +23,8 @@
           {% endfor %}
         </address> -->
       </footer><!-- /.post-info -->
-      <div class="entry-content"> {{ article.summary }}
+      <div class="entry-content"> 
+          {{ article.summary }}
           <p>
             <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
               title="Permalink to {{ article.title|striptags }}">Continue
