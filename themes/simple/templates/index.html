@@ -20,7 +20,11 @@
         </address> -->
       </footer><!-- /.post-info -->
       <div class="entry-content"> {{ article.summary }}
-        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">Continue Reading</a>
+          <p>
+            <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
+              title="Permalink to {{ article.title|striptags }}">Continue
+              Reading</a>
+          </p>
       </div><!-- /.entry-content -->
     </article></li>
     {% endfor %}
