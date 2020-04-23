@@ -9,17 +9,17 @@ Summary: Images taken with a new macro lens
 
 Images taken with a new macro lens
 
-![Image](img/mac_IMG_5146.jpg)
+![Motor Power Terminals](img/mac_IMG_5146.jpg)
 
-![Image](img/mac_IMG_5147.jpg)
+![Mustang Front Headlight](img/mac_IMG_5147.jpg)
 
-![Image](img/mac_IMG_5156.jpg)
+![Mustang Front Headlight](img/mac_IMG_5156.jpg)
 
-![Image](img/mac_IMG_5167.jpg)
+![XMods all wheel drive driveshaft](img/mac_IMG_5167.jpg)
 
-![Image](img/mac_IMG_5173.jpg)
+![XMods Steering Gearing](img/mac_IMG_5173.jpg)
 
-![Image](img/mac_IMG_5188.jpg)
+![Steering Motor](img/mac_IMG_5188.jpg)
 
-![Image](img/mac_IMG_5193.jpg)
+![XMods 2nd Generation Circuit Board](img/mac_IMG_5193.jpg)
 
