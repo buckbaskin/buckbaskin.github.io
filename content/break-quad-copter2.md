@@ -46,7 +46,7 @@ started. On with the soup!
 
 In a now somewhat obvious mistake, I bought
 super-mini-ultra-micro-gigga-fantastic small motors that turned out to be about
-half the diamater that I thought they were in order to have a backup set/set for
+half the diameter that I thought they were in order to have a backup set/set for
 building out a new design. After taking the time to measure these motors, they
 seem to fit the bill of a relatively standard size of 8.5mm in diameter x 20mm
 in body length, with an overall length of a little over 25.5mm including the
@@ -64,9 +64,9 @@ abuse the calipers) around the motor, and the gear didn't turn. My hypothesis
 through random googling appears to be correct, the motor appears to have a
 static magnet
 ([stator?](http://www.koshindenki.com/img/file/CL_TechnologyOvr_R3a_Std.pdf))
-and a moveable winding.
+and a rotating winding.
 
-### Power Eletrics: Doing it live
+### Power Electrics: Doing it live
 
 The last step I want to find out about the motors is to check out the voltage
 that they get when the quadcopter is turned on. It's been a little while since
@@ -88,11 +88,11 @@ between 3.6V and 3.7V. Turning it up to 50% and leaving it for a little while
 actually caused the voltage to be measured at 3.4V. Going up to 100% made it
 measure at something like 3.3V, which seems to me would indicate that the motors
 are controlled with PWM and then the voltage drops as current increases and the
-internal resistance of the motors becomes significiant. My original measurement
+internal resistance of the motors becomes significant. My original measurement
 of the resistance didn't change with increasing use, although I've heard that
 increasing internal temperatures can increase resistance.
 
-For those that were idley curious, the LEDs seem to be powered at about 2V.
+For those that were idly curious, the LEDs seem to be powered at about 2V.
 
 At this point, I think I've identified all the major power-in (batteries) and
 power out (motors, LEDs, camera mount and switch) to the board. What I'd be
@@ -107,7 +107,7 @@ important to understand the (unloaded) behavior of the motor.
 There are two methods for identifying the kV of a motor according to this
 [website](http://www.radiocontrolinfo.com/brushless-motor-efficiency/brushless-motor-kv-measure-a-motors-kv/)
 I just found:
- - Drive the motor eletronically and measure the RPM
+ - Drive the motor electronically and measure the RPM
  - Drive the gear with a drill and measure the voltage.
 
 One involves a drill that I don't have, and one involves a data logger that I

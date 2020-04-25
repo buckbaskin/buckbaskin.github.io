@@ -33,7 +33,7 @@ The first step is to add a skip link. This is a link that allows the screen read
 
 1. Add a main id to the correct pages in the template
 2. Add a link to the top of the page in the template that skips directly to the content labelled with the id `main`
-3. Add some css to hide it until it comes in focus
+3. Add some CSS to hide it until it comes in focus
 
 ### Step 1: Something to reference
 

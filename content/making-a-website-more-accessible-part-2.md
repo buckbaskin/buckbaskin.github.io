@@ -7,7 +7,7 @@ Updated: 2018-12-30
 Summary: In this blog post, I'm going to work on bringing a nicer experience to people who use screen readers by adding ARIA landmarks and roles.
 ---
 
-In this blog post, I'm going to work on bringing a nicer experience to people who use screen readers by adding ARIA landmarks and roles. ARIA stands for Accessible Rich Internet Applications. Landmarks are key points on the page common across many applications where a user might want to jump to easily. This work continues changes I'm making based on suggestions from Ben Robertson's blog post on [accessbility for screen readers](https://benrobertson.io/accessibility/designing-layouts-for-screen-readers).
+In this blog post, I'm going to work on bringing a nicer experience to people who use screen readers by adding ARIA landmarks and roles. ARIA stands for Accessible Rich Internet Applications. Landmarks are key points on the page common across many applications where a user might want to jump to easily. This work continues changes I'm making based on suggestions from Ben Robertson's blog post on [accessibility for screen readers](https://benrobertson.io/accessibility/designing-layouts-for-screen-readers).
 
 # Feature: ARIA Roles
 

@@ -52,13 +52,13 @@ te.css" />
 <p>Yes. I found a helpful <a href="https://www.technorms.com/45925/create-shareable-website-facebook-twitter-sharing-tags">article</a> by Kyle Nazario. Funny enough, I couldn't find Kyle, but let me know if I missed an obvious link. Jinja templates' <code>{{ article.* }}</code> fields within the <code>{{ block head }}</code> allow for inserting the correct metadata on the article pages.</p>
 <h2 id="twitter-cards">Twitter Cards<a class="headerlink" href="#twitter-cards" title="Permanent link">&para;</a></h2>
 <p>Twitter cards work with the following tags, split between the base (where I can add universal information) and article pages, where I can fill in the complete metadata (creator, title, description, etc.).</p>
-<p>The base html extras are as follows:</p>
+<p>The base HTML extras are as follows:</p>
 <ul>
 <li><code>&lt;meta name="tag" content="tag data"&gt;</code></li>
 <li><code>&lt;meta name="twitter:card" content="summary"&gt;&lt;/meta&gt;</code></li>
 <li><code>&lt;meta name="twitter:site" content="@beBaskin"&gt;&lt;/meta&gt;</code></li>
 </ul>
-<p>The article html adds the following:</p>
+<p>The article HTML adds the following:</p>
 <ul>
 <li><code>&lt;meta name="twitter:creator" content="@beBaskin"&gt;&lt;/meta&gt;</code></li>
 <li><code>&lt;meta name="twitter:title" content="{{article.title}}"&gt;&lt;/meta&gt;</code></li>

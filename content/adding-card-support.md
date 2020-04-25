@@ -21,13 +21,13 @@ Yes. I found a helpful [article](https://www.technorms.com/45925/create-shareabl
 
 Twitter cards work with the following tags, split between the base (where I can add universal information) and article pages, where I can fill in the complete metadata (creator, title, description, etc.).
 
-The base html extras are as follows:
+The base HTML extras are as follows:
 
 - `<meta name="tag" content="tag data">`
 - `<meta name="twitter:card" content="summary"></meta>`
 - `<meta name="twitter:site" content="@beBaskin"></meta>`
 
-The article html adds the following:
+The article HTML adds the following:
 
 - `<meta name="twitter:creator" content="@beBaskin"></meta>`
 - `<meta name="twitter:title" content="{{article.title}}"></meta>`

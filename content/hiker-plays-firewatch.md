@@ -3,12 +3,12 @@ Title: AT Hiker Plays Firewatch: Day 1
 Date: 2018-07-22
 Category: Building
 Tags: Firewatch
-Summary: I've had the game Firewatch for a while, but I just started playing the game today. What makes the game particularly special to me now is that I spent last summer hiking the Appalachain Trail. Many aspects of the game bring back memories from that experience which I think is kind of amazing. This probably will spoil some of the game for you if you haven't already played. Day 1!
+Summary: I've had the game Firewatch for a while, but I just started playing the game today. What makes the game particularly special to me now is that I spent last summer hiking the Appalachian Trail. Many aspects of the game bring back memories from that experience which I think is kind of amazing. This probably will spoil some of the game for you if you haven't already played. Day 1!
 ---
 
 I've had the game Firewatch for a while, but I just started playing the game
 today. What makes the game particularly special to me now is that I spent last
-summer hiking the Appalachain Trail. Many
+summer hiking the Appalachian Trail. Many
 aspects of the game bring back memories from that experience which I think is
 kind of amazing (given that I'm sitting at a desk and clicking around with a
 mouse). This probably will spoil some of the game for you if you haven't already
@@ -16,7 +16,7 @@ played.
 
 ### Day 1 (Firewatch Land)
 
-- My initial impression is that the story and setup is very impactful, way moreso
+- My initial impression is that the story and setup is very impactful, way more
 than I expected from anything that I'd heard about the game.
 
 - Small Thing I'm Impressed by #1: When you're picking up beer cans, you can
@@ -55,7 +55,7 @@ end of the line. Based on how the (voice acting? voice generation?) is done,
 it seems like the person on the other end of the line has feelings about what I
 say.
 
-- I've actaully been to a fire watch tower, and most everything (except the fact
+- I've actually been to a fire watch tower, and most everything (except the fact
 that the ones I've been to are not in use) looks as expected.
 
 - Trail signs remain super useful.
