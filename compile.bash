@@ -1,2 +1,2 @@
-bash compile_images.bash
-bash compile_content.bash
+time bash parallel_compile_images.bash
+time bash compile_content.bash
