@@ -4,6 +4,7 @@ Date: 2018-07-26
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
 Summary: I decided to go for the full-break method of investigating the electronics, and while it worked out well to start, it's looking iffy going forward.
+Image: img/naked_quadcopter.jpg
 ---
 
 I decided to go for the full-break method of investigating the electronics, and

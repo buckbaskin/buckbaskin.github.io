@@ -3,13 +3,14 @@ Title: Tearing Down a Quadcopter: Part 3 - Reading a Circuit Board
 Date: 2018-07-25
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
-Summary: My background in electrical engineering involves the first 4 chapters of an electronics textbook I read on my phone when I had internet connection and power in town while hiking the Appalachian Trail. What can I figure out about how the circut board works for the quadcopter?
+Summary: My background in electrical engineering involves the first 4 chapters of an electronics textbook I read on my phone when I had internet connection and power in town while hiking the Appalachian Trail. What can I figure out about how the circuit board works for the quadcopter?
+Image: img/mpu6050_combined_invert.jpg
 ---
 
 My background in electrical engineering involves the first 4 chapters of an
 electronics textbook I read on my phone when I had internet connection and power
 in town while hiking the Appalachian Trail. What can I figure out about how the
-circut board works for the quadcopter?
+circuit board works for the quadcopter?
 
 ![Circuit Board Mystery]({attach}img/board_layout.jpg)
 
@@ -21,7 +22,7 @@ are the B+ and B- for the battery (and charging) leads and an "SK" that appears
 to lead to the main power switch via a 2 wire connector.
 
 Another interesting note: The camera connector and the power switch are rigidly
-mounted to the quadcopter chasis, so they're actually on their own separate PCB,
+mounted to the quadcopter chassis, so they're actually on their own separate PCB,
 probably to reduce the effect that vibration has on the main PCB. The charging
 port is essentially the same thing, but its just a connector with a handy little
 physical mount connected by some flexing wire to the main board.
@@ -95,7 +96,7 @@ the next corner holds the pins for connecting to the external sensors (compass?)
 via I2C. Then you get:
 
 - `08`VLOGIC, the supply voltage for digital communication logic
-- `10`REGOUT, a pin for a filter capactior (probably another component on the
+- `10`REGOUT, a pin for a filter capacitor (probably another component on the
 board)
 - `11`FSYNC, used for synchronizing with frames for camera stabilization
 - `12`INT, a digital out interrupt
@@ -120,15 +121,15 @@ logic and power supplies. The logic supply (VLOGIC in the datasheet) is 1.8V
 plus or minus 5% (0.09V) and the main power supply (VDD in the datasheet) is
 2.375V to 3.46V. Nominally the internal gyroscopes expect 2.5V and probably
 function down to the 2.375V mark, but this is at the input of an internal
-charge pump. My guess is that the mems need high voltage input but have lower
+charge pump. My guess is that the MEMS need high voltage input but have lower
 current requirements.
 
 #### Mildly Interesting
 
 In terms of current, when everything is running on the chip, the chip draws 3.9
-milli-amps of power. It can drop to as low as 10 micro-amps if just the
+milliamps of power. It can drop to as low as 10 micro-amps if just the
 accelerometer is run at a low update frequency. From reading further, the
-gyroscope is the power hog, running at 3.6 milli amps.
+gyroscope is the power hog, running at 3.6 milliamps.
 
 The gyroscopes are sensitive to high frequency noise in the power supply. Not
 100% sure on the units, but it looks like "high" frequency sine waves (250Hz +)

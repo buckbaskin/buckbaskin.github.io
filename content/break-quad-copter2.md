@@ -4,6 +4,7 @@ Date: 2018-07-23
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering
 Summary: Mechanically, it's in shambles. What's left in the rubble? I dive into the electronics to figure it out.
+Image: img/measuring_motors.jpg
 ---
 
 Mechanically, it's in shambles. What's left in the rubble? I dive into the electronics to figure it out.
@@ -23,7 +24,7 @@ expect 3.7V and get a minimum of around 3V. Maybe I'll just
 fly the quadcopter with both batteries on board and line them up in series.
 
 Looking back at the battery (with the help of the Adafruit link), I can now see
-that the battery is a 3.7V rated battery with 750 milli-amp-hours of current
+that the battery is a 3.7V rated battery with 750 milliamp-hours of current
 rating and 2.78 Watt-hours of power rating. A quick search of the batteries'
 serial number indicates that its at least nominally a special part for the
 quadcopter, but its pretty similar to a lot of other batteries so I bet it could

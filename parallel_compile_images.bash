@@ -18,6 +18,7 @@ else
     done
     wait
     echo "Done with JPG"
+
     echo "Compressing CAD PNG"
     for filename in content/img/full/CAD*.png; do
         echo Compressing ${filename}
@@ -34,6 +35,7 @@ else
         fi
     done
     wait
-    echo "Done with PNG"
+    echo "Done with CAD PNG"
+
     echo "Done compressing images"
 fi
