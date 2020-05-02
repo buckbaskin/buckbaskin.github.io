@@ -17,11 +17,15 @@ Examples are based on Pandoc's [math demo
 text](https://pandoc.org/demo/math.text) and Mozilla's [MathML Torture
 Test](https://mdn.mozillademos.org/en-US/docs/Mozilla/MathML_Project/MathML_Torture_Test$samples/MathML_Torture_Test)
 
-TODO! Check on the licensing for the two example pages.
+<!-- TODO! Check on the licensing for the two example pages. -->
 
 ## First Attempt
 
 Write it and see what Pelican does without modification:
+
+`$v(t) = v_0 + \frac{1}{2}at^2$`
+
+Renders as:
 
 $v(t) = v_0 + \frac{1}{2}at^2$
 
@@ -91,10 +95,30 @@ function and then call the existing read function, or I can capture the output
 of the existing read and modify it. I'll need to do a little sleuthing to figure
 out what each looks like.
 
+Time passes...
+
+In the end, I decided to parse the HTML output of the original Markdown parser,
+then find special `img` tags with the alt text `LaTeX`. From there, I edit that
+tag in place to move the original LaTeX source to the alt text and render the
+LaTeX into the child elements as MathML. This is effectively using some Python
+libraries and Pelican to take the "Scripting" approach.
+
+The end Markdown syntax looks like:
+
+`![LaTeX](insert^{LaTeX}_{here})`
+
+And rendered:
+
+![LaTeX](insert^{LaTeX}_{here})
+
 Useful: Pelican [source](https://github.com/getpelican/pelican)
 
 Also Useful: Pelican [plugin library](https://github.com/getpelican/pelican-plugins)
 
-# Also, What about Unsupported Browsers?
+# But What about Unsupported Browsers?
 
 I'm looking at you Chrome
+
+I think the answer may involve using a [Sympy
+viewer](https://stackoverflow.com/questions/1381741/converting-latex-code-to-images-or-other-displayble-format-with-python)
+

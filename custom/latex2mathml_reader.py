@@ -6,20 +6,17 @@ from pyquery import PyQuery as pq
 from lxml import etree
 from lxml.builder import E
 from lxml.etree import Element
+from latex2mathml.converter import convert as latex2mathml
 
 class LatexToMathMLReader(MarkdownReader):
     enabled = True
 
-    file_extensions = ['mdm']
+    file_extensions = ['md', 'mdm']
 
     def __init__(self, *args, **kwargs):
         super(LatexToMathMLReader, self).__init__(*args, **kwargs)
 
     def read(self, source_path):
-        print('Input:')
-        print('> Source Path')
-        print(source_path)
-
         content, metadata = super(LatexToMathMLReader, self).read(source_path)
 
         if 'math' not in metadata:
@@ -29,14 +26,8 @@ class LatexToMathMLReader(MarkdownReader):
         if not metadata['math']:
             return content, metadata
 
-        print('Output:')
-
         parsed_content = pq(content)
-        print('rendering')
         parsed_content = self.re_render_math(parsed_content)
-
-        print('outer html')
-        print(parsed_content.html())
 
         return parsed_content.html(), metadata
 
@@ -49,26 +40,28 @@ class LatexToMathMLReader(MarkdownReader):
         alt = tag.attrib['alt']
 
         if alt != 'LaTeX':
-            print('rendering as img %s' % (tag,))
             return tag
     
         # alt == 'LaTeX'
         
         source = tag.attrib['src']
+
+        tag.clear()
         tag.tag = 'math'
 
-        hardcoded = r'<semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>a</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">v(t) = v_0 + \frac{1}{2}at^2</annotation></semantics>'
-        semantics = etree.fromstring(hardcoded)
+        # hardcoded = r'<semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>a</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">v(t) = v_0 + \frac{1}{2}at^2</annotation></semantics>'
+        # semantics = etree.fromstring(hardcoded)
+
+        mathml = latex2mathml(source)
+        prefix = '<math xmlns="http://www.w3.org/1998/Math/MathML">'
+        suffix = '</math>'
+        mathml_block = etree.fromstring(mathml[len(prefix):-len(suffix)])
 
         tag.attrib['display'] = 'block'
-        tag.attrib['xmlns']='http://www.w3.org/1998/Math/MathML'
-        tag.attrib['src'] = source
+        tag.attrib['xmlns'] = "http://www.w3.org/1998/Math/MathML"
         tag.attrib['alt'] = source
-        tag.clear()
-        tag.append(semantics)
-        print('children')
-        print(list(tag))
-        print('rendering as fake %s' % (tag,))
+
+        tag.append(E.semantics(mathml_block))
         return tag
 
 

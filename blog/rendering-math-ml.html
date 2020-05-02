@@ -53,21 +53,22 @@ te.css" />
          title="Permalink to Rendering Math ML">permalink</a></p>
     <p>I'd like to render mathematical equations nicely in the browser. MathML
 seems like the right tool, but it's not supported everywhere.</p>
-<h1 id="exploring-ways-to-get-math-to-the-web">Exploring Ways to Get Math to the Web<a class="headerlink" href="#exploring-ways-to-get-math-to-the-web" title="Permanent link">&para;</a></h1>
+<h1 id="exploring-ways-to-get-math-to-the-web">Exploring Ways to Get Math to the Web<a class="headerlink" href="#exploring-ways-to-get-math-to-the-web" title="Permanent link">¶</a></h1>
 <p>Examples are based on Pandoc's <a href="https://pandoc.org/demo/math.text">math demo
 text</a> and Mozilla's <a href="https://mdn.mozillademos.org/en-US/docs/Mozilla/MathML_Project/MathML_Torture_Test$samples/MathML_Torture_Test">MathML Torture
 Test</a></p>
-<p>TODO! Check on the licensing for the two example pages.</p>
-<h2 id="first-attempt">First Attempt<a class="headerlink" href="#first-attempt" title="Permanent link">&para;</a></h2>
+<!-- TODO! Check on the licensing for the two example pages. -->
+
+<h2 id="first-attempt">First Attempt<a class="headerlink" href="#first-attempt" title="Permanent link">¶</a></h2>
 <p>Write it and see what Pelican does without modification:</p>
 <p>$v(t) = v_0 + \frac{1}{2}at^2$</p>
 <p>Unfortunately, Pelican doesn't know what to do with it, so I just get the plain
 text.</p>
-<h2 id="second-attempt">Second Attempt<a class="headerlink" href="#second-attempt" title="Permanent link">&para;</a></h2>
+<h2 id="second-attempt">Second Attempt<a class="headerlink" href="#second-attempt" title="Permanent link">¶</a></h2>
 <p>Embed an html fragment using Jinja include syntax. This would allow me to
 compile the latex into MathML using other tools, such as Pandoc.</p>
 <p>{% include '/index.html' %}</p>
-<h2 id="third-attempt">Third Attempt<a class="headerlink" href="#third-attempt" title="Permanent link">&para;</a></h2>
+<h2 id="third-attempt">Third Attempt<a class="headerlink" href="#third-attempt" title="Permanent link">¶</a></h2>
 <p>Just to confirm things would work, I'm copying some raw MathML here from the
 Pandoc example. I made one small edit to change the display from <code>inline</code> to
 <code>block</code>.</p>
@@ -76,21 +77,21 @@ Pandoc example. I made one small edit to change the display from <code>inline</c
 <p>With a little styling modification to the CSS, it'll actually work out nicely.
 I'm just adding <code>10px</code> of padding for now and I can come back to it later if
 that doesn't work.</p>
-<h2 id="render-it-as-an-image">Render it as an image<a class="headerlink" href="#render-it-as-an-image" title="Permanent link">&para;</a></h2>
+<h2 id="render-it-as-an-image">Render it as an image<a class="headerlink" href="#render-it-as-an-image" title="Permanent link">¶</a></h2>
 <p>This would likely slow down the page loading with lots of images for math, but
 it could work. I'd also have to change how my image styling works slightly
 because I'd expect the math equations to be different proportions than the usual
 images taken with a camera.</p>
 <p>This is promising, but I'd like to see if I can use web technologies to do
 better.</p>
-<h2 id="manual-scripting">Manual Scripting<a class="headerlink" href="#manual-scripting" title="Permanent link">&para;</a></h2>
+<h2 id="manual-scripting">Manual Scripting<a class="headerlink" href="#manual-scripting" title="Permanent link">¶</a></h2>
 <p>One thing I'm considering is using some sort of automation to find and replace
 Latex code with rendered MathML using some external tool. I could use an easily
 matched regex (e.g. <code>![Math](.*)</code>) and then strip the leading and trailing
 parenthesis and substitute the middle section of the match with whatever MathML
 rendering I get.</p>
 <p>Now to figure out if I can do better than manually copying in MathML.</p>
-<h2 id="customizing-pelican">Customizing Pelican<a class="headerlink" href="#customizing-pelican" title="Permanent link">&para;</a></h2>
+<h2 id="customizing-pelican">Customizing Pelican<a class="headerlink" href="#customizing-pelican" title="Permanent link">¶</a></h2>
 <p>Pelican provides support for
 <a href="https://docs.getpelican.com/en/4.0.1/plugins.html">plugins</a> that can be used to
 modify or replace how certain parts of the
@@ -110,10 +111,22 @@ though.</p>
 function and then call the existing read function, or I can capture the output
 of the existing read and modify it. I'll need to do a little sleuthing to figure
 out what each looks like.</p>
+<p>Time passes...</p>
+<p>In the end, I decided to parse the HTML output of the original Markdown parser,
+then find special <code>img</code> tags with the alt text <code>LaTeX</code>. From there, I edit that
+tag in place to move the original LaTeX source to the alt text and render the
+LaTeX into the child elements as MathML. This is effectively using some Python
+libraries and Pelican to take the "Scripting" approach.</p>
+<p>The end Markdown syntax looks like:</p>
+<p><code>![LaTeX](insert^{LaTeX}_{here})</code></p>
+<p>And rendered:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML" alt="insert^{LaTeX}_{here}"><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><msubsup><mi>t</mi><mrow><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi></mrow><mrow><mi>L</mi><mi>a</mi><mi>T</mi><mi>e</mi><mi>X</mi></mrow></msubsup></mrow></semantics></math></p>
 <p>Useful: Pelican <a href="https://github.com/getpelican/pelican">source</a></p>
 <p>Also Useful: Pelican <a href="https://github.com/getpelican/pelican-plugins">plugin library</a></p>
-<h1 id="also-what-about-unsupported-browsers">Also, What about Unsupported Browsers?<a class="headerlink" href="#also-what-about-unsupported-browsers" title="Permanent link">&para;</a></h1>
+<h1 id="but-what-about-unsupported-browsers">But What about Unsupported Browsers?<a class="headerlink" href="#but-what-about-unsupported-browsers" title="Permanent link">¶</a></h1>
 <p>I'm looking at you Chrome</p>
+<p>I think the answer may involve using a <a href="https://stackoverflow.com/questions/1381741/converting-latex-code-to-images-or-other-displayble-format-with-python">Sympy
+viewer</a></p>
   </div><!-- /.entry-content -->
 </div>
         </main><!-- /#content -->
