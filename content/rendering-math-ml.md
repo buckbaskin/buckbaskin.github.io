@@ -127,4 +127,5 @@ I'm looking at you Chrome
 
 I think the answer may involve using a [Sympy
 viewer](https://stackoverflow.com/questions/1381741/converting-latex-code-to-images-or-other-displayble-format-with-python)
-
+or a custom writer. If the custom reader updates metadata with the right
+information in the metadata, the writer can write out custom image files.
