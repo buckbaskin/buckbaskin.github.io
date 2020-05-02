@@ -5,6 +5,7 @@ Tags: MathML, MathJax, Rendering, Yak Shaving
 Date: 2020-05-01
 Updated: 2020-05-01
 Summary: I'd like to render mathematical equations nicely in the browser. MathML seems like the right tool, but it's not supported everywhere.
+Math: True
 ---
 
 I'd like to render mathematical equations nicely in the browser. MathML
@@ -36,7 +37,8 @@ text.
 Embed an html fragment using Jinja include syntax. This would allow me to
 compile the latex into MathML using other tools, such as Pandoc.
 
-{% include '/index.html' %}
+Keeping the include syntax caused rendering problems elsewhere and didn't work,
+so it's not worth keeping.
 
 ## Third Attempt
 

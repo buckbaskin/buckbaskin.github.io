@@ -23,8 +23,8 @@ class LatexToMathMLReader(MarkdownReader):
             metadata['math'] = False
         metadata['math'] = bool(metadata['math'])
         
-        # if not metadata['math']:
-        #     return content, metadata
+        if not metadata['math']:
+            return content, metadata
 
         parsed_content = pq(content)
         parsed_content = self.re_render_math(parsed_content)

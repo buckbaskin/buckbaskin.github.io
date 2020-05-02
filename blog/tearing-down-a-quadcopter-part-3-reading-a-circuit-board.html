@@ -53,7 +53,7 @@ te.css" />
 electronics textbook I read on my phone when I had internet connection and power
 in town while hiking the Appalachian Trail. What can I figure out about how the
 circuit board works for the quadcopter?</p>
-<p><img alt="Circuit Board Mystery" src="/blog/img/board_layout.jpg"/></p>
+<p><img alt="Circuit Board Mystery" src="/blog/img/board_layout.jpg" /></p>
 <p>First, some easy wins: The motors are marked with a capital M, and the LEDs are
 marked with a capital L on the top of the board. I'm guessing this is for
 soldering on the leads by hand because there's quite a bit of heat melting away
@@ -72,10 +72,10 @@ I found as the second or third google search result. I can see the major
 components that are connected off the board, and I can check voltages, but
 beyond that I'm on my own (and I have to guess at things like checking for a PWM
 signal).</p>
-<h3 id="the-ic-on-top">The IC on Top<a class="headerlink" href="#the-ic-on-top" title="Permanent link">¶</a></h3>
-<p><img alt="Top Down IC" src="/blog/img/zoom_enhance.jpg"/></p>
+<h3 id="the-ic-on-top">The IC on Top<a class="headerlink" href="#the-ic-on-top" title="Permanent link">&para;</a></h3>
+<p><img alt="Top Down IC" src="/blog/img/zoom_enhance.jpg" /></p>
 <p>Zoom! Enhance!</p>
-<p><img alt="Top Down IC" src="/blog/img/zoom_enhance2.jpg"/></p>
+<p><img alt="Top Down IC" src="/blog/img/zoom_enhance2.jpg" /></p>
 <p>The top of the integrated circuit on top of the board reads:</p>
 <p><code>INVENSENSE
 MPU-6050C
@@ -97,7 +97,7 @@ This would indicate that this part was made in late September or early October
 <p>As an additional fun feature for a CS guy, it has a hardware FIFO queue so that
 the main processor can batch process sensor data if desired and enter a low
 power mode (or swap threads or something else) while the sensor does its thing.</p>
-<h4 id="reading-specs">Reading Specs<a class="headerlink" href="#reading-specs" title="Permanent link">¶</a></h4>
+<h4 id="reading-specs">Reading Specs<a class="headerlink" href="#reading-specs" title="Permanent link">&para;</a></h4>
 <p>From what I can tell, the 050 designation is for the number in the series (60X0)
 without SPI, so I'm probably looking for an I2C interface.</p>
 <p>What do the other numbers on the chip mean?</p>
@@ -105,7 +105,7 @@ without SPI, so I'm probably looking for an I2C interface.</p>
 <p>The gyro is measured in 131 LSBs/dps. I wasn't sure what the measurement meant,
 but its <a href="https://arduino.stackexchange.com/questions/14474/what-does-lsb-per-degree-per-second-mean">essentially</a>
 a turning rate of 131 of the least significant bits.</p>
-<h4 id="pin-out">Pin out<a class="headerlink" href="#pin-out" title="Permanent link">¶</a></h4>
+<h4 id="pin-out">Pin out<a class="headerlink" href="#pin-out" title="Permanent link">&para;</a></h4>
 <p>It looks like there should be a small dot (there is) in the corner with the
 clock pin and SDA. As I learned reading the datasheet, SDA stands for serial
 data which comes paired with Serial Clock (SCL). It's not relevant at this
@@ -128,7 +128,7 @@ board)</li>
 <p>The pins I'm most interested in are the REGOUT and CPOUT pins because they
 should guide me to identifying other parts on the board. Additionally, I'd like
 to figure out where on the circuit board I can find the ground plane.</p>
-<p><img alt="Board and Schematic" src="/blog/img/mpu6050_combined_invert.jpg"/>
+<p><img alt="Board and Schematic" src="/blog/img/mpu6050_combined_invert.jpg" />
 <a href="https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf">link to datasheet</a></p>
 <p>In the image above, one can see the various support capacitors marked, as well
 as the I2C data pins that lead to the main processor. The last thing that is
@@ -140,7 +140,7 @@ plus or minus 5% (0.09V) and the main power supply (VDD in the datasheet) is
 function down to the 2.375V mark, but this is at the input of an internal
 charge pump. My guess is that the MEMS need high voltage input but have lower
 current requirements.</p>
-<h4 id="mildly-interesting">Mildly Interesting<a class="headerlink" href="#mildly-interesting" title="Permanent link">¶</a></h4>
+<h4 id="mildly-interesting">Mildly Interesting<a class="headerlink" href="#mildly-interesting" title="Permanent link">&para;</a></h4>
 <p>In terms of current, when everything is running on the chip, the chip draws 3.9
 milliamps of power. It can drop to as low as 10 micro-amps if just the
 accelerometer is run at a low update frequency. From reading further, the
@@ -156,7 +156,7 @@ place the IMU at the center of rotation for the motors and the center of the
 frame. This location makes it a lot easier, because it should (in theory)
 require no extra accounting for a rotational lever arm to convert the
 accelerations measured by the IMU to the quadcopter frame.</p>
-<h3 id="the-bottom-of-the-board">The Bottom of the Board<a class="headerlink" href="#the-bottom-of-the-board" title="Permanent link">¶</a></h3>
+<h3 id="the-bottom-of-the-board">The Bottom of the Board<a class="headerlink" href="#the-bottom-of-the-board" title="Permanent link">&para;</a></h3>
 <p>I've also found a less destructive way to look at the bottom of the board by
 opening up the battery door, but to really see everything on the bottom of the
 board, I'm going to need to take out my handy dandy screw driver and lift the
