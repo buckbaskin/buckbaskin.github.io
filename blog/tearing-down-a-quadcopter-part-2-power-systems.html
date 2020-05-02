@@ -50,7 +50,7 @@ te.css" />
     <p><a href="/blog/tearing-down-a-quadcopter-part-2-power-systems.html" rel="bookmark"
          title="Permalink to Tearing Down a Quadcopter: Part 2 - Power Systems">permalink</a></p>
     <p>Mechanically, it's in shambles. What's left in the rubble? I dive into the electronics to figure it out.</p>
-<h3 id="power">Power!<a class="headerlink" href="#power" title="Permanent link">&para;</a></h3>
+<h3 id="power">Power!<a class="headerlink" href="#power" title="Permanent link">¶</a></h3>
 <p>First things first, I wanted to check out the battery voltage to see how it'd
 fare, and maybe, just maybe, see if it could power an Arduino. It looks like
 that won't pan out, because from a quick inspection of the power terminals, it
@@ -68,7 +68,7 @@ rating and 2.78 Watt-hours of power rating. A quick search of the batteries'
 serial number indicates that its at least nominally a special part for the
 quadcopter, but its pretty similar to a lot of other batteries so I bet it could
 be replaced if needed.</p>
-<h3 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h3>
+<h3 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">¶</a></h3>
 <p>The next thing I've been meaning to look into is the motors themselves. The wire
 leads are absolutely tiny compared with the main leads from the battery pack to
 the board.</p>
@@ -99,7 +99,7 @@ through random googling appears to be correct, the motor appears to have a
 static magnet
 (<a href="http://www.koshindenki.com/img/file/CL_TechnologyOvr_R3a_Std.pdf">stator?</a>)
 and a rotating winding.</p>
-<h3 id="power-electrics-doing-it-live">Power Electrics: Doing it live<a class="headerlink" href="#power-electrics-doing-it-live" title="Permanent link">&para;</a></h3>
+<h3 id="power-electrics-doing-it-live">Power Electrics: Doing it live<a class="headerlink" href="#power-electrics-doing-it-live" title="Permanent link">¶</a></h3>
 <p>The last step I want to find out about the motors is to check out the voltage
 that they get when the quadcopter is turned on. It's been a little while since
 the quadcopter was last run (can I really call it a quadcopter any more? or is
@@ -111,7 +111,7 @@ have to "hack" the power chain. If it is changing the voltage, that'll mean I
 can do some sleuthing of the circuitry to find out what makes the power leveling
 tick (a buck-boost converter somewhere?)</p>
 <p>For my notes, the black motors turn clockwise when you look at the gear.</p>
-<p><img alt="Reading the voltage" src="/blog/img/measuring_motors.jpg" /></p>
+<p><img alt="Reading the voltage" src="/blog/img/measuring_motors.jpg"/></p>
 <p>At 5% output power from the controller, the motors are measured at somewhere
 between 3.6V and 3.7V. Turning it up to 50% and leaving it for a little while
 actually caused the voltage to be measured at 3.4V. Going up to 100% made it
@@ -125,7 +125,7 @@ increasing internal temperatures can increase resistance.</p>
 power out (motors, LEDs, camera mount and switch) to the board. What I'd be
 curious to look at is the power consumption requirements of the motors and LEDs
 (and maybe the camera too?) as an interesting follow-on analysis project.</p>
-<h3 id="kv">kV<a class="headerlink" href="#kv" title="Permanent link">&para;</a></h3>
+<h3 id="kv">kV<a class="headerlink" href="#kv" title="Permanent link">¶</a></h3>
 <p>Given my home electronics equipment, can I measure the kV? Supposedly its pretty
 important to understand the (unloaded) behavior of the motor.</p>
 <p>There are two methods for identifying the kV of a motor according to this
