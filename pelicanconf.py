@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+PLUGIN_PATHS = ['./custom/']
+PLUGINS = ['latex2mathml_reader',]
+
 AUTHOR = 'Buck Baskin'
 SITENAME = 'Building and Breaking'
 SITESUBTITLE = ''

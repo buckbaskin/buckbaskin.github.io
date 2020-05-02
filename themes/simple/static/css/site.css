@@ -128,3 +128,7 @@ pre, code {
     background-color: darkgrey;
     float: left;
 }
+
+math {
+    padding: 10px;
+}

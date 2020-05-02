@@ -1,0 +1,28 @@
+---
+Title: Rendering Math Example
+Category: Building
+Tags: MathML, MathJax, Rendering, Yak Shaving
+Date: 2020-05-01
+Updated: 2020-05-01
+Summary: Summary
+Math: True
+---
+
+I'd like to render mathematical equations nicely in the browser. MathML
+seems like the right tool, but it's not supported everywhere.
+
+# Latex
+
+$v(t) = v_0 + \frac{1}{2}at^2$
+
+# MathML
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>a</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">v(t) = v_0 + \frac{1}{2}at^2</annotation></semantics></math>
+
+# Image
+
+![Not Latex]({attach}/img/IMG_5401.jpg)
+
+# Image with Latex Inside
+
+![LaTeX]($v(t) = v_0 + \frac{1}{2}at^2$)
