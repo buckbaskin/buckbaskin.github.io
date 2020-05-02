@@ -55,10 +55,7 @@ te.css" />
 seems like the right tool, but it's not supported everywhere.</p>
 <h1 id="exploring-ways-to-get-math-to-the-web">Exploring Ways to Get Math to the Web<a class="headerlink" href="#exploring-ways-to-get-math-to-the-web" title="Permanent link">¶</a></h1>
 <p>Examples are based on Pandoc's <a href="https://pandoc.org/demo/math.text">math demo
-text</a> and Mozilla's <a href="https://mdn.mozillademos.org/en-US/docs/Mozilla/MathML_Project/MathML_Torture_Test$samples/MathML_Torture_Test">MathML Torture
-Test</a></p>
-<!-- TODO! Check on the licensing for the two example pages. -->
-
+text</a>.</p>
 <h2 id="first-attempt">First Attempt<a class="headerlink" href="#first-attempt" title="Permanent link">¶</a></h2>
 <p>Write it and see what Pelican does without modification:</p>
 <p><code>$v(t) = v_0 + \frac{1}{2}at^2$</code></p>
@@ -123,7 +120,11 @@ libraries and Pelican to take the "Scripting" approach.</p>
 <p>The end Markdown syntax looks like:</p>
 <p><code>![LaTeX](insert^{LaTeX}_{here})</code></p>
 <p>And rendered:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML" alt="insert^{LaTeX}_{here}"><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><msubsup><mi>t</mi><mrow><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi></mrow><mrow><mi>L</mi><mi>a</mi><mi>T</mi><mi>e</mi><mi>X</mi></mrow></msubsup></mrow></semantics></math></p>
+<p><math display="block" scriptminsize="21pt" xmlns="http://www.w3.org/1998/Math/MathML" alt="insert^{LaTeX}_{here}"><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><msubsup><mi>t</mi><mrow><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi></mrow><mrow><mi>L</mi><mi>a</mi><mi>T</mi><mi>e</mi><mi>X</mi></mrow></msubsup></mrow></semantics></math></p>
+<p>A more complicated example from the Pandoc set:</p>
+<p><code>![LaTeX](e^x = \sum_{n=0}^\infty \frac{x^n}{n!} = \lim_{n\rightarrow\infty} (1+x/n)^n)</code></p>
+<p>Rendered:</p>
+<p><math display="block" scriptminsize="21pt" xmlns="http://www.w3.org/1998/Math/MathML" alt="e^x = \sum_{n=0}^\infty \frac{x^n}{n!} = \lim_{n\rightarrow\infty} (1+x/n)^n"><semantics><mrow><msup><mi>e</mi><mi>x</mi></msup><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow><mo>∞</mo></msubsup><mfrac><mrow><msup><mi>x</mi><mi>n</mi></msup></mrow><mrow><mi>n</mi><mi>!</mi></mrow></mfrac><mo>=</mo><msub><mi>lim</mi><mrow><mi>n</mi><mo>→</mo><mo>∞</mo></mrow></msub><mo>(</mo><mn>1</mn><mo>+</mo><mi>x</mi><mo>/</mo><mi>n</mi><msup><mo>)</mo><mi>n</mi></msup></mrow></semantics></math></p>
 <p>Useful: Pelican <a href="https://github.com/getpelican/pelican">source</a></p>
 <p>Also Useful: Pelican <a href="https://github.com/getpelican/pelican-plugins">plugin library</a></p>
 <h1 id="but-what-about-unsupported-browsers">But What about Unsupported Browsers?<a class="headerlink" href="#but-what-about-unsupported-browsers" title="Permanent link">¶</a></h1>

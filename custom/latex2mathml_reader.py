@@ -1,15 +1,19 @@
 from pelican import signals
 from pelican.readers import MarkdownReader
 
-# TODO: Add a if condition to disable parser if this fails
-from pyquery import PyQuery as pq
-from lxml import etree
-from lxml.builder import E
-from lxml.etree import Element
-from latex2mathml.converter import convert as latex2mathml
+try:
+    from pyquery import PyQuery as pq
+    from lxml import etree
+    from lxml.builder import E
+    from lxml.etree import Element
+    from latex2mathml.converter import convert as latex2mathml
+    happy_imports = True
+except ImportError:
+    happy_imports = False
+
 
 class LatexToMathMLReader(MarkdownReader):
-    enabled = True
+    enabled = happy_imports
 
     file_extensions = ['md', 'mdm']
 
@@ -49,15 +53,13 @@ class LatexToMathMLReader(MarkdownReader):
         tag.clear()
         tag.tag = 'math'
 
-        # hardcoded = r'<semantics><mrow><mi>v</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>a</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">v(t) = v_0 + \frac{1}{2}at^2</annotation></semantics>'
-        # semantics = etree.fromstring(hardcoded)
-
         mathml = latex2mathml(source)
         prefix = '<math xmlns="http://www.w3.org/1998/Math/MathML">'
         suffix = '</math>'
         mathml_block = etree.fromstring(mathml[len(prefix):-len(suffix)])
 
         tag.attrib['display'] = 'block'
+        tag.attrib['scriptminsize'] = '21pt'
         tag.attrib['xmlns'] = "http://www.w3.org/1998/Math/MathML"
         tag.attrib['alt'] = source
 

@@ -3,7 +3,7 @@ Title: Rendering Math ML
 Category: Building
 Tags: MathML, MathJax, Rendering, Yak Shaving
 Date: 2020-05-01
-Updated: 2020-05-01
+Updated: 2020-05-02
 Summary: I'd like to render mathematical equations nicely in the browser. MathML seems like the right tool, but it's not supported everywhere.
 Math: True
 ---
@@ -14,10 +14,7 @@ seems like the right tool, but it's not supported everywhere.
 # Exploring Ways to Get Math to the Web
 
 Examples are based on Pandoc's [math demo
-text](https://pandoc.org/demo/math.text) and Mozilla's [MathML Torture
-Test](https://mdn.mozillademos.org/en-US/docs/Mozilla/MathML_Project/MathML_Torture_Test$samples/MathML_Torture_Test)
-
-<!-- TODO! Check on the licensing for the two example pages. -->
+text](https://pandoc.org/demo/math.text).
 
 ## First Attempt
 
@@ -111,6 +108,14 @@ The end Markdown syntax looks like:
 And rendered:
 
 ![LaTeX](insert^{LaTeX}_{here})
+
+A more complicated example from the Pandoc set:
+
+`![LaTeX](e^x = \sum_{n=0}^\infty \frac{x^n}{n!} = \lim_{n\rightarrow\infty} (1+x/n)^n)`
+
+Rendered:
+
+![LaTeX](e^x = \sum_{n=0}^\infty \frac{x^n}{n!} = \lim_{n\rightarrow\infty} (1+x/n)^n)
 
 Useful: Pelican [source](https://github.com/getpelican/pelican)
 
