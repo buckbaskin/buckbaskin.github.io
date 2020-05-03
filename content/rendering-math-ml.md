@@ -6,6 +6,7 @@ Date: 2020-05-01
 Updated: 2020-05-02
 Summary: I'd like to render mathematical equations nicely in the browser. MathML seems like the right tool, but it's not supported everywhere.
 Math: True
+Image: img/autoeqnc3eefd6c7af9e0ce48b4512b2e9b0c.png
 ---
 
 I'd like to render mathematical equations nicely in the browser. MathML
@@ -134,7 +135,7 @@ Update 2020-05-02
 
 The answer turned out to be a combination of both. The custom reader now
 generates PNG files that render the LaTeX. You can view the rendering by
-clicking on the file.
+clicking on the equation.
 
 ![LaTeX](\exists x \forall y (Rxy \equiv Ryx))
 
