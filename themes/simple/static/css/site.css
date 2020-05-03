@@ -51,13 +51,12 @@ ul > li{
     }
 }
 
-img {
+.wideimage {
     width: 100%;
     max-width: 1040px;
     margin-left: calc(-40px);
     width: calc(100% + 80px);
     background-color: darkgrey;
-    /* clip-path: rectangle(100px 100px at 50% 50%); */
 }
 
 pre, code {
@@ -131,4 +130,18 @@ pre, code {
 
 math {
     padding: 10px;
+}
+
+.latex {
+    postion: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 90px;
+    max-width: 1040px;
+    height: auto;
+    width: auto;
+}
+
+.latexhidden {
+    display: none;
 }
