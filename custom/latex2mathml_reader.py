@@ -1,7 +1,7 @@
 from pelican import signals
 from pelican.readers import MarkdownReader
 
-from urllib import quote_plus
+from urllib.parse import quote_plus
 from hashlib import sha256
 
 try:
@@ -98,6 +98,7 @@ class LatexToMathMLReader(MarkdownReader):
         tag.clear()
         tag.tag = "p"
         tag.attrib["display"] = "block"
+        tag.attrib["onclick"] = "document.getElementById('%s').classList.remove('latexhidden');" % (name,)
         tag.append(
             E.math(
                 mathml_block,
@@ -105,8 +106,6 @@ class LatexToMathMLReader(MarkdownReader):
                 scriptminsize="21pt",
                 alt=source + " (click to show image)",
                 xmlns="http://www.w3.org/1998/Math/MathML",
-                onclick='document.getElementById("%s").classList.remove("latexhidden");'
-                % (name,),
             ),
         )
 
@@ -118,7 +117,7 @@ class LatexToMathMLReader(MarkdownReader):
         return tag
 
     def slugify_latex(self, latex):
-        return "autoeqn" + sha256(latex).hexdigest()[:30]
+        return "autoeqn" + sha256(latex.encode()).hexdigest()[:30]
 
 
 def add_reader(readers):
