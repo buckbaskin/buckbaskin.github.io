@@ -1,7 +1,11 @@
 from pelican import signals
 from pelican.readers import MarkdownReader
 
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
+
 from hashlib import sha256
 
 try:
