@@ -95,9 +95,10 @@ class LatexToMathMLReader(MarkdownReader):
         write_to_file(source, file_path)
 
         mathml = latex2mathml(source)
-        prefix = '<math xmlns="http://www.w3.org/1998/Math/MathML">'
+        prefix = '<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML">'
         suffix = "</math>"
-        mathml_block = etree.fromstring(mathml[len(prefix) : -len(suffix)])
+        cutmathml = mathml[len(prefix) : -len(suffix)]
+        mathml_block = etree.fromstring(cutmathml)
 
         tag.clear()
         tag.tag = "p"
