@@ -41,11 +41,18 @@ Senior Project: Multi-Robot Mapping for Search and Rescue
 
 ## Employment
 
+### Software Engineer - *Cruise*
+
+Jan 2020 - Current
+
+- Estimation and Control Algorithms for Autonomous Cars
+
 ### Robotics Perception Engineer - *Starsky Robotics*
 
-June 2018 - Current
+June 2018 - Jan 2020
 
-Vision algorithms for autonomous semi-trucks
+- Built a new localization and mapping system for a self-driving semi truck
+- Helped test and launch the first [driverless semi truck](https://www.washingtonpost.com/technology/2019/06/26/floridas-latest-oddity-semi-trucks-with-nobody-inside-them/) in the US
 
 ### Software Team Lead - *Biorobotics Lab Autonomous Snowplow*
 
@@ -65,9 +72,9 @@ Fall 2014 - Spring 2018
 Fall 2016 - Spring 2017
 
 - Built searchable database of unstructured visual data with MongoDB via
-  scraping and text processing
+  scraping and text processing from PDFs
 - Designed API for a Node.js microservice to enhance discovery and accessibility
-  of historic data
+  of historic financial data
 - Integrated customer, business and technical feedback to quickly launch
   successful features
 
@@ -80,35 +87,25 @@ Summer 2016
   development velocity and reduce bugs by topologically sorting generation
   targets
 
-### Software Development Intern - *Flashstarts Startup Accelerator*
+<div class="skipprint">
+<h3 id="software-development-intern-flashstarts">
+    Software Development Intern - 
+    <em>Flashstarts Startup Accelerator</em>
+    <a class="headerlink" href="#software-development-intern-flashstarts" title="Permanent link">¶</a>
+</h3>
 
 Summer 2015
 
-- Led technical development for a Node.js and AngularJS intellectual property
-  exchange startup
-- Built prototype Ruby on Rails application to match companies seeking domain
-  specific experts
-- Created real-time messaging system with Socket.io to enhance interpersonal
-  communication
-
-<div class="skipprint">
-<h3>Intern - Silicon Turnkey Express</h3>
-
-Summer 2014
-
 <ul>
-<li>Tested and debugged custom designed RapidIO interconnect board for use in a
-  communications system</li>
-<li>Designed and built test fixture for single boards that cut costs by 90%
-  compared to commercial options</li>
+<li>Led technical development for a Node.js and AngularJS IP exchange startup</li>
+<li>Built prototype Rails application to match companies seeking domain specific experts</li>
+<li>Created real-time Socket.io messaging system to speed up communication</li>
 </ul>
 </div>
 
 ## Robotics Projects
 
 ### 3D Printed Walking Robot - *Hustlebug*
-
-<!-- link title to Grabcad project -->
 
 Fall 2017 - Spring 2018
 
