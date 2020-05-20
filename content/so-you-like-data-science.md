@@ -1,7 +1,7 @@
 ---
 Title: So You Like Data Science?
 Category: Building
-Tags: Data Science
+Tags: Data Science, What I'm Reading
 Date: 2018-09-05
 Updated: 2018-09-05
 Summary: I think that data science is a fascinating topic, and I wanted to share some interesting things that I've found in the area.
