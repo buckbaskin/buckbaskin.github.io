@@ -1,6 +1,6 @@
-DATE="2020-05-17"
+DATE="2020-05-18"
 EDITDATE=`date +%Y-%m-%d`
-IDX=27
+IDX=28
 FILE="content/restomod-${DATE}.md"
 if [ -z ${PICLOC+x} ]; then
     echo "Using default image location"
@@ -37,11 +37,13 @@ for FULLPATHIMG in ${IMAGESOURCE}/*.jpg; do
     cp -v ${FULLPATHIMG} ${ENDPATH}
 
     printf "![Image]({attach}/img/${IMG})\n\n" >> ${FILE};
+    
 done
+
+vim ${FILE};
 
 else
     echo "File Already Exists"
 fi
 
 echo ${FILE};
-vim ${FILE};
