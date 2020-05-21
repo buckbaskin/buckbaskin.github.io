@@ -1,6 +1,6 @@
-DATE="2020-05-08"
+DATE="2020-05-17"
 EDITDATE=`date +%Y-%m-%d`
-IDX=24
+IDX=27
 FILE="content/restomod-${DATE}.md"
 if [ -z ${PICLOC+x} ]; then
     echo "Using default image location"

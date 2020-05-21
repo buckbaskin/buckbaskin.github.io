@@ -5,6 +5,7 @@ Tags: What I'm Reading, 99% Invisible, Over the Road, Ear Hustle, Podcast, Blogs
 Date: 2020-05-19
 Updated: 2020-05-19
 Summary: Blogs, Books and Podcasts (technically listening, I know)
+Image: img/intelligent_investor.jpg
 ---
 
 Blogs, Books and Podcasts (technically listening, I know)
