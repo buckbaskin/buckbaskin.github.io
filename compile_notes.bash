@@ -1,3 +1,7 @@
+# TODO: Append title metadata, then copy to content instead of blog
+#   This will result in the right heading and title automatically
+# TODO: Add date metadata automatically
+
 pointdir=blog/pages
 
 for book in notes/*; do 
