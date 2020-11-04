@@ -2,7 +2,7 @@
 Title: Working with small gears
 Category: Building
 Tags: 3D Printing, Additive Manufacturing, Macro
-Date: 2020-11-02
+Date: 2020-10-24
 Updated: 2020-11-03
 Summary: How small can we get with a functional gear part on a FDM printer?
 Image: img/IMG_0336.jpg
