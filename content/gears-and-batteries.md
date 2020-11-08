@@ -1,7 +1,7 @@
 ---
 Title: Gears and Batteries
 Category: Building
-Tags: 3D Printing, Additive Manufacturing, Macro
+Tags: 3D Printing, Additive Manufacturing, Macro, Project RC Build
 Date: 2020-11-04
 Updated: 2020-11-07
 Summary: How small can we get with a functional gear part on a FDM printer? What about packing in extra batteries?

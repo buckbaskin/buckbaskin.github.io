@@ -40,3 +40,5 @@ MARKDOWN = {
         },
     }
 }
+
+DIRECT_TEMPLATES = ['index', 'tags', 'archives', 'projects']

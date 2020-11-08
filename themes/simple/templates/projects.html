@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }} - Projects{% endblock %}
+
+{% block content %}
+<h1>Projects</h1>
+<ul>
+    {% for tag, articles in tags|sort %}
+    {% if tag.name.startswith("Project") %}
+    <li>
+        <h2 class="entry-title">
+            <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a> ({{
+            articles|count }} entries)
+        </h2>
+        {% set article = articles|first %}
+        <article class="hentry" style="clear: left;">
+            <header>
+                <h3 class="entry-title">
+                    <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a> 
+                    {% if article.category %}
+                    <small><small>
+                            <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+                        </small></small>
+                        {% endif %}
+                </h3> 
+            </header>
+            {% if article.image %}
+            <img alt="Article Preview" src="/blog/{{article.image}}"
+                                       class="previewimage">
+            {% endif %}
+            <footer class="post-info">
+                <time class="published" datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }} </time>
+            </footer><!-- /.post-info -->
+            <div class="entry-content"> 
+                {{ article.summary }}
+                <p>
+                <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
+                                                          title="Permalink to {{ article.title|striptags }}">Continue
+                                                          Reading</a>
+                </p>
+            </div><!-- /.entry-content -->
+        </article>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

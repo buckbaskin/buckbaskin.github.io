@@ -2,7 +2,7 @@
 Title: Tearing Down a Quadcopter: Part 2 - Power Systems
 Date: 2018-07-23
 Category: Breaking
-Tags: quadcopter, multimeter, reverse engineering
+Tags: quadcopter, multimeter, reverse engineering, Project Quadcopter
 Summary: Mechanically, it's in shambles. What's left in the rubble? I dive into the electronics to figure it out.
 Image: img/measuring_motors.jpg
 ---

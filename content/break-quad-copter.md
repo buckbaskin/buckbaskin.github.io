@@ -2,7 +2,7 @@
 Title: Tearing Down a Quadcopter: Part 1
 Date: 2018-07-19
 Category: Breaking
-Tags: quadcopter
+Tags: quadcopter, Project Quadcopter
 Summary: This has been a back burner project for a while; I'm now finally taking the time to take apart a quadcopter I've had for a while to see what goes into making it tick (and see if I can't mess with it a little bit too)
 ---
 

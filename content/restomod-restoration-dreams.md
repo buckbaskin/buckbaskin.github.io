@@ -1,7 +1,7 @@
 ---
 Title: Restomod Restoration Aspirations
 Category: Building
-Tags: XMods, Ford, Mustang, Mitsubishi, Evo, Restomod
+Tags: XMods, Ford, Mustang, Mitsubishi, Evo, Project Restomod
 Date: 2020-04-09
 Updated: 2020-04-22
 Summary: One of the more complicated restorations that I'll need to complete is reviving the older shorter chassis for the Mitsubishi Lancer Evo and the classic Ford Mustang.

@@ -2,7 +2,7 @@
 Title: Tearing Down a Quadcopter: Part 3 - Reading a Circuit Board
 Date: 2018-07-25
 Category: Breaking
-Tags: quadcopter, multimeter, reverse engineering
+Tags: quadcopter, multimeter, reverse engineering, Project Quadcopter
 Summary: My background in electrical engineering involves the first 4 chapters of an electronics textbook I read on my phone when I had internet connection and power in town while hiking the Appalachian Trail. What can I figure out about how the circuit board works for the quadcopter?
 Image: img/mpu6050_combined_invert.jpg
 ---
