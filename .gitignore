@@ -16,3 +16,8 @@ static/*.zip
 static/*.jpg
 static/**/*.JPG
 v/
+
+notes/
+blog/pages/notes/
+content/pages/notes/
+content/pages/athletic.html
