@@ -4,7 +4,7 @@ else
     let "CORES_MINUS=$(nproc --all) - 1"
     echo "Working with ${CORES_MINUS} cores"
     echo "Compressing Images"
-    for filename in $(find content/img/full/*.jpg -mmin -120); do
+    for filename in $(find content/img/full/*.jpg -mmin -240); do
         echo Compressing ${filename}
 
         BASE=$(basename $filename .jpg)
@@ -23,7 +23,7 @@ else
     echo "Done with JPG"
     echo "Starting PNG"
 
-    for filename in $(find content/img/full/*.png -mmin -120); do
+    for filename in $(find content/img/full/*.png -mmin -240); do
         echo Compressing ${filename}
 
         BASE=$(basename $filename .png)
