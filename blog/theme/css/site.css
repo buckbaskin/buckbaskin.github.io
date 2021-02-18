@@ -153,3 +153,8 @@ math {
 .latexhidden {
     display: none;
 }
+
+blockquote {
+    background-color: lightgray;
+    padding: 1px;
+}
