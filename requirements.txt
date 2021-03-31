@@ -3,6 +3,6 @@ markdown
 typogrify
 
 pyquery==1.4.1
-lxml==4.5.0
+lxml==4.6.3
 latex2mathml==2.8.4
 sympy
