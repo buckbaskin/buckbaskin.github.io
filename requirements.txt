@@ -1,8 +1,10 @@
 pelican==4.0.1
+Jinja2<2.10.1
+markupsafe==2.0.1
 markdown
 typogrify
 
 pyquery==1.4.1
-lxml==4.5.0
+# lxml==4.5.0
 latex2mathml==2.8.4
 sympy
