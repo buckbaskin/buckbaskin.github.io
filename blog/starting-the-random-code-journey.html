@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Starting the random-code journey - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="Starting the random-code journey - Building and Breaking"></meta>
+    <meta name="description" content="<p>Let's automatically construct programs for testing</p>" />
+    <meta name="twitter:description" content="<p>Let's automatically construct programs for testing</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="random-python" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Starting the random-code journey - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-07-29T00:00:00-07:00">
+      Fri 29 July 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/random-python.html">random-python</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/starting-the-random-code-journey.html" rel="bookmark"
+         title="Permalink to Starting the random-code journey">permalink</a></p>
+    <p>I got inspired by Zac Hatfield-Dodds's blog post 
+<a href="https://zhd.dev/sufficiently/">Sufficiently Advanced Testing</a>. 
+The post talks about <a href="https://hypothesis.readthedocs.io/en/latest/"><code>hypothesis</code></a>
+and property based testing, but also goes into some other cool stuff:</p>
+<ul>
+<li>swarm testing</li>
+<li>coverage guided property-based testing ("Targeted PBT")</li>
+<li>symbolic execution</li>
+<li>concolic execution</li>
+<li>constructing programs</li>
+</ul>
+<p>The last one is the one that stuck with me most. Quoting from the post:</p>
+<blockquote>
+<p>We could look at the grammar of Python source code, and we could generate arbitrary strings which would be parsed by the Python grammar. I tried this it worked! I found a bug in the CPython parser because it turns out that the grammar of Python is not exactly describing what CPython really does... foiled by the reference implementation!</p>
+<p>If this sounds cool, <a href="https://pypi.org/project/hypothesmith/">you can use Hypothesmith too</a>! (punning on the more famous <a href="https://embed.cs.utah.edu/csmith/">CSmith</a>)</p>
+<p>The main challenge is that almost all syntactically-valid programs are semantically invalid, <a href="https://blog.regehr.org/archives/1039">which limits what we can test with them</a>. One promising approach is to <a href="https://github.com/Zac-HD/hypothesmith/issues/2">generate and 'unparse' a typed syntax tree</a> - in particular, this could guarantee by construction that it's safe to execute the generated programs... so we could systematically compare Python interpreters as well as our development tools.</p>
+</blockquote>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
