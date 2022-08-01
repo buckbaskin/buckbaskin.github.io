@@ -104,15 +104,17 @@ node, we can reverse the parsing process and generate source code from the AST.<
 <h1 id="so-what-does-that-get-us">So, what does that get us?<a class="headerlink" href="#so-what-does-that-get-us" title="Permanent link">¶</a></h1>
 <p>Based on the progress to the <a href="https://github.com/buckbaskin/random-python/commit/7918c072822bfdd98fd02e364b3d8da8168cf0e8">latest
 commit</a>, a simple script that looks like:</p>
-<p><code>corpus_paths = list(find_files("corpus"))
-random_source = give_me_random_code(corpus_paths)</code></p>
+<pre><code>corpus_paths = list(find_files("corpus"))
+random_source = give_me_random_code(corpus_paths)
+</code></pre>
 <p>Produces output like:</p>
-<p><code>def factorial():
+<pre><code>def factorial():
     if factorial == 1:
         return factorial - 1
     return 0
 if factorial &lt;= 0:
-    factorial(factorial - 1)</code></p>
+    factorial(factorial - 1)
+</code></pre>
 <p>What's going on here? The script is searching the example corpus folder for
 Python files. It finds some simple examples that have integer functions for
 factorial, fibonacci and basic <code>main</code> function.</p>
