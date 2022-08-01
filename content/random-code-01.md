@@ -75,11 +75,13 @@ node, we can reverse the parsing process and generate source code from the AST.
 Based on the progress to the [latest
 commit](https://github.com/buckbaskin/random-python/commit/7918c072822bfdd98fd02e364b3d8da8168cf0e8), a simple script that looks like:
 
+    # python
     corpus_paths = list(find_files("corpus"))
     random_source = give_me_random_code(corpus_paths)
 
 Produces output like:
 
+    # python
     def factorial():
         if factorial == 1:
             return factorial - 1
