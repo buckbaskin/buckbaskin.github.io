@@ -1,7 +1,7 @@
 ---
 Title: Starting the random-code journey
 Category: Building
-Tags: Open Source, random-python
+Tags: Open Source, random-python, Project Random
 Date: 2022-07-29
 Updated: 2022-07-31
 Summary: Let's automatically construct programs for testing
@@ -27,6 +27,8 @@ The last one is the one that stuck with me most. Quoting from the post:
 > The main challenge is that almost all syntactically-valid programs are semantically invalid, [which limits what we can test with them](https://blog.regehr.org/archives/1039). One promising approach is to [generate and 'unparse' a typed syntax tree](https://github.com/Zac-HD/hypothesmith/issues/2) - in particular, this could guarantee by construction that it's safe to execute the generated programs... so we could systematically compare Python interpreters as well as our development tools.
 
 My interpretation of this was to jump into the challenge and see what I could do.
+
+[Relevant XKCD](https://xkcd.com/386/)
 
 # An Inspiration: Wave Function Collapse
 

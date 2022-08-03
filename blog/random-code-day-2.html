@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>random-code Day 2 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="random-code Day 2 - Building and Breaking"></meta>
+    <meta name="description" content="<p>Progress on a better understanding of Python while generating random code</p>" />
+    <meta name="twitter:description" content="<p>Progress on a better understanding of Python while generating random code</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="random-python" />
+    <meta name="tags" content="Project Random" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">random-code Day 2 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-07-30T00:00:00-07:00">
+      Sat 30 July 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/random-python.html">random-python</a>
+            <a href="/blog/tag/project-random.html">Project Random</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/random-code-day-2.html" rel="bookmark"
+         title="Permalink to random-code Day 2">permalink</a></p>
+    <p>I got inspired by Zac Hatfield-Dodds's blog post <a href="https://zhd.dev/sufficiently/">Sufficiently Advanced
+Testing</a> to pursue the challenge of construction
+random programs. To get the intro of what I've worked on so far check out the
+<a href="blog/starting-the-random-code-journey.html">Day 1 post</a></p>
+<h1 id="progress">Progress<a class="headerlink" href="#progress" title="Permanent link">¶</a></h1>
+<p>When I left off yesterday, I had a simple code and corpus example working, but I need to take further steps to get it working on real code.</p>
+<h2 id="name-discovery">Name Discovery<a class="headerlink" href="#name-discovery" title="Permanent link">¶</a></h2>
+<p>In order to figure out which names are in scope and which names we need to
+match, we need to inspect the underlying tree. For example, if the new code
+swapped in references <code>self.clear()</code>, we want do break it down and identify
+that we want to check the scope for <code>self</code>.</p>
+<ul>
+<li>Later we can do some type checking that will help us known if self has a
+  callable member <code>clear</code></li>
+</ul>
+<p>For this example, <code>self.clear()</code> starts out as the AST node <code>Call</code>. Under it,
+we have an <code>Attribute</code> <code>.func</code>. This has the two elements of interest:</p>
+<ul>
+<li>attr <code>clear</code></li>
+<li>value, which is a <code>Name</code> with id <code>self</code></li>
+</ul>
+<p>In order to solve this, we can recursively search an AST for names that we need
+to check in scope. This is done by the
+<a href="https://github.com/buckbaskin/random-python/blob/8802d4fb5dafd71eb0637ef2531e81079449d9ad/random_code/impl.py#L397-L665"><code>nested_unpack</code></a>
+method. (It's not the cleanest, but...) The general pattern is for each type to
+either identify if:</p>
+<ul>
+<li>There's no possible names we'd need to check (e.g. for a <code>Constant</code>)</li>
+<li>There's one possible name (e.g. for a <code>Name</code> where we want it's <code>id</code>)</li>
+<li>There's multiple possible subelements that could have names</li>
+</ul>
+<p>To combine these together, each function retuns the list, and elements that
+contain multiple sub-elements flatten the list from their sub-elements and call
+the recursion. This rolls up to a list at the top level of 0 or more names to
+check and pretty elegantly fits into the scope checking code.</p>
+<h2 id="scoping">Scoping<a class="headerlink" href="#scoping" title="Permanent link">¶</a></h2>
+<p>Each each element, we know if we've defined more names (e.g. for an <code>Assign</code>)
+or gotten into a new scope (e.g. for a FunctionDef) and new names (e.g.
+arguments in a <code>FunctionDef</code>).</p>
+<p>This isn't something I've found a good general pattern for and haven't yet
+gotten to all the sources of names and scopes, so the code is sticking to hard
+code in the visiting logic
+<a href="https://github.com/buckbaskin/random-python/blob/8802d4fb5dafd71eb0637ef2531e81079449d9ad/random_code/impl.py#L853-L861"><code>_visit_X</code></a>
+for function arguments.</p>
+<h2 id="validating-swaps-in-the-ast">Validating Swaps in the AST<a class="headerlink" href="#validating-swaps-in-the-ast" title="Permanent link">¶</a></h2>
+<p>Together, we can use the name discovery and scoping to aid in doing a better
+job than randomly swapping by AST type. For each potential swap we're checking,
+we can make sure that the names we're swapping in are going to be in scope when
+they're used. This shakes out as the basic end conditions for
+<a href="https://github.com/buckbaskin/random-python/blob/8802d4fb5dafd71eb0637ef2531e81079449d9ad/random_code/impl.py#L808-L813"><code>valid_swap</code></a>.</p>
+<p>This swap validation feels like it could be done more recursively like the name
+discovery, but I haven't figured out that pattern yet.</p>
+<h3 id="special-case-typing">Special Case: Typing<a class="headerlink" href="#special-case-typing" title="Permanent link">¶</a></h3>
+<p>When it comes to swapping out names, I've implemented a primative type matching
+system. When I find cases where I know the type (e.g. from Python type
+annotations), I store the variable's type as the value in the key-value mapping
+in the scope (with the name as the key). This allows for swapping exact type
+matches, but there's no sense of classes and sub-classes without doing a little
+bit more.</p>
+<p>(I think the little bit more would be tracking class definitions and parent
+classes in an auxiliary tree)</p>
+<h3 id="special-case-function-calls">Special Case: Function Calls<a class="headerlink" href="#special-case-function-calls" title="Permanent link">¶</a></h3>
+<p>This feels like it might not need to be a special case, but for now it is to
+handle making sure that the position and keyword arguments that go into the
+function call are all checked. This special case does have some weird edge case
+behavior. For example, calling <code>"a b c".split(" ")</code> doesn't have a name to
+validate even though my intuition is that usually we'd expect to have at least
+one name to validate.</p>
+<h1 id="references">References:<a class="headerlink" href="#references" title="Permanent link">¶</a></h1>
+<ul>
+<li><a href="https://zhd.dev/">Zach Hatfield-Dodds</a></li>
+<li><a href="https://zhd.dev/sufficiently/">Sufficiently Advanced Testing</a></li>
+</ul>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
