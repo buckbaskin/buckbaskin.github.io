@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>random-code Day 3 - Testing - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="random-code Day 3 - Testing - Building and Breaking"></meta>
+    <meta name="description" content="<p>Starting testing and immediately finding some bugs</p>" />
+    <meta name="twitter:description" content="<p>Starting testing and immediately finding some bugs</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="random-python" />
+    <meta name="tags" content="Project Random" />
+    <meta name="tags" content="testing" />
+    <meta name="tags" content="logging" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">random-code Day 3 - Testing - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-07-31T00:00:00-07:00">
+      Sun 31 July 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/random-python.html">random-python</a>
+            <a href="/blog/tag/project-random.html">Project Random</a>
+            <a href="/blog/tag/testing.html">testing</a>
+            <a href="/blog/tag/logging.html">logging</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/random-code-day-3-testing.html" rel="bookmark"
+         title="Permalink to random-code Day 3 - Testing">permalink</a></p>
+    <p>I got inspired by Zac Hatfield-Dodds's blog post <a href="https://zhd.dev/sufficiently/">Sufficiently Advanced
+Testing</a> to pursue the challenge of construction
+random programs. To get the intro of what I've worked on so far check out the
+<a href="blog/starting-the-random-code-journey.html">Day 1 post</a> and the latest <a href="blog/random-code-day-2.html">Day 2
+post</a></p>
+<h1 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">¶</a></h1>
+<p>Testing is made pretty easy with pytest. In a few <a href="https://github.com/buckbaskin/random-python/blob/254e5cbc2f01b3ddddeb5b57c79cb1b5aa829b63/test/name_discovery_test.py#L123-L126">lines of
+code</a>,
+we can make a little bit of Python, convert it to an AST, make sure we're
+working on the correct node and make sure we've discovered the right names with
+something like this:</p>
+<pre><code>def test_IfExp():
+    ast = _strip_expr(str_to_ast("""0 if name else 1"""))
+    assert isinstance(ast, IfExp)
+    assert ["name"] == nested_unpack(ast)
+</code></pre>
+<p>The only bit of magic is that <code>str_to_ast</code> will remove the Module that Python
+assumes is the start of each string (as if it were its own file). With small
+examples like this, we can fairly easily cover the AST concept by concept.</p>
+<p>There's some more interesting stuff coming, but pytest makes it really easy to
+do these little tests to build up confidence things are working as expected.</p>
+<h2 id="testing-win">Testing Win<a class="headerlink" href="#testing-win" title="Permanent link">¶</a></h2>
+<p>Testing the BoolOp case quickly surfaced a
+<a href="https://github.com/buckbaskin/random-python/commit/2dff8adf4104e5f2b086dcef874c583fa86e00ac#diff-9a7cc4f1e446f21dca1fcd2007a4cd6029f9460d38fb2bbd120c862da8fa018fL479-L486">typo</a></p>
+<p>In the
+<a href="https://github.com/buckbaskin/random-python/commit/2dff8adf4104e5f2b086dcef874c583fa86e00ac#diff-6bb417164f20198c4e59062bb7b6b76426a82e595cb37ac5c1663f9df662c115R47-R49">test</a>
+we have:</p>
+<pre><code>def test_BoolOp():
+    ast = str_to_ast("""name or False""")
+    assert ["name"] == nested_unpack(ast)
+</code></pre>
+<p>But we get an error:</p>
+<pre><code>E       AssertionError: assert ['name'] == [&lt;ast.Name ob...7b7aa5140970&gt;]
+E         At index 0 diff: 'name' != &lt;ast.Name object at 0x7b7aa5140970&gt;
+</code></pre>
+<p>The typo came down to returning the wrong thing: When iterating over the values
+in a BoolOp, we kept returning the value instead of the name id...</p>
+<pre><code>for v in element.values:
+    for vid in nested_unpack(v, top_level):
+        yield v
+</code></pre>
+<p>Becomes</p>
+<pre><code>for v in element.values:
+    for vid in nested_unpack(v, top_level):
+        yield vid
+</code></pre>
+<p>Ultimately not a very complicated or insiduous bug, but definitely hard to
+catch trying to drive-by inspect the code while reading a diff</p>
+<h1 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">¶</a></h1>
+<p>The other quick win for the day was logging. I'd originally been trying to
+manage my own printing and debug info by passing around configuration, but
+moving to using Python's built in logging library has made it much easier.</p>
+<p>There's still some stuff that I'm trying to figure out (specifically indenting
+the logging based on the depth of the iteration in the AST to make it easier to
+visually see which data groups together) but for now I'm pretty satisfied with
+being able to turn on debug information for an individual test but otherwise
+keep the output pretty muted.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

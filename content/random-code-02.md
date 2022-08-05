@@ -3,7 +3,7 @@ Title: random-code Day 2
 Category: Building
 Tags: Open Source, random-python, Project Random
 Date: 2022-07-30
-Updated: 2022-07-31
+Updated: 2022-08-03
 Summary: Progress on a better understanding of Python while generating random code
 ---
 
