@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>random-code Day 4: Littering - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="random-code Day 4: Littering - Building and Breaking"></meta>
+    <meta name="description" content="<p>How do you test a Transformer and if scoping is working?</p>" />
+    <meta name="twitter:description" content="<p>How do you test a Transformer and if scoping is working?</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="random-python" />
+    <meta name="tags" content="Project Random" />
+    <meta name="tags" content="testing" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">random-code Day 4: Littering - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-08-02T00:00:00-07:00">
+      Tue 02 August 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/random-python.html">random-python</a>
+            <a href="/blog/tag/project-random.html">Project Random</a>
+            <a href="/blog/tag/testing.html">testing</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/random-code-day-4-littering.html" rel="bookmark"
+         title="Permalink to random-code Day 4: Littering">permalink</a></p>
+    <p>I got inspired by Zac Hatfield-Dodds's blog post <a href="https://zhd.dev/sufficiently/">Sufficiently Advanced
+Testing</a> to pursue the challenge of construction
+random programs. To get the intro of what I've worked on so far check out the
+<a href="blog/starting-the-random-code-journey.html">Day 1 post</a> and the latest <a href="blog/random-code-day-3.html">Day 3
+post</a>. Check out the
+<a href="https://github.com/buck.baskin/random-python">random-python</a> project on
+Github.</p>
+<h1 id="schrodingers-cat">Schrödinger's cat<a class="headerlink" href="#schrodingers-cat" title="Permanent link">¶</a></h1>
+<p>The question I've been pondering today is: "How do you test a Transformer and
+if scoping is working?"</p>
+<p>Scoping is the most important thing I've been focusing on so far with the
+project. On one side, you have name discovery to figure out which names we need
+to check against the scope. On the other side, you have the book-keeping for
+keeping track of which names are in scope at each step in the code.</p>
+<p>Testing this logic feels a little bit like Schrödinger's cat. The scope is
+almost always changing as the Transformer is visiting different nodes. This
+makes it tricky to write  a test to run the Transformer and then inspect if the
+scope is correct because the scope can be correct to start, correct at the end,
+but incorrect somewhere in the middle of exploring the AST.</p>
+<h2 id="transformer-you-say">Transformer you say?<a class="headerlink" href="#transformer-you-say" title="Permanent link">¶</a></h2>
+<p><a href="https://docs.python.org/3.8/library/ast.html#ast.NodeTransformer">NodeTransformer</a>
+is a pattern for viewing and modifying the AST.</p>
+<p>The general pattern is the
+<a href="https://docs.python.org/3.8/library/ast.html#ast.NodeVisitor">Visitor</a>, which
+makes it easy to view data in a tree structure by "visiting" each node in the
+tree and calling a specific function based on its type. This can be applied to
+lots of tree structures, but is useful for the AST because we're dealing with
+many (but well documented) types of nodes that we might want to view.</p>
+<p>Taking it one step more specific, the Transformer is a Visitor that can help
+you swap out the node that you've visited. You can completely change the node
+that's in the tree, but for this use case we can stick to the simpler task of
+swapping out different instances of the same type of node (e.g. one function
+definition for another).</p>
+<h1 id="solution-constantly-observe-the-cat">Solution: Constantly Observe the "Cat"<a class="headerlink" href="#solution-constantly-observe-the-cat" title="Permanent link">¶</a></h1>
+<p>The solution I've come up to is to put the Transformer's common structure of
+visiting and modifying each node to use. At each step of the way, we can
+annotate the node with the scope that's available. I call this process littering.
+Afterwards, when observing the tree in a test, we can check each node and use
+that to understand if it's working properly. To stretch the Schrödinger's cat
+analogy one last time, we want to repeatedly observe the "cat" so we know its
+state.</p>
+<p>Specifically for the random-python project, each AST node that gets processed
+(excepting strings) gets tagged with a new property <code>_ending_scope</code> and a copy
+of the scope is assigned. This is useful for asserting both that certain names
+are in scope (e.g. the name of a function is in scope in its body for recursive
+calls) and for asserting a name is not in scope (e.g. a local variable defined
+in a function definition body isn't present in the code after the function
+definition).</p>
+<h2 id="testing-with-littering">Testing with Littering<a class="headerlink" href="#testing-with-littering" title="Permanent link">¶</a></h2>
+<p>Testing with littering enabled are fairly straightforward. In about 10 lines of
+code, we set up a small Python snippet with the relevant AST node, parse it to
+the AST, then run it through the transformer. We can then assert on the scope.
+The
+<a href="https://github.com/buckbaskin/random-python/blob/b4a9d4d3c5307d34e4504efaedf58ff52bf2b0c0/test/scoping_test.py#L35-L47">tests</a>
+look something like this:</p>
+<pre><code>def test_FunctionDef_annotation():
+    input_text = """
+def main(i: i):
+    return 1
+"""
+    ast = str_to_ast(input_text)
+    transformer = build_transformer(ast)
+    result = transformer.visit(ast)
+
+    assert isinstance(result, FunctionDef)
+    args = result.args
+    assert isinstance(args, arguments)
+    assert "i" not in args._ending_scope
+</code></pre>
+<h2 id="easy-littering">Easy Littering<a class="headerlink" href="#easy-littering" title="Permanent link">¶</a></h2>
+<p>Remembering to assign these scopes in all of the relevant places can be easy to
+forget for functions with multiple returns or otherwise require copying around
+a lot of code. To make the littering process easier, the project defines a
+<a href="https://github.com/buckbaskin/random-python/blob/b4a9d4d3c5307d34e4504efaedf58ff52bf2b0c0/random_code/impl.py#L744-L760"><code>littering</code></a>
+decorator that takes in the name of the variable its copying and the variable
+its writing to. The decorator calls into the main function, but after the main
+function returns and before the decorator returns it performs an assignment to
+"litter" the AST node being returned. This ensures that regardless of how the
+function exits we'll always get the littering for existing code and as I add
+new functionality.</p>
+<p>A secondary benefit of moving to the decorator is that I had to standardize the
+interface to the visitor functions. Previously, I'd mixed functions that looked
+like free functions (no self) with functions that looked like member functions
+(that included self) and now they're all standardized as functions, both
+hand-written and generated, that accept self as members of the class.</p>
+<h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h1>
+<p>All together, we've been able to go from uncertainty about scopes to easily
+writing tests for scoping by applying littering. This implementation pattern
+makes it easier to expand tests with simple or complicated examples and the
+decorator makes it easy to ensure that we get the same behavior across the AST
+as we add functionality.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
