@@ -11,8 +11,8 @@ I got inspired by Zac Hatfield-Dodds's blog post [Sufficiently Advanced
 Testing](https://zhd.dev/sufficiently/) to pursue the challenge of construction
 random programs. To get the intro of what I've worked on so far check out the
 [Day 1 post](blog/starting-the-random-code-journey.html) and the latest [Day 3
-post](blog/random-code-day-3.html). Check out the
-[random-python](https://github.com/buck.baskin/random-python) project on
+post](blog/random-code-day-3-testing.html). Check out the
+[random-python](https://github.com/buckbaskin/random-python) project on
 Github.
 
 # Schrödinger's cat

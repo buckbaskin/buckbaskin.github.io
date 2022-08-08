@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>random-code Day 5: Python Class Manipulation - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="random-code Day 5: Python Class Manipulation - Building and Breaking"></meta>
+    <meta name="description" content="<p>Becoming a little more familiar with Python's Abstract Base Class functionality</p>" />
+    <meta name="twitter:description" content="<p>Becoming a little more familiar with Python's Abstract Base Class functionality</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="random-python" />
+    <meta name="tags" content="Project Random" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">random-code Day 5: Python Class Manipulation - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-08-03T00:00:00-07:00">
+      Wed 03 August 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/random-python.html">random-python</a>
+            <a href="/blog/tag/project-random.html">Project Random</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/random-code-day-5-python-class-manipulation.html" rel="bookmark"
+         title="Permalink to random-code Day 5: Python Class Manipulation">permalink</a></p>
+    <p>I got inspired by Zac Hatfield-Dodds's blog post <a href="https://zhd.dev/sufficiently/">Sufficiently Advanced
+Testing</a> to pursue the challenge of construction
+random programs. To get the intro of what I've worked on so far check out the
+<a href="blog/starting-the-random-code-journey.html">Day 1 post</a> and the latest <a href="blog/random-code-day-4-littering.html">Day 4
+post</a>. Check out the
+<a href="https://github.com/buckbaskin/random-python">random-python</a> project on
+Github.</p>
+<h1 id="type-dispatching">Type Dispatching<a class="headerlink" href="#type-dispatching" title="Permanent link">¶</a></h1>
+<p>In the AST visiting logic, there are a handful of functions that all need to
+dispatch to different logic based on the type of the node they're working with.
+They all look something like:</p>
+<pre><code>def interesting_node_logic(node):
+    if isinstance(node, FunctionDef):
+        ...
+    elif isinstance(node, Lambda):
+        ...
+    elif isinstance(node, ListComp):
+        ...
+    ...
+</code></pre>
+<p>This continues on for quite a while because there are 40 or 50 different types
+of nodes we can encounter in the tree. Even if each only needs a couple of
+lines of logic, this can lead to long piles of code. If we can find more
+succinct ways to represent these functions, we can more easily group similar
+logic and compress the code into more readable groups of lines instead of
+having sprawling logic and repeated code.</p>
+<h1 id="abstract-base-classes">Abstract Base Classes<a class="headerlink" href="#abstract-base-classes" title="Permanent link">¶</a></h1>
+<p>I recently ran across <a href="twitter.com/hillelogram">Hillel Wayne's</a> blog post
+<a href="https://www.hillelwayne.com/post/python-abc/">"Crimes with Python's Pattern
+Matching"</a> about pattern matching
+and Python's abstract base classes. It starts off with a bang:</p>
+<blockquote>
+<p>One of my favorite little bits of python is <code>__subclasshook__</code>. Abstract Base Classes with <code>__subclasshook__</code> can define what counts as a subclass of the ABC, even if the target doesn’t know about the ABC.</p>
+</blockquote>
+<p>This first few sentences of the blog post provided me with all I needed to know
+to figure out how to simplify the type dispatching. For AST elements with
+similar properties, we can create groups to make them easier to work with. </p>
+<p>The immediate example that comes to mind is called
+<a href="https://github.com/buckbaskin/random-python/blob/1d9d170b6b907759be2a9b2b900c62e0939ec147/random_code/impl.py#L145-L160"><code>NotNameParent</code></a>.
+When parsing an AST looking for names that need to be in scope, there are a
+handful of AST nodes that we know will not contain a name to check and will not
+have children with a name to check. These include: <code>break</code>, <code>pass</code> and
+constants. This means that we can create a simple abstract base class that
+collects these names into a single consistent idea. The class looks like:</p>
+<pre><code>class NotNameParent(ABC):
+    _doesnt_contain_names = {
+        "Break",
+        "Constant",
+        "Import",
+        "ImportFrom",
+        "JoinedStr",
+        "NoneType",
+        "Pass",
+    }
+
+    @classmethod
+    def __subclasshook__(cls, C):
+        name = C.__name__
+        log.debug("NotNameParent.__subclasshook__ %s", name)
+        return name in cls._doesnt_contain_names
+</code></pre>
+<p>And allows us to simplify the type dispatching logic to <a href="https://github.com/buckbaskin/random-python/blob/1d9d170b6b907759be2a9b2b900c62e0939ec147/random_code/impl.py#L496-L497">lines
+like</a>:</p>
+<pre><code>if isinstance(element, NotNameParent):
+    return []
+</code></pre>
+<h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h1>
+<p>In conclusion, there's Python mechanisms under the hood that can greatly
+simplify repetitive code if only you know where to look. Abstract Base Classes
+let you retroactively combine different classes across similar concepts to
+create an alternate tree for your use case.</p>
+<p>Also, I highly recommend reading more than just the first paragraph of Hillel's
+post <a href="https://www.hillelwayne.com/post/python-abc/">"Crimes with Python's Pattern
+Matching"</a>. It's well written and
+fascinating.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
