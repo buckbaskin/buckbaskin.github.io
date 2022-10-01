@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK User Interface Demo - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK User Interface Demo - Building and Breaking"></meta>
+    <meta name="description" content="<p>Using Python's type checking to check for mismatched physical quantities</p>" />
+    <meta name="twitter:description" content="<p>Using Python's type checking to check for mismatched physical quantities</p>"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="User Interface" />
+    <meta name="tags" content="30 for 30" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK User Interface Demo - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-03T00:00:00-07:00">
+      Mon 03 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/user-interface.html">User Interface</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-user-interface-demo.html" rel="bookmark"
+         title="Permalink to FormaK User Interface Demo">permalink</a></p>
+    <h1 id="the-idea">The Idea<a class="headerlink" href="#the-idea" title="Permanent link">¶</a></h1>
+<p>As part of the FormaK library, I'd like to introduce the concept of physical
+units into the UI this would allow for checking that things like the following
+are correct (every element added together ends up in units of velocity)</p>
+<p><code>vel = accel * dt + snap * (dt ^2) / 2</code></p>
+<p>and something like the following is incorrect (there's a missing dt element)</p>
+<p><code>position = velocity + position</code></p>
+<h1 id="the-hypothesis">The Hypothesis<a class="headerlink" href="#the-hypothesis" title="Permanent link">¶</a></h1>
+<p>I'd also like to approach the integration of units in a "zero-cost abstraction"
+way where a user doesn't pay for what they don't use but they do get increasing
+utility with increasing effort to use features in the library. This means that
+a gradual approach like is used in Mypy/Pep 484 for typing and checking Python
+programs would be ideal. In fact, can we take that approach to develop a
+physical units system based on Python's types?</p>
+<h1 id="the-experiment">The Experiment<a class="headerlink" href="#the-experiment" title="Permanent link">¶</a></h1>
+<p><a href="https://github.com/buckbaskin/formak/blob/physical-units-demo/demo/src/physical_units.py">source</a></p>
+<p>```python</p>
+<h1 id="some-hacky-code">... some hacky code ...<a class="headerlink" href="#some-hacky-code" title="Permanent link">¶</a></h1>
+<p>class UnitMeta(type):
+    def <strong>getitem</strong>(cls, key: Tuple[int, int]):
+        meters, seconds = key
+        env = dict(UnitImpl.<strong>dict</strong>)
+        env["meters"] = meters
+        env["seconds"] = seconds</p>
+<pre><code>    Type = type("Unit", (UnitImpl,), env)
+    return GenericAlias(Type, key)
+</code></pre>
+<p>class Unit(UnitImpl, metaclass=UnitMeta):
+    def <strong>add</strong>(self, rhs: Unit):
+        return super().<strong>add</strong>(rhs)</p>
+<p>dt = Unit<a href="" title="dt">0, 1</a>  # Unit[0,1]
+accel = Unit<a href="" title="accel">1, -2</a>  # Unit[1,-2]
+jerk = Unit<a href="" title="jerk">1, -3</a>  # Unit[1,-3]</p>
+<p>print("a", accel)
+print("dt", dt)
+print("a * dt", accel * dt)</p>
+<p>vel = accel * dt + jerk * (dt * dt) / 2
+print("vel", vel)</p>
+<p>position = Unit<a href="" title="position">1, 0</a>  # Unit[1,0]</p>
+<p>position = (
+    vel + position
+)  # Expect to fail here (velocity not the same units as position)
+```</p>
+<p>Mypy command: <code>python3 -m pip install -U mypy typing; mypy physical_units.py</code></p>
+<p>Mypy "error" message: <code>Success: no issues found in 1 source file</code></p>
+<p>Unfortunately, at this time I've not been able to get to a point where I can
+get Mypy to fail with crossing up meters/seconds units.</p>
+<h1 id="the-runtime-checking-future">The Runtime Checking Future<a class="headerlink" href="#the-runtime-checking-future" title="Permanent link">¶</a></h1>
+<p>As a final step to be most useful for FormaK, I'd like to be able to check at
+runtime so we can perform the checking as part of model validation. The tool
+for the job is <a href="https://github.com/agronholm/typeguard">Typeguard</a>.</p>
+<p>Originally I'd expect to be able to use Mypy, but it's pretty set on being a
+command line tool for files according to <a href="https://github.com/python/mypy/issues/2369#issuecomment-256984061">Guido Van Rossum</a>:</p>
+<blockquote>
+<p>... We're reluctant to make mypy importable and callable from other code, because mypy's primary usage is through the command line, targeted at whole programs, and we often make big changes to the internals that would break external invocations. Think of mypy as a linter ...</p>
+</blockquote>
+<p>However, that redirected me to <a href="https://github.com/python/typing/issues/310">Dynamic PEP 484 type checking without code
+changes?</a>
+and that pointed me to Typeguard [<a href="https://github.com/agronholm/typeguard/commit/69ce354d74b9de0cee0efc1b6509e8bb2e51ca47">commit</a>, <a href="https://typeguard.readthedocs.io/en/latest/userguide.html">User Guide</a>]</p>
+<p>Taking another look at the code example above, this time with Typeguard</p>
+<h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h1>
+<p>This simple example of units focuses on two units (distance, time) and needs
+something extra to get working via Mypy type checking. If you'd like to
+contribute this or another feature to the FormaK project, reach out to me on
+Twitter @bebaskin or reach out on the proposal issue on Github.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
