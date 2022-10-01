@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>30 for 30: Open Sourcing "FormaK" - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="30 for 30: Open Sourcing "FormaK" - Building and Breaking"></meta>
+    <meta name="description" content="<p>Starting live development of a new open source project</p>" />
+    <meta name="twitter:description" content="<p>Starting live development of a new open source project</p>"></meta>
+
+    <meta name="tags" content="Open Source" />
+    <meta name="tags" content="Software Engineering" />
+    <meta name="tags" content="30 for 30" />
+    <meta name="tags" content="FormaK" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">30 for 30: Open Sourcing "FormaK" - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-01T00:00:00-07:00">
+      Sat 01 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/open-source.html">Open Source</a>
+            <a href="/blog/tag/software-engineering.html">Software Engineering</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+            <a href="/blog/tag/formak.html">FormaK</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/30-for-30-open-sourcing-formak.html" rel="bookmark"
+         title="Permalink to 30 for 30: Open Sourcing "FormaK"">permalink</a></p>
+    <p>This October, I'm committing to committing to the FormaK project every day and writing a
+blog post about development and adjacent projects that I'm working on.</p>
+<h1 id="the-formak-project">The FormaK Project<a class="headerlink" href="#the-formak-project" title="Permanent link">¶</a></h1>
+<p>What is the FormaK project do you ask? The FormaK project aims to combine symbolic 
+modeling for fast, efficient system modeling with code generation to create performant
+code that is easy to use.</p>
+<h2 id="a-simple-model">A Simple Model<a class="headerlink" href="#a-simple-model" title="Permanent link">¶</a></h2>
+<p>With a little simplification, a
+<a href="https://github.com/buckbaskin/formak/blob/master/featuretests/python_ui_demo/simple_test.py">model</a>
+that looks like this:</p>
+<p>```python
+    dt = Symbol("dt")</p>
+<pre><code>tp = trajectory_properties = {k: Symbol(k) for k in ["mass", "z", "v", "a"]}
+
+thrust = Symbol("thrust")
+
+state = set(tp.values())
+control = set([thrust])
+
+state_model = {
+    tp["mass"]: tp["mass"],
+    tp["z"]: tp["z"] + dt * tp["v"],
+    tp["v"]: tp["v"] + dt * tp["a"],
+    tp["a"]: -9.81 * tp["mass"] + thrust,
+}
+
+model = Model(dt=dt, state=state, control=control, state_model=state_model)
+</code></pre>
+<p>```</p>
+<h2 id="useable-c">Useable C++<a class="headerlink" href="#useable-c" title="Permanent link">¶</a></h2>
+<p>... becomes code you can use that looks like this:</p>
+<p><code>generated/simple.h</code>
+<code>c++
+class StateModel {
+    State process(const State&amp; state, const Control&amp; control);
+    // implementation also generated
+};</code></p>
+<p>If you'd like to see examples that are beyond a toy example, check out the project 
+<a href="https://github.com/buckbaskin/formak/tree/master/demo/src">demos</a>.</p>
+<h1 id="30-for-30">30 for 30<a class="headerlink" href="#30-for-30" title="Permanent link">¶</a></h1>
+<p>My goal is to work on consistently contributing to the project and writing about it. To that
+end, I'm going to be writing and posting here once daily about what I'm working on and what
+I'm learning about to advance the project.</p>
+<h1 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">¶</a></h1>
+<p>The FormaK project is hosted at <a href="https://github.com/buckbaskin/formak">github.com/buckbaskin/formak</a> </p>
+<p>To get started with the project, check out the <a href="https://github.com/buckbaskin/formak/blob/master/docs/getting-started.md">documentation</a></p>
+<p>To learn about the future of the project, check out the <a href="https://github.com/buckbaskin/formak/blob/master/designs/formak_v0.md">design doc</a>.</p>
+<p>For more posts in the series, check out the tag <a href="buckbaskin.com/blog/tag/30-for-30.html">30 for 30</a> and tag <a href="buck.baskin/blog/tag/foramk.html">FormaK</a> for ongoing updates about the project.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
