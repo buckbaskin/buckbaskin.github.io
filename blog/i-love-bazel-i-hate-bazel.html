@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>I Love Bazel, I Hate Bazel - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="I Love Bazel, I Hate Bazel - Building and Breaking"></meta>
+    <meta name="description" content="<p>I love Bazel. It's one of those satisfying tools where computer science</p>" />
+    <meta name="twitter:description" content="<p>I love Bazel. It's one of those satisfying tools where computer science</p>"></meta>
+
+    <meta name="tags" content="Bazel" />
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Selenium" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">I Love Bazel, I Hate Bazel - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-02T00:00:00-07:00">
+      Sun 02 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/bazel.html">Bazel</a>
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/selenium.html">Selenium</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/i-love-bazel-i-hate-bazel.html" rel="bookmark"
+         title="Permalink to I Love Bazel, I Hate Bazel">permalink</a></p>
+    <p>algorithms and data structures fuse with good software practice to create
+something that's satisfying on many levels. It knows how to minimally rebuild
+things. It knows how to hermetically build things in a repeatable way. I also hate Bazel.
+Image: img/bazel-sketch.jpg</p>
+<hr/>
+<p>I love Bazel. It's one of those satisfying tools where computer science
+algorithms and data structures fuse with good software practice to create
+something that's satisfying on many levels. It knows how to minimally rebuild
+things. It knows how to hermetically build things in a repeatable way. It's
+existence made <a href="https://sluongng.hashnode.dev/bazel-caching-explained-pt-1-how-bazel-works">Merkle
+trees</a>
+make more sense to me.</p>
+<p>I hate Bazel. While trying to figure out building a mix of Python and C++, I've
+wandered endlessly trying to sort out how to get it working. I dislike the odd
+mix of a large amount of documentation and a large amount of documentation that
+doesn't explain what I'm hoping to understand. Python in particular is somewhat
+inscrutable in that when trying to build a pytest test, it seemed to repeatedly
+break the hermeticity I was hoping I had. Its complexity led to me repeatedly
+break things that I thought that I'd fixed.  The diff to fix what I thought was
+the right system is largely one made of witch incantations over a cauldron made
+by dumping an existing project in and skimming stuff off the top that seemed
+passable.</p>
+<p>So, on that note, thanks to my savior: the Selenium project. I appreciate it as
+a testing tool (one which I find enjoyable), but more now as a multi-language
+Bazel project (including Python) whose example I can follow. FormaK's build
+structure now heavily borrows from Selenium and it's held up to some minor
+expansions. With the Selenium-inspired structure (and essentially standing on
+the shoulders of Selenium as my build tools "team") I can now proceed forward
+with the more FormaK-y aspects of the project:
+- The scikit-learn-ification of FormaK to adapt existing machine learning
+  tooling - <a href="https://github.com/buckbaskin/formak/blob/sklearn-integration/designs/sklearn-integration.md">Design</a></p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
