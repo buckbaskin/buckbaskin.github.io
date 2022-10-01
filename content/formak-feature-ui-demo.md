@@ -1,5 +1,5 @@
 ---
-Title: FormaK User Interface
+Title: FormaK: User Interface
 Category: Building
 Tags: FormaK, User Interface, 30 for 30
 Date: 2022-10-04
