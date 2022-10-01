@@ -32,42 +32,40 @@ physical units system based on Python's types?
 
 [source](https://github.com/buckbaskin/formak/blob/physical-units-demo/demo/src/physical_units.py)
 
-```python
-# ... some hacky code ...
-
-class UnitMeta(type):
-    def __getitem__(cls, key: Tuple[int, int]):
-        meters, seconds = key
-        env = dict(UnitImpl.__dict__)
-        env["meters"] = meters
-        env["seconds"] = seconds
-
-        Type = type("Unit", (UnitImpl,), env)
-        return GenericAlias(Type, key)
-
-
-class Unit(UnitImpl, metaclass=UnitMeta):
-    def __add__(self, rhs: Unit):
-        return super().__add__(rhs)
-
-
-dt = Unit[0, 1]("dt")  # Unit[0,1]
-accel = Unit[1, -2]("accel")  # Unit[1,-2]
-jerk = Unit[1, -3]("jerk")  # Unit[1,-3]
-
-print("a", accel)
-print("dt", dt)
-print("a * dt", accel * dt)
-
-vel = accel * dt + jerk * (dt * dt) / 2
-print("vel", vel)
-
-position = Unit[1, 0]("position")  # Unit[1,0]
-
-position = (
-    vel + position
-)  # Expect to fail here (velocity not the same units as position)
-```
+    # ... some hacky code ...
+    
+    class UnitMeta(type):
+        def __getitem__(cls, key: Tuple[int, int]):
+            meters, seconds = key
+            env = dict(UnitImpl.__dict__)
+            env["meters"] = meters
+            env["seconds"] = seconds
+    
+            Type = type("Unit", (UnitImpl,), env)
+            return GenericAlias(Type, key)
+    
+    
+    class Unit(UnitImpl, metaclass=UnitMeta):
+        def __add__(self, rhs: Unit):
+            return super().__add__(rhs)
+    
+    
+    dt = Unit[0, 1]("dt")  # Unit[0,1]
+    accel = Unit[1, -2]("accel")  # Unit[1,-2]
+    jerk = Unit[1, -3]("jerk")  # Unit[1,-3]
+    
+    print("a", accel)
+    print("dt", dt)
+    print("a * dt", accel * dt)
+    
+    vel = accel * dt + jerk * (dt * dt) / 2
+    print("vel", vel)
+    
+    position = Unit[1, 0]("position")  # Unit[1,0]
+    
+    position = (
+        vel + position
+    )  # Expect to fail here (velocity not the same units as position)
 
 Mypy command: `python3 -m pip install -U mypy typing; mypy physical_units.py`
 

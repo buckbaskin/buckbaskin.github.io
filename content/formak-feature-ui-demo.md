@@ -44,7 +44,7 @@ The user interface is designed to be easy to use and familiar to folks that
 work with Python. Setting up a very simple physics model for a rocket looks
 like:
 
-```python
+
     vp = vehicle_properties = {k: Symbol(k) for k in ["m", "x", "v", "a"]}
     fuel_burn_rate = Symbol("fuel_burn_rate")
 
@@ -67,7 +67,7 @@ like:
     }
 
     orbital_model = Model(dt=dt, state=state, control=control, state_model=state_model)
-```
+
 
 Based on [orbital_test.py](https://github.com/buckbaskin/formak/tree/master/featuretests/python_ui_demo/orbital_test.py)
 

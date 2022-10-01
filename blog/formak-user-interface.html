@@ -78,10 +78,10 @@ optimally fits the data.</p>
 <p>The user interface is designed to be easy to use and familiar to folks that
 work with Python. Setting up a very simple physics model for a rocket looks
 like:</p>
-<p>```python
-    vp = vehicle_properties = {k: Symbol(k) for k in ["m", "x", "v", "a"]}
-    fuel_burn_rate = Symbol("fuel_burn_rate")</p>
-<pre><code>state = set(vehicle_properties.values())
+<pre><code>vp = vehicle_properties = {k: Symbol(k) for k in ["m", "x", "v", "a"]}
+fuel_burn_rate = Symbol("fuel_burn_rate")
+
+state = set(vehicle_properties.values())
 
 control = set([fuel_burn_rate])  # kg/sec
 
@@ -101,7 +101,6 @@ state_model = {
 
 orbital_model = Model(dt=dt, state=state, control=control, state_model=state_model)
 </code></pre>
-<p>```</p>
 <p>Based on <a href="https://github.com/buckbaskin/formak/tree/master/featuretests/python_ui_demo/orbital_test.py">orbital_test.py</a></p>
 <p>One of the areas that I'm working on improving further is the way to set up
 symbols. In a very complicated system, having to specify everything in a

@@ -65,33 +65,41 @@ programs would be ideal. In fact, can we take that approach to develop a
 physical units system based on Python's types?</p>
 <h1 id="the-experiment">The Experiment<a class="headerlink" href="#the-experiment" title="Permanent link">¶</a></h1>
 <p><a href="https://github.com/buckbaskin/formak/blob/physical-units-demo/demo/src/physical_units.py">source</a></p>
-<p>```python</p>
-<h1 id="some-hacky-code">... some hacky code ...<a class="headerlink" href="#some-hacky-code" title="Permanent link">¶</a></h1>
-<p>class UnitMeta(type):
-    def <strong>getitem</strong>(cls, key: Tuple[int, int]):
+<pre><code># ... some hacky code ...
+
+class UnitMeta(type):
+    def __getitem__(cls, key: Tuple[int, int]):
         meters, seconds = key
-        env = dict(UnitImpl.<strong>dict</strong>)
+        env = dict(UnitImpl.__dict__)
         env["meters"] = meters
-        env["seconds"] = seconds</p>
-<pre><code>    Type = type("Unit", (UnitImpl,), env)
-    return GenericAlias(Type, key)
-</code></pre>
-<p>class Unit(UnitImpl, metaclass=UnitMeta):
-    def <strong>add</strong>(self, rhs: Unit):
-        return super().<strong>add</strong>(rhs)</p>
-<p>dt = Unit<a href="" title="dt">0, 1</a>  # Unit[0,1]
-accel = Unit<a href="" title="accel">1, -2</a>  # Unit[1,-2]
-jerk = Unit<a href="" title="jerk">1, -3</a>  # Unit[1,-3]</p>
-<p>print("a", accel)
+        env["seconds"] = seconds
+
+        Type = type("Unit", (UnitImpl,), env)
+        return GenericAlias(Type, key)
+
+
+class Unit(UnitImpl, metaclass=UnitMeta):
+    def __add__(self, rhs: Unit):
+        return super().__add__(rhs)
+
+
+dt = Unit[0, 1]("dt")  # Unit[0,1]
+accel = Unit[1, -2]("accel")  # Unit[1,-2]
+jerk = Unit[1, -3]("jerk")  # Unit[1,-3]
+
+print("a", accel)
 print("dt", dt)
-print("a * dt", accel * dt)</p>
-<p>vel = accel * dt + jerk * (dt * dt) / 2
-print("vel", vel)</p>
-<p>position = Unit<a href="" title="position">1, 0</a>  # Unit[1,0]</p>
-<p>position = (
+print("a * dt", accel * dt)
+
+vel = accel * dt + jerk * (dt * dt) / 2
+print("vel", vel)
+
+position = Unit[1, 0]("position")  # Unit[1,0]
+
+position = (
     vel + position
 )  # Expect to fail here (velocity not the same units as position)
-```</p>
+</code></pre>
 <p>Mypy command: <code>python3 -m pip install -U mypy typing; mypy physical_units.py</code></p>
 <p>Mypy "error" message: <code>Success: no issues found in 1 source file</code></p>
 <p>Unfortunately, at this time I've not been able to get to a point where I can
