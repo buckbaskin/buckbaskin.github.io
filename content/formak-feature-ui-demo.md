@@ -15,11 +15,13 @@ FormaK aims to combine symbolic modeling for fast, efficient system modelling
 with code generation to create performant code that is easy to use.
 
 The values (in order) are:
+
 - Easy to use
 - Performant
 
 In line with those values, the intended user experience is as follows. The user
 provides:
+
 - Model that describes the physics of the system
 - Execution criteria (e.g. memory usage, execution time)
 - Time series data for for the system

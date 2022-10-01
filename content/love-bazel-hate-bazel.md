@@ -34,5 +34,6 @@ structure now heavily borrows from Selenium and it's held up to some minor
 expansions. With the Selenium-inspired structure (and essentially standing on
 the shoulders of Selenium as my build tools "team") I can now proceed forward
 with the more FormaK-y aspects of the project:
+
 - The scikit-learn-ification of FormaK to adapt existing machine learning
   tooling - [Design](https://github.com/buckbaskin/formak/blob/sklearn-integration/designs/sklearn-integration.md)
