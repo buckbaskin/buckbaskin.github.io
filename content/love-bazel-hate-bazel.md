@@ -4,10 +4,7 @@ Category: Building
 Tags: Bazel, FormaK, Selenium
 Date: 2022-10-02
 Updated: 2022-10-01
-Summary: I love Bazel. It's one of those satisfying tools where computer science
-algorithms and data structures fuse with good software practice to create
-something that's satisfying on many levels. It knows how to minimally rebuild
-things. It knows how to hermetically build things in a repeatable way. I also hate Bazel.
+Summary: I love Bazel. It's one of those satisfying tools where computer science algorithms and data structures fuse with good software practice to create something that's satisfying on many levels. It knows how to minimally rebuild things. It knows how to hermetically build things in a repeatable way. I also hate Bazel.
 Image: img/bazel-sketch.jpg
 ---
 
