@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Tooling: CI - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK Tooling: CI - Building and Breaking"></meta>
+    <meta name="description" content="<p>FormaK implements CI for new commits as of PR #4 (link) via GitHub Actions</p>" />
+    <meta name="twitter:description" content="<p>FormaK implements CI for new commits as of PR #4 (link) via GitHub Actions</p>"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="30 for 30" />
+    <meta name="tags" content="GitHub" />
+    <meta name="tags" content="GitHub Actions" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Tooling: CI - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-07T00:00:00-07:00">
+      Fri 07 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+            <a href="/blog/tag/github.html">GitHub</a>
+            <a href="/blog/tag/github-actions.html">GitHub Actions</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-tooling-ci.html" rel="bookmark"
+         title="Permalink to FormaK Tooling: CI">permalink</a></p>
+    <p>TLDR: FormaK implements CI for new commits as of PR #4 (link) via GitHub
+Actions</p>
+<p>This post aims to be a short review of FormaK’s tooling for continuous
+integration (CI). </p>
+<p>In the <a href="https://github.com/buckbaskin/formak/blob/master/docs/designs/formak_v0.md">design of the
+library</a>,
+FormaK aims to deal with a handful of big features:</p>
+<ul>
+<li>Code generation across languages</li>
+<li>Detailed numerical code (link scikit learn)</li>
+</ul>
+<p>FormaK’s design process also leans on testing as part of the design phase
+(feature tests) and refactoring with confidence in addition to tests for
+correctness and numerical properties (property-based testing). Altogether,
+automatic testing is incredibly useful to the project.</p>
+<p>The original format for this testing was a bash file: 
+<a href="https://github.com/buckbaskin/formak/blob/17199f85d98623395eba3556fcb24214e958f3f6/actions/ci.bash"><code>actions/ci.bash</code></a>.
+This runs the tests for the project in multiple configurations, but requires
+remembering to run locally. As a convinience, the project also has a Makefile
+to enable the command make ci but that doesn’t solve the missing automation.</p>
+<p>Instead, the FormaK project now uses GitHub Actions to run these tests
+automatically. The configurations can be seen in
+<a href="https://github.com/buckbaskin/formak/tree/17199f85d98623395eba3556fcb24214e958f3f6/.github/workflows">.github/workflows</a>,
+with one each for:</p>
+<ul>
+<li>Demos: do they run?</li>
+<li>Feature tests: do they pass?</li>
+<li>Unit tests: do they pass?</li>
+</ul>
+<p>This integrates automatically with Github PRs to give the following:</p>
+<p><img alt="Example of Github Actions with one test failing" src="/blog/img/github-actions-example.jpg" class="wideimage"/></p>
+<p>All in all, this seems to work pretty well. I read <a href="https://fusectore.dev/2022/09/25/github-actions-pitfalls.html">"How well do you know
+Github
+Actions?"</a> and
+expected to have it fall apart, but following GitHub's
+<a href="https://docs.github.com/en/actions/quickstart">Quickstart</a> got me 95% of the
+way there.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
