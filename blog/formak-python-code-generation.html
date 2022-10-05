@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK: Python Code Generation - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK: Python Code Generation - Building and Breaking"></meta>
+    <meta name="description" content="<p>The second feature for FormaK landed: generating Python models</p>" />
+    <meta name="twitter:description" content="<p>The second feature for FormaK landed: generating Python models</p>"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="30 for 30" />
+    <meta name="tags" content="Code Generation" />
+    <meta name="tags" content="Python" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK: Python Code Generation - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-05T00:00:00-07:00">
+      Wed 05 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+            <a href="/blog/tag/code-generation.html">Code Generation</a>
+            <a href="/blog/tag/python.html">Python</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-python-code-generation.html" rel="bookmark"
+         title="Permalink to FormaK: Python Code Generation">permalink</a></p>
+    <p>Parent Design: <a href="https://github.com/buckbaskin/formak/tree/master/designs/formak_v0.md">designs/formak_v0.md</a></p>
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h1>
+<p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>The values (in order) are:</p>
+<ul>
+<li>Easy to use</li>
+<li>Performant</li>
+</ul>
+<p>The Five Key Elements the library provides to achieve this (see parent) are:</p>
+<ol>
+<li>Python Interface to define models</li>
+<li>Python implementation of the model and supporting tooling</li>
+<li>Integration to scikit-learn to leverage the model selection and parameter tuning functions</li>
+<li>C++ and Python to C++ interoperability for performance</li>
+<li>C++ interfaces to support a variety of model uses</li>
+</ol>
+<p>This design provides the initial implementation of second of the Five Keys
+"Python implementation of the model and supporting tooling". This design also
+prepares for the third of the 5 Keys: "Integration to scikit-learn to leverage
+the model selection and parameter tuning functions". At this stage it is
+helpful to inform the design of the tooling so that it won't have any big
+hurdles to the next steps in the design.</p>
+<h1 id="solution-approach">Solution Approach<a class="headerlink" href="#solution-approach" title="Permanent link">¶</a></h1>
+<p>The basic step for this feature is translating from Sympy to Python (without a
+sympy dependency). Sympy provides this functionality already, so getting the
+basics working wasn't too hard. The follow on work to refactor will be
+important in order to make sure that the library remains easy to use.</p>
+<p>The key classes involved are:</p>
+<ul>
+<li><code>ui.Model</code>: User interface class encapsulating the information required to define the model</li>
+<li><code>py.Model</code>: (new) Class encapsulating the model for running a model efficiently in Python code</li>
+</ul>
+<h2 id="tooling">Tooling<a class="headerlink" href="#tooling" title="Permanent link">¶</a></h2>
+<p>Along with the <code>py.Model</code> encapsulation, the code generation tooling provides
+an Extended Kalman Filter implementation to quantify variance (based on best
+fit of a Kalman Filter to data) and outliers (innovation as a function of
+variance). This part of the design is more focused on being used with the
+coming scikit-learn integration.</p>
+<p>The key classes involved are:</p>
+<ul>
+<li><code>py.Model</code>: (new) Class encapsulating the model for running a model efficiently in Python code</li>
+<li><code>py.ExtendedKalmanFilter</code>: (new)<ul>
+<li>Looking ahead to model fitting, characterize model quality, data variance by fitting an EKF</li>
+<li>Constructor accepts state type, state to state process model (as a <code>ui.Model</code>), process noise, sensor types, state to sensor sensor models and sensor noise</li>
+<li>Process Model Function: take in current state, current variance, dt/update time. Return new state, new variance</li>
+<li>Sensor Model Function: take in current state, current variance, sensor id, sensor reading</li>
+</ul>
+</li>
+</ul>
+<p>These two classes will likely share a lot under the hood because they both want
+to run Python efficiently; however, they'll remain independent classes to start
+for a separation of concerns. The EKF class at this point is more aimed to
+using it under the hood of the scikit-learn stuff whereas the <code>py.Model</code> class
+is aimed at the Formak User (easy to use first, performant second).</p>
+<h2 id="the-cherry-on-top-transparent-compilation">The Cherry On Top - Transparent Compilation<a class="headerlink" href="#the-cherry-on-top-transparent-compilation" title="Permanent link">¶</a></h2>
+<p>In addition to merely repackaging the model defined in the <code>ui.Model</code>, this
+design integrates with Python compiler tooling
+(<a href="https://github.com/numba/numba">Numba</a>) to write Python in the <code>py.Model</code>
+class, but JIT compile high use model functions.</p>
+<p>This has some trade-offs (increased implementation complexity, increased
+startup time), but should likely also have some performance benefits especially
+for longer-running analysis use cases (e.g. running with a long sequence of
+data). Numba was selected because it could easily be adapted to work with the
+generated code, whereas some other compilers (for example Cython) require code
+annotation or other changes that would be more involved than I wanted to pursue
+at this stage.</p>
+<h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h3>
+<ul>
+<li>In the spirit of don't pay for what you don't use, the compiler option motivated the creation of a common configuration pattern. We want to be able to (at conversion time) selectively enable or disable the compilation. Continuing to put thought into a common configuration pattern will make it easier to reuse in future designs (e.g. selecting configuration about other model optimizations)</li>
+</ul>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

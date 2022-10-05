@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Coming Soon: Scikt-Learn Integration - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK Coming Soon: Scikt-Learn Integration - Building and Breaking"></meta>
+    <meta name="description" content="<p>There's a new feature coming to Formak: integration with sckit-learn. This enables quickly integrating new features such as model selection, pipelines and other data tooling.</p>" />
+    <meta name="twitter:description" content="<p>There's a new feature coming to Formak: integration with sckit-learn. This enables quickly integrating new features such as model selection, pipelines and other data tooling.</p>"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="30 for 30" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="Scikit-Learn" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Coming Soon: Scikt-Learn Integration - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-06T00:00:00-07:00">
+      Thu 06 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/scikit-learn.html">Scikit-Learn</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-coming-soon-scikt-learn-integration.html" rel="bookmark"
+         title="Permalink to FormaK Coming Soon: Scikt-Learn Integration">permalink</a></p>
+    <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h1>
+<p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>The values (in order) are:</p>
+<ul>
+<li>Easy to use</li>
+<li>Performant</li>
+</ul>
+<p>The Five Key Elements the library provides to achieve this (see parent) are:</p>
+<ol>
+<li>Python Interface to define models</li>
+<li>Python implementation of the model and supporting tooling</li>
+<li>Integration to scikit-learn to leverage the model selection and parameter tuning functions</li>
+<li>C++ and Python to C++ interoperability for performance</li>
+<li>C++ interfaces to support a variety of model uses</li>
+</ol>
+<p>This design provides the initial implementation of third of the Five Keys
+"Integration to scikit-learn to leverage the model selection and parameter
+tuning functions". Scikit-learn is a common library who's interface is
+replicated many places (e.g. dask-ml for scaling up machine learning tasks)
+that's a good place to start with for an easy to use library.</p>
+<p>Why is scikit-learn and machine learning relevant? Conceptually, a detailed,
+physical model derived from first principles describes both one complex model,
+as well as a space of models derived via simplifications, enhancements or even
+disconnected approximations from the original model. Using data from the system
+we hope to describe, we can select the appropriate model from the space. This
+process is very analogous to a machine learning model, where we have one idea
+of how to approximate the system and want to select machine learning models (in
+a more algorithmic sense of the term models) and their parameters to best fit
+data.</p>
+<h1 id="the-dream">The Dream<a class="headerlink" href="#the-dream" title="Permanent link">¶</a></h1>
+<p>In the end, my hope is that the user can provide an arbitrarily complex
+description of the system as a model and provide data and auto-magically get a
+best fit approximation to their system. Providing a more complicated model
+provides more of a space for discovering improvements to the final system in
+the same way providing more data can improve the final system. The "auto-magic"
+doesn't come from anything magical; instead, it comes from accumulating
+knowledge and how to use it in one place where the final level (improved
+knowledge) can also improve the final system above and beyond that which could
+be achieved by the user alone. Scikit-learn makes some of this process easier,
+especially when it comes to comparing multiple candidate models.</p>
+<h1 id="what-could-this-look-like">What could this look like?<a class="headerlink" href="#what-could-this-look-like" title="Permanent link">¶</a></h1>
+<p>Scikit-learn offers helpful tooling for many things, including model selection,
+cross validation and building pipelines from estimators and transformers.
+By borrowing from scikit-learn's <a href="https://scikit-learn.org/stable/modules/compose.html#pipeline">Pipeline
+documentation</a>
+and <a href="https://scikit-learn.org/stable/modules/cross_validation.html">Model Selection
+documentation</a>
+we can build the code to compose a pipeline and validate the estimator:</p>
+<pre><code>from formak import py
+
+from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+
+formak_model = py.Model(...)
+
+estimators = [('reduce_dim', PCA()), ('formak model', formak_model)]
+pipeline = Pipeline(estimators)
+
+# ... load some data X, y...
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=0)
+
+pipeline.fit(X_train, y_train)
+
+pipeline.score(X_test, y_test)
+</code></pre>
+<p>This is just a small part of what scikit-learn has to offer. For example,
+scikit-learn has additional functionality for <a href="https://scikit-learn.org/stable/modules/outlier_detection.html">detecting
+outliers</a> and
+other <a href="https://scikit-learn.org/stable/unsupervised_learning.html">unsupervised
+learning</a>
+capabilities that are direclty useful to FormaK.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
