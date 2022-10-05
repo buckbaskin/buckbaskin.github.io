@@ -4,7 +4,7 @@ Category: Building
 Tags: FormaK, Project FormaK,30 for 30, GitHub, GitHub Actions
 Date: 2022-10-07
 Updated: 2022-10-04
-Summary: FormaK implements CI for new commits as of [PR #4](https://github.com/buckbaskin/formak/pull/4) via GitHub Actions
+Summary: FormaK implements CI for new commits as of PR #4 via GitHub Actions
 Image: img/github-actions-example.jpg
 ---
 
