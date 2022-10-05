@@ -1,7 +1,7 @@
 ---
 Title: 30 for 30: Open Sourcing "FormaK"
 Category: Building
-Tags: Open Source, Software Engineering, 30 for 30, FormaK
+Tags: Open Source, Software Engineering, 30 for 30, FormaK, Project FormaK
 Date: 2022-10-01
 Updated: 2022-10-01
 Summary: Starting live development of a new open source project

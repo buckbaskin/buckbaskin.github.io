@@ -1,7 +1,7 @@
 ---
 Title: FormaK: Python Code Generation
 Category: Building
-Tags: FormaK, 30 for 30, Code Generation, Python
+Tags: FormaK, Project FormaK,30 for 30, Code Generation, Python
 Date: 2022-10-05
 Updated: 2022-10-02
 Summary: The second feature for FormaK landed: generating Python models

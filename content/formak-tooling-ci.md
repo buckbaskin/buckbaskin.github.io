@@ -1,14 +1,14 @@
 ---
 Title: FormaK Tooling: CI
 Category: Building
-Tags: FormaK, 30 for 30, GitHub, GitHub Actions
+Tags: FormaK, Project FormaK,30 for 30, GitHub, GitHub Actions
 Date: 2022-10-07
 Updated: 2022-10-04
-Summary: FormaK implements CI for new commits as of PR #4 (link) via GitHub Actions
+Summary: FormaK implements CI for new commits as of [PR #4](https://github.com/buckbaskin/formak/pull/4) via GitHub Actions
 Image: img/github-actions-example.jpg
 ---
 
-TLDR: FormaK implements CI for new commits as of PR #4 (link) via GitHub
+TLDR: FormaK implements CI for new commits as of [PR #4](https://github.com/buckbaskin/formak/pull/4) via GitHub
 Actions
 
 This post aims to be a short review of FormaK’s tooling for continuous
@@ -19,7 +19,7 @@ library](https://github.com/buckbaskin/formak/blob/master/docs/designs/formak_v0
 FormaK aims to deal with a handful of big features:
 
 - Code generation across languages
-- Detailed numerical code (link scikit learn)
+- Detailed numerical code (the [`scikit-learn` integration](https://github.com/buckbaskin/formak/blob/sklearn-integration/docs/designs/sklearn-integration.md) for example)
 
 FormaK’s design process also leans on testing as part of the design phase
 (feature tests) and refactoring with confidence in addition to tests for
@@ -30,15 +30,15 @@ The original format for this testing was a bash file:
 [`actions/ci.bash`](https://github.com/buckbaskin/formak/blob/17199f85d98623395eba3556fcb24214e958f3f6/actions/ci.bash).
 This runs the tests for the project in multiple configurations, but requires
 remembering to run locally. As a convinience, the project also has a Makefile
-to enable the command make ci but that doesn’t solve the missing automation.
+to enable the command `make ci` but that doesn’t solve the missing automation.
 
 Instead, the FormaK project now uses GitHub Actions to run these tests
 automatically. The configurations can be seen in
 [.github/workflows](https://github.com/buckbaskin/formak/tree/17199f85d98623395eba3556fcb24214e958f3f6/.github/workflows),
 with one each for:
 
-- Demos: do they run?
 - Feature tests: do they pass?
+- Demos: do they run?
 - Unit tests: do they pass?
 
 This integrates automatically with Github PRs to give the following:

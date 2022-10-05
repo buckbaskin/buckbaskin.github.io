@@ -1,7 +1,7 @@
 ---
 Title: FormaK User Interface Experiment: Physical Units as Python Types
 Category: Building
-Tags: FormaK, User Interface, 30 for 30
+Tags: FormaK, Project FormaK,User Interface, 30 for 30
 Date: 2022-10-03
 Updated: 2022-10-01
 Summary: Using Python's type checking to check for mismatched physical quantities

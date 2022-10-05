@@ -1,7 +1,7 @@
 ---
 Title: I Love Bazel, I Hate Bazel
 Category: Building
-Tags: Bazel, FormaK, Selenium, 30 for 30
+Tags: Bazel, FormaK, Project FormaK, Selenium, 30 for 30
 Date: 2022-10-02
 Updated: 2022-10-01
 Summary: I love Bazel. It's one of those satisfying tools where computer science algorithms and data structures fuse with good software practice to create something that's satisfying on many levels. It knows how to minimally rebuild things. It knows how to hermetically build things in a repeatable way. I also hate Bazel.

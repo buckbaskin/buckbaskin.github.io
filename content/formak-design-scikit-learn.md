@@ -1,7 +1,7 @@
 ---
 Title: FormaK Coming Soon: Scikt-Learn Integration
 Category: Building
-Tags: FormaK, 30 for 30, Python, Scikit-Learn
+Tags: FormaK, Project FormaK,30 for 30, Python, Scikit-Learn
 Date: 2022-10-06
 Updated: 2022-10-02
 Summary: There's a new feature coming to Formak: integration with sckit-learn. This enables quickly integrating new features such as model selection, pipelines and other data tooling.

@@ -12,10 +12,11 @@ te.css" />
 
     <meta name="twitter:creator" content="@beBaskin"></meta>
     <meta name="twitter:title" content="FormaK Tooling: CI - Building and Breaking"></meta>
-    <meta name="description" content="<p>FormaK implements CI for new commits as of PR #4 (link) via GitHub Actions</p>" />
-    <meta name="twitter:description" content="<p>FormaK implements CI for new commits as of PR #4 (link) via GitHub Actions</p>"></meta>
+    <meta name="description" content="<p>FormaK implements CI for new commits as of <a href="https://github.com/buckbaskin/formak/pull/4">PR #4</a> via GitHub Actions</p>" />
+    <meta name="twitter:description" content="<p>FormaK implements CI for new commits as of <a href="https://github.com/buckbaskin/formak/pull/4">PR #4</a> via GitHub Actions</p>"></meta>
 
     <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
     <meta name="tags" content="30 for 30" />
     <meta name="tags" content="GitHub" />
     <meta name="tags" content="GitHub Actions" />
@@ -43,6 +44,7 @@ te.css" />
     </address>
     <div class="tags">
             <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
             <a href="/blog/tag/30-for-30.html">30 for 30</a>
             <a href="/blog/tag/github.html">GitHub</a>
             <a href="/blog/tag/github-actions.html">GitHub Actions</a>
@@ -51,7 +53,7 @@ te.css" />
   <div class="entry-content">
     <p><a href="/blog/formak-tooling-ci.html" rel="bookmark"
          title="Permalink to FormaK Tooling: CI">permalink</a></p>
-    <p>TLDR: FormaK implements CI for new commits as of PR #4 (link) via GitHub
+    <p>TLDR: FormaK implements CI for new commits as of <a href="https://github.com/buckbaskin/formak/pull/4">PR #4</a> via GitHub
 Actions</p>
 <p>This post aims to be a short review of FormaK’s tooling for continuous
 integration (CI). </p>
@@ -60,7 +62,7 @@ library</a>,
 FormaK aims to deal with a handful of big features:</p>
 <ul>
 <li>Code generation across languages</li>
-<li>Detailed numerical code (link scikit learn)</li>
+<li>Detailed numerical code (the <a href="https://github.com/buckbaskin/formak/blob/sklearn-integration/docs/designs/sklearn-integration.md"><code>scikit-learn</code> integration</a> for example)</li>
 </ul>
 <p>FormaK’s design process also leans on testing as part of the design phase
 (feature tests) and refactoring with confidence in addition to tests for
@@ -70,14 +72,14 @@ automatic testing is incredibly useful to the project.</p>
 <a href="https://github.com/buckbaskin/formak/blob/17199f85d98623395eba3556fcb24214e958f3f6/actions/ci.bash"><code>actions/ci.bash</code></a>.
 This runs the tests for the project in multiple configurations, but requires
 remembering to run locally. As a convinience, the project also has a Makefile
-to enable the command make ci but that doesn’t solve the missing automation.</p>
+to enable the command <code>make ci</code> but that doesn’t solve the missing automation.</p>
 <p>Instead, the FormaK project now uses GitHub Actions to run these tests
 automatically. The configurations can be seen in
 <a href="https://github.com/buckbaskin/formak/tree/17199f85d98623395eba3556fcb24214e958f3f6/.github/workflows">.github/workflows</a>,
 with one each for:</p>
 <ul>
-<li>Demos: do they run?</li>
 <li>Feature tests: do they pass?</li>
+<li>Demos: do they run?</li>
 <li>Unit tests: do they pass?</li>
 </ul>
 <p>This integrates automatically with Github PRs to give the following:</p>
