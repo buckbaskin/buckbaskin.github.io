@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Under The Hood: Optimization for scikit-learn integration - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK Under The Hood: Optimization for scikit-learn integration - Building and Breaking"></meta>
+    <meta name="description" content="<p>For the new scikit-learn feature, let's dive into how the model gets fit to data.</p>" />
+    <meta name="twitter:description" content="<p>For the new scikit-learn feature, let's dive into how the model gets fit to data.</p>"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="30 for 30" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="Scikit-Learn" />
+    <meta name="tags" content="Scipy" />
+    <meta name="tags" content="optimization" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Under The Hood: Optimization for scikit-learn integration - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-10-08T00:00:00-07:00">
+      Sat 08 October 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/30-for-30.html">30 for 30</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/scikit-learn.html">Scikit-Learn</a>
+            <a href="/blog/tag/scipy.html">Scipy</a>
+            <a href="/blog/tag/optimization.html">optimization</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-under-the-hood-optimization-for-scikit-learn-integration.html" rel="bookmark"
+         title="Permalink to FormaK Under The Hood: Optimization for scikit-learn integration">permalink</a></p>
+    <p>One of the common interfaces, perhaps the common interface, of scikit-learn is
+<code>fit(X, y)</code>, which updates the estimator's internal parameters to fit some data
+(potentially based on other hyper-parameters, like say a symbolic model of the
+system).</p>
+<p>FormaK is trying to assess the model quality and elect model parameters that
+best fit the data. In order to do that, the FormaK library provides a Kalman
+filter implementation for quantifying and assessing errors in a structured way
+while processing the data. This is similar to some of scikit-learn's
+functionality
+(<a href="https://scikit-learn.org/stable/modules/covariance.html#covariance">Covariance</a>
+for example), but allows for a stronger model-first approach by integrating a
+process model (the symbolic model) and "sensors" for translating that process
+state into the format that we get data coming into the system.</p>
+<p>Where this doesn't immediately line up is in selecting the parameters for the
+Kalman filter. We have a model of how the system interacts for the state space,
+we have a state and we have data, but how do we get a <code>fit</code>?</p>
+<p>Skip to the <a href="#summary">Summary</a> if you just want to see how to use this in FormaK</p>
+<h1 id="part-1-what-are-we-fitting">Part 1: What are we fitting?<a class="headerlink" href="#part-1-what-are-we-fitting" title="Permanent link">¶</a></h1>
+<p>The Kalman Filter provides an additional benefit that I glossed over earlier:
+it tracks the covariance for the state and, via the sensor models, this allows
+us to assess the magnitude of the error for each new data point versus our
+expectation. This is called the innovation.</p>
+<p>Normally we might say that we'd want to approach zero error (and therefore zero
+innovation); however, for the Kalman filter model we actually want to approach
+mean zero and standard deviation of 1 when normalized by the expected variance.
+This means that we don't have any biases in the model and our assessment of the
+noise in the system matches the noise in the data.</p>
+<p>The loss function that looks something like this would be ideal:</p>
+<p><img alt="Curve with minimum at x=1" src="/blog/img/hand-innovation-loss-function.jpg" class="wideimage"/></p>
+<p>One possible function: <code>( 1 / x + x ) / 2</code></p>
+<p>As we approach 0, the 1/x term dominates and as x grows, x dominates. Together,
+the functions combine to produce a minima at x=1 (and equal to y=1 when we
+include the /2 term).</p>
+<h1 id="part-2-optimization">Part 2: Optimization<a class="headerlink" href="#part-2-optimization" title="Permanent link">¶</a></h1>
+<p>Ok, so we have a metric where we can look at our data and understand if it's a
+good fit or not for the model: innovation. What next?</p>
+<p>Here is where we can make a big leap forward by standing on the shoulders of
+giants: scipy provides a general algorithm for optimizing once we have a
+metric, called <code>minimize</code>. All we have to do is provide a function to calculate
+the metric (would you look at that, we've got this covered with the innovation)
+and the initial state from which to start the optimization.</p>
+<p>The initial state here isn't quite the state of the Kalman Filter (although
+that can be a part of it). Instead, the optimization problem we're considering
+is the mapping from choices of noise parameters to innovation outcomes, so the
+state vector we're going to use is made up of the various noise parameters for
+the model.</p>
+<h1 id="part-3-results">Part 3: Results<a class="headerlink" href="#part-3-results" title="Permanent link">¶</a></h1>
+<p>To test out the optimization at a high level, I've set up a simple test case.
+The data is pretty arbitrary and set around a simple model of position,
+velocity and acceleration. The 
+<a href="https://github.com/buckbaskin/formak/blob/5116eae67644cacce1a26847219cc35682d38da3/featuretests/scikit_learn_integration/simple_regression_test.py#L32-L51">code to run the fit</a> 
+looks something like this:</p>
+<pre><code>model = python.compile_ekf(
+    ui.Model(dt=dt, state=state, control=control, state_model=state_model), **params
+)
+
+readings = X = np.array([[10, 0, 0], [10, 0, 1], [9, 1, 2]])
+
+# Fit the model to data
+model.fit(readings)
+
+fit_score = model.score(readings)
+
+assert fit_score &lt; unfit_score
+</code></pre>
+<p>And the 
+<a href="https://github.com/buckbaskin/formak/blob/5116eae67644cacce1a26847219cc35682d38da3/py/formak/python.py#L429-L453">optimization code</a>
+looks something like this:</p>
+<pre><code># Fit the model to data
+def fit(self, X, y=None, sample_weight=None):
+    # TODO(buck): Figure out dt, add it as the first element of X
+    dt = 0.1
+
+    assert self.params["process_noise"] is not None
+    assert self.params["sensor_models"] is not None
+    assert self.params["sensor_noises"] is not None
+
+    x0 = self._flatten_scoring_params(self.params)
+    # TODO(buck): implement parameter fitting, y ignored
+    def minimize_this(x):
+        holdout_params = dict(self.get_params())
+
+        scoring_params = self._inverse_flatten_scoring_params(x)
+        self.set_params(**scoring_params)
+
+        score = self.score(X, y, sample_weight)
+
+        self.set_params(**holdout_params)
+        return score
+
+    minimize_this(x0)
+
+    result = minimize(minimize_this, x0)
+
+    if not result.success:
+        print("success", result.success, result.message)
+        assert result.success
+
+    soln_as_params = self._inverse_flatten_scoring_params(result.x)
+    self.set_params(**soln_as_params)
+
+    return self
+
+def score(self, X, y=None, sample_weight=None):
+    state = np.zeros((self.state_size, 1))
+    covariance = np.eye(self.state_size)
+
+    innovations = []
+
+    for idx in range(X.shape[0]):
+        controls_input, the_rest = (
+            X[idx, : self.control_size],
+            X[idx, self.control_size :],
+        )
+        state, covariance = self.process_model(
+            dt, state, covariance, controls_input
+        )
+
+        innovation = []
+
+        for key in sorted(list(self.params["sensor_models"])):
+            sensor_size = len(self.params["sensor_models"][key])
+
+            sensor_input, the_rest = (
+                the_rest[:sensor_size],
+                the_rest[sensor_size:],
+            )
+            state, covariance = self.sensor_model(
+                key, state, covariance, sensor_input
+            )
+
+            # Normalized by the uncertainty at the time of the measurement
+            innovation.append(
+                np.matmul(
+                    self.innovations[key],
+                    np.linalg.inv(self.sensor_prediction_uncertainty[key]),
+                )
+            )
+
+        innovations.append(innovation)
+
+    x = np.sum(np.square(innovations))
+
+    # minima at x = 1, innovations match noise model
+    return (1.0 / x + x) / 2.0
+</code></pre>
+<p>This took some tweaking to get right, but the outcome is going from an error
+score of 1.29 down to 1.00. It's only a couple of data points, so the numbers
+aren't meaningful, but we can see that the minimization is working to decrease
+the model error by manipulating the noise parameters.</p>
+<p>With this work under the hood, we can now easily select parameters for a
+model based on data.</p>
+<h1 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h1>
+<p>Under the hood of the <code>fit</code> interface Formak uses an optimization algorithm
+working on your behalf to pick model parameters based on your data.</p>
+<p>To use this with FormaK, all you have to do is define your model and call fit
+on your data.</p>
+<pre><code># define physics
+physics_model = {
+    x: x + dt * v,
+    v: v,
+}
+# load some data
+data = ...
+# prepare the model
+model = python.compile_ekf(
+    ui.Model(dt=dt, state=state, control=control, state_model=physics_model), **params
+)
+physics_model.fit(data)
+# profit
+</code></pre>
+<p>From there, you're off to the races working with an optimal model :)</p>
+<p>If you want to try this out, check out the 
+<a href="https://github.com/buckbaskin/formak/pull/3">pull request</a> or play with the 
+branch
+<a href="https://github.com/buckbaskin/formak/tree/sklearn-integration"><code>sklearn-integration</code></a>
+When you try it out, if you find any bugs or have questions, please 
+<a href="https://github.com/buckbaskin/formak/issues">open an issue</a> on Github</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
