@@ -13,61 +13,61 @@ One of the common interfaces, perhaps the common interface, of scikit-learn is
 (potentially based on other hyper-parameters, like say a symbolic model of the
 system).
 
-FormaK is trying to assess the model quality and elect model parameters that
-best fit the data. In order to do that, the FormaK library provides a Kalman
-filter implementation for quantifying and assessing errors in a structured way
-while processing the data. This is similar to some of scikit-learn's
-functionality
+FormaK assesses the model quality and elects model parameters that best fit the
+data. In order to do that, the FormaK library implements a Kalman filter
+implementation for quantifying and assessing errors in a structured way. This
+is similar to some of scikit-learn's functionality
 ([Covariance](https://scikit-learn.org/stable/modules/covariance.html#covariance)
-for example), but allows for a stronger model-first approach by integrating a
+for example), but adds a stronger model-first capability by integrating a
 process model (the symbolic model) and "sensors" for translating that process
-state into the format that we get data coming into the system.
+state into the format that data enters the system.
 
 Where this doesn't immediately line up is in selecting the parameters for the
-Kalman filter. We have a model of how the system interacts for the state space,
+Kalman filter. We have a model of how the system moves through the state space,
 we have a state and we have data, but how do we get a `fit`?
 
-Skip to the [Summary](#summary) if you just want to see how to use this in FormaK
+Skip to the [Summary](#summary) if you just want to see how to get this in FormaK
 
 # Part 1: What are we fitting?
 
 The Kalman Filter provides an additional benefit that I glossed over earlier:
-it tracks the covariance for the state and, via the sensor models, this allows
-us to assess the magnitude of the error for each new data point versus our
-expectation. This is called the innovation.
+it tracks the covariance for the state and, via the sensor models, the
+covariance quantifies the expected error distribution for each new data point.
+The error between the predicted measurement and the reading is called the
+innovation and the score for how that matches the distribution is the
+[Mahalanobis distance](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.mahalanobis.html).
 
-Normally we might say that we'd want to approach zero error (and therefore zero
-innovation); however, for the Kalman filter model we actually want to approach
-mean zero and standard deviation of 1 when normalized by the expected variance.
-This means that we don't have any biases in the model and our assessment of the
-noise in the system matches the noise in the data.
+Normally approach approaches zero; however, for the Kalman filter model we
+actually want to approach mean zero and standard deviation of 1 when normalized
+by the expected variance.  Zero mean and standard deviation of 1 indicates that
+we don't have any biases in the model and our assessment of the noise in the
+system matches the noise in the data.
 
-The loss function that looks something like this would be ideal:
+A loss function for the variance that looks something like this would be ideal:
 
 ![Curve with minimum at x=1]({attach}/img/hand-innovation-loss-function.jpg)
 
 One possible function: `( 1 / x + x ) / 2`
 
-As we approach 0, the 1/x term dominates and as x grows, x dominates. Together,
-the functions combine to produce a minima at x=1 (and equal to y=1 when we
-include the /2 term).
+As the function approaches 0, the 1/x term dominates and as x grows, x
+dominates. Together, the functions combine to produce a minima at x=1 (and
+equal to y=1 with the /2 term).
 
 # Part 2: Optimization
 
-Ok, so we have a metric where we can look at our data and understand if it's a
-good fit or not for the model: innovation. What next?
+We have a metric where we can look at our data and understand if it's a
+good fit or not for the model: the Mahalanobis distance. What's next?
 
-Here is where we can make a big leap forward by standing on the shoulders of
-giants: scipy provides a general algorithm for optimizing once we have a
-metric, called `minimize`. All we have to do is provide a function to calculate
-the metric (would you look at that, we've got this covered with the innovation)
-and the initial state from which to start the optimization.
+FormaK gets a big leap forward by standing on the shoulders of giants: `scipy`
+provides a general algorithm for optimizing once we have a metric, called
+`minimize`. FormaK provides a function to calculate the metric (would you look
+at that, we've got this covered with the Mahalanobis distance) and the initial
+state from which to start the optimization.
 
-The initial state here isn't quite the state of the Kalman Filter (although
-that can be a part of it). Instead, the optimization problem we're considering
-is the mapping from choices of noise parameters to innovation outcomes, so the
-state vector we're going to use is made up of the various noise parameters for
-the model.
+The initial state isn't quite the state of the Kalman Filter (although that can
+be a part of it). Instead, to match the optimization problem we're considering
+(the mapping from choices of noise parameters to innovation outcomes) FormaK
+uses a state made up of the noise parameters for the model.
 
 # Part 3: Results
 
@@ -96,15 +96,9 @@ looks something like this:
 
     # Fit the model to data
     def fit(self, X, y=None, sample_weight=None):
-        # TODO(buck): Figure out dt, add it as the first element of X
         dt = 0.1
 
-        assert self.params["process_noise"] is not None
-        assert self.params["sensor_models"] is not None
-        assert self.params["sensor_noises"] is not None
-
         x0 = self._flatten_scoring_params(self.params)
-        # TODO(buck): implement parameter fitting, y ignored
         def minimize_this(x):
             holdout_params = dict(self.get_params())
 
@@ -176,9 +170,6 @@ This took some tweaking to get right, but the outcome is going from an error
 score of 1.29 down to 1.00. It's only a couple of data points, so the numbers
 aren't meaningful, but we can see that the minimization is working to decrease
 the model error by manipulating the noise parameters.
-
-With this work under the hood, we can now easily select parameters for a
-model based on data.
 
 # Summary
 

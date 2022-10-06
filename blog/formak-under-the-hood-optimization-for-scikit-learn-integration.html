@@ -61,48 +61,48 @@ te.css" />
 <code>fit(X, y)</code>, which updates the estimator's internal parameters to fit some data
 (potentially based on other hyper-parameters, like say a symbolic model of the
 system).</p>
-<p>FormaK is trying to assess the model quality and elect model parameters that
-best fit the data. In order to do that, the FormaK library provides a Kalman
-filter implementation for quantifying and assessing errors in a structured way
-while processing the data. This is similar to some of scikit-learn's
-functionality
+<p>FormaK assesses the model quality and elects model parameters that best fit the
+data. In order to do that, the FormaK library implements a Kalman filter
+implementation for quantifying and assessing errors in a structured way. This
+is similar to some of scikit-learn's functionality
 (<a href="https://scikit-learn.org/stable/modules/covariance.html#covariance">Covariance</a>
-for example), but allows for a stronger model-first approach by integrating a
+for example), but adds a stronger model-first capability by integrating a
 process model (the symbolic model) and "sensors" for translating that process
-state into the format that we get data coming into the system.</p>
+state into the format that data enters the system.</p>
 <p>Where this doesn't immediately line up is in selecting the parameters for the
-Kalman filter. We have a model of how the system interacts for the state space,
+Kalman filter. We have a model of how the system moves through the state space,
 we have a state and we have data, but how do we get a <code>fit</code>?</p>
-<p>Skip to the <a href="#summary">Summary</a> if you just want to see how to use this in FormaK</p>
+<p>Skip to the <a href="#summary">Summary</a> if you just want to see how to get this in FormaK</p>
 <h1 id="part-1-what-are-we-fitting">Part 1: What are we fitting?<a class="headerlink" href="#part-1-what-are-we-fitting" title="Permanent link">¶</a></h1>
 <p>The Kalman Filter provides an additional benefit that I glossed over earlier:
-it tracks the covariance for the state and, via the sensor models, this allows
-us to assess the magnitude of the error for each new data point versus our
-expectation. This is called the innovation.</p>
-<p>Normally we might say that we'd want to approach zero error (and therefore zero
-innovation); however, for the Kalman filter model we actually want to approach
-mean zero and standard deviation of 1 when normalized by the expected variance.
-This means that we don't have any biases in the model and our assessment of the
-noise in the system matches the noise in the data.</p>
-<p>The loss function that looks something like this would be ideal:</p>
+it tracks the covariance for the state and, via the sensor models, the
+covariance quantifies the expected error distribution for each new data point.
+The error between the predicted measurement and the reading is called the
+innovation and the score for how that matches the distribution is the
+<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.mahalanobis.html">Mahalanobis distance</a>.</p>
+<p>Normally approach approaches zero; however, for the Kalman filter model we
+actually want to approach mean zero and standard deviation of 1 when normalized
+by the expected variance.  Zero mean and standard deviation of 1 indicates that
+we don't have any biases in the model and our assessment of the noise in the
+system matches the noise in the data.</p>
+<p>A loss function for the variance that looks something like this would be ideal:</p>
 <p><img alt="Curve with minimum at x=1" src="/blog/img/hand-innovation-loss-function.jpg" class="wideimage"/></p>
 <p>One possible function: <code>( 1 / x + x ) / 2</code></p>
-<p>As we approach 0, the 1/x term dominates and as x grows, x dominates. Together,
-the functions combine to produce a minima at x=1 (and equal to y=1 when we
-include the /2 term).</p>
+<p>As the function approaches 0, the 1/x term dominates and as x grows, x
+dominates. Together, the functions combine to produce a minima at x=1 (and
+equal to y=1 with the /2 term).</p>
 <h1 id="part-2-optimization">Part 2: Optimization<a class="headerlink" href="#part-2-optimization" title="Permanent link">¶</a></h1>
-<p>Ok, so we have a metric where we can look at our data and understand if it's a
-good fit or not for the model: innovation. What next?</p>
-<p>Here is where we can make a big leap forward by standing on the shoulders of
-giants: scipy provides a general algorithm for optimizing once we have a
-metric, called <code>minimize</code>. All we have to do is provide a function to calculate
-the metric (would you look at that, we've got this covered with the innovation)
-and the initial state from which to start the optimization.</p>
-<p>The initial state here isn't quite the state of the Kalman Filter (although
-that can be a part of it). Instead, the optimization problem we're considering
-is the mapping from choices of noise parameters to innovation outcomes, so the
-state vector we're going to use is made up of the various noise parameters for
-the model.</p>
+<p>We have a metric where we can look at our data and understand if it's a
+good fit or not for the model: the Mahalanobis distance. What's next?</p>
+<p>FormaK gets a big leap forward by standing on the shoulders of giants: <code>scipy</code>
+provides a general algorithm for optimizing once we have a metric, called
+<code>minimize</code>. FormaK provides a function to calculate the metric (would you look
+at that, we've got this covered with the Mahalanobis distance) and the initial
+state from which to start the optimization.</p>
+<p>The initial state isn't quite the state of the Kalman Filter (although that can
+be a part of it). Instead, to match the optimization problem we're considering
+(the mapping from choices of noise parameters to innovation outcomes) FormaK
+uses a state made up of the noise parameters for the model.</p>
 <h1 id="part-3-results">Part 3: Results<a class="headerlink" href="#part-3-results" title="Permanent link">¶</a></h1>
 <p>To test out the optimization at a high level, I've set up a simple test case.
 The data is pretty arbitrary and set around a simple model of position,
@@ -127,15 +127,9 @@ assert fit_score &lt; unfit_score
 looks something like this:</p>
 <pre><code># Fit the model to data
 def fit(self, X, y=None, sample_weight=None):
-    # TODO(buck): Figure out dt, add it as the first element of X
     dt = 0.1
 
-    assert self.params["process_noise"] is not None
-    assert self.params["sensor_models"] is not None
-    assert self.params["sensor_noises"] is not None
-
     x0 = self._flatten_scoring_params(self.params)
-    # TODO(buck): implement parameter fitting, y ignored
     def minimize_this(x):
         holdout_params = dict(self.get_params())
 
@@ -207,8 +201,6 @@ def score(self, X, y=None, sample_weight=None):
 score of 1.29 down to 1.00. It's only a couple of data points, so the numbers
 aren't meaningful, but we can see that the minimization is working to decrease
 the model error by manipulating the noise parameters.</p>
-<p>With this work under the hood, we can now easily select parameters for a
-model based on data.</p>
 <h1 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h1>
 <p>Under the hood of the <code>fit</code> interface Formak uses an optimization algorithm
 working on your behalf to pick model parameters based on your data.</p>
