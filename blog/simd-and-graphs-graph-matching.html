@@ -77,13 +77,17 @@ broken down into the following:</p>
 patterns within the graph. The brief intuition is that regex describes finite
 state machines and we could use finite state machines to match the graph. The
 primary problem I found here was in two parts. First, the language to describe a
-match of something like "Add(.<em>,.</em>)" didn't scale to matching across graph
+match of something like <code>Add(.*,.*)</code> didn't scale to matching across graph
 levels. Second, it would take some effort to elegantly split an implementation
 of regex from its usual linear form to a tree form.</p>
 <p>The other misstep to highlight was trying to rewrite a Sympy compute graph into
 essentially the same thing with bespoke classes. The outcome of this would have
 been the same, with less functionality and harder to integrate out as a second
 form of internal representation.</p>
+<pre><code>Add = namedtuple("Add", ["left", "right"])
+# vs
+sympy.core.add.Add
+</code></pre>
 <h1 id="a-solution">A Solution<a class="headerlink" href="#a-solution" title="Permanent link">¶</a></h1>
 <h2 id="the-visitor-pattern">The Visitor Pattern<a class="headerlink" href="#the-visitor-pattern" title="Permanent link">¶</a></h2>
 <p>After exploring many patterns, the outcome I found most satisfying was that of
@@ -99,12 +103,31 @@ match whichever function we'd like and provide flexibility for the user. For
 example, for the SIMD function <code>_mm_add_ps</code> we want to match up to 4 add
 operations, so the logic for matching is a simple 
 <code>expr.func == sympy.core.add.Add</code>.</p>
+<pre><code>def visit_sympy_expr(expr, matcher):
+    if matcher(expr):
+        yield base, expr
+
+    for idx, arg in enumerate(expr.args):
+        for result in visit_sympy_expr(arg, matcher):
+            yield result
+</code></pre>
 <h2 id="prefix">Prefix<a class="headerlink" href="#prefix" title="Permanent link">¶</a></h2>
 <p>The next element to note about this particular implementation of matching is
 that it follows a prefix order. This means that each node will be matched before
 each of its children. This doesn't have much significance yet because we're not
 manipulating the graph, but it may make other transforms easier later. Consider
 it more of a note of an intentional design to revisit later.</p>
+<pre><code>def visit_sympy_expr(expr, matcher):
+    if matcher(expr): # prefix
+        yield base, expr
+
+    for idx, arg in enumerate(expr.args):
+        for result in visit_sympy_expr(arg, matcher):
+            yield result
+
+    if matcher(expr): # postfix
+        yield base, expr
+</code></pre>
 <h2 id="naming-and-a-sub-graph">Naming and a Sub-Graph<a class="headerlink" href="#naming-and-a-sub-graph" title="Permanent link">¶</a></h2>
 <p>The final element to note is one of naming. When performing these graph
 manipulations it's often useful to have a unique identifier. A typical option
@@ -114,6 +137,17 @@ heritage. When visiting the child of each node, add the index of the child in
 the parents list of arguments to the operator. In this way, each child is
 uniquely identified from its siblings (by different indices) and each child is
 uniquely identified from its parent (by different length of the list).</p>
+<pre><code>def visit_sympy_expr(expr, matcher, base=None):
+    if base is None:
+        base = []
+
+    if matcher(expr):
+        yield base, expr
+
+    for idx, arg in enumerate(expr.args):
+        for result in visit_sympy_expr(arg, matcher, base + [idx]):
+            yield result
+</code></pre>
 <p>This form of unique identifier also allows us to build a sub-graph of the
 original nodes in the form of matches. Edges in this graph form simplified data
 dependencies across matches and we can identify if there are data depedencies

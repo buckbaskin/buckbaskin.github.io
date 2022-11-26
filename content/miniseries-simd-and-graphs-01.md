@@ -3,7 +3,7 @@ Title: SIMD and Graphs: Graph Matching
 Category: Building
 Tags: Miniseries, FormaK, Graphs, SIMD
 Date: 2022-11-25
-Updated: 2022-11-25
+Updated: 2022-11-26
 Summary: This post is a new episode in a miniseries focused on SIMD instructions. This first post focuses on matching points in the compute graph where we can combine individual instructions to form SIMD instructions.
 ---
 
@@ -38,7 +38,7 @@ One of the first thoughts that I pursued was a regex like pattern for specifying
 patterns within the graph. The brief intuition is that regex describes finite
 state machines and we could use finite state machines to match the graph. The
 primary problem I found here was in two parts. First, the language to describe a
-match of something like "Add(.*,.*)" didn't scale to matching across graph
+match of something like `Add(.*,.*)` didn't scale to matching across graph
 levels. Second, it would take some effort to elegantly split an implementation
 of regex from its usual linear form to a tree form.
 
@@ -46,6 +46,10 @@ The other misstep to highlight was trying to rewrite a Sympy compute graph into
 essentially the same thing with bespoke classes. The outcome of this would have
 been the same, with less functionality and harder to integrate out as a second
 form of internal representation.
+
+    Add = namedtuple("Add", ["left", "right"])
+    # vs
+    sympy.core.add.Add
 
 # A Solution
 
@@ -65,6 +69,14 @@ example, for the SIMD function `_mm_add_ps` we want to match up to 4 add
 operations, so the logic for matching is a simple 
 `expr.func == sympy.core.add.Add`.
 
+    def visit_sympy_expr(expr, matcher):
+        if matcher(expr):
+            yield base, expr
+    
+        for idx, arg in enumerate(expr.args):
+            for result in visit_sympy_expr(arg, matcher):
+                yield result
+
 ## Prefix
 
 The next element to note about this particular implementation of matching is
@@ -72,6 +84,18 @@ that it follows a prefix order. This means that each node will be matched before
 each of its children. This doesn't have much significance yet because we're not
 manipulating the graph, but it may make other transforms easier later. Consider
 it more of a note of an intentional design to revisit later.
+
+    def visit_sympy_expr(expr, matcher):
+        if matcher(expr): # prefix
+            yield base, expr
+    
+        for idx, arg in enumerate(expr.args):
+            for result in visit_sympy_expr(arg, matcher):
+                yield result
+
+        if matcher(expr): # postfix
+            yield base, expr
+    
 
 ## Naming and a Sub-Graph
 
@@ -83,6 +107,17 @@ heritage. When visiting the child of each node, add the index of the child in
 the parents list of arguments to the operator. In this way, each child is
 uniquely identified from its siblings (by different indices) and each child is
 uniquely identified from its parent (by different length of the list).
+
+    def visit_sympy_expr(expr, matcher, base=None):
+        if base is None:
+            base = []
+    
+        if matcher(expr):
+            yield base, expr
+    
+        for idx, arg in enumerate(expr.args):
+            for result in visit_sympy_expr(arg, matcher, base + [idx]):
+                yield result
 
 This form of unique identifier also allows us to build a sub-graph of the
 original nodes in the form of matches. Edges in this graph form simplified data
