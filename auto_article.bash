@@ -1,4 +1,4 @@
-DATE="2020-05-18"
+DATE="2022-11-25"
 EDITDATE=`date +%Y-%m-%d`
 IDX=28
 FILE="content/restomod-${DATE}.md"
