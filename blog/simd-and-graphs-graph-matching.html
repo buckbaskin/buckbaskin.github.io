@@ -65,9 +65,9 @@ speed up in the code.</p>
 individual operations to a compute graph of SIMD operations. The steps are
 broken down into the following:</p>
 <ol>
-<li>Parse the sympy graph into a subset of pattern matches with partial orderings of patterns that contain (depend upon) other patterns. </li>
+<li>Parse the sympy graph into a subset of pattern matches with partial orderings of patterns that contain (depend upon) other patterns. (This post)</li>
 <li>Perform common subexpression elimination to deduplicate computations</li>
-<li>Run the Coffman-Graham algorithm to get a bounded nearly optimal allocation of the matches</li>
+<li><a href="/blog/simd-and-graphs-partitioning-graphs-into-data-dependency-levels.html">Run the Coffman-Graham algorithm to get a bounded nearly optimal allocation of the matches</a></li>
 <li>Edit the SIMD compute node in place of matching patterns</li>
 </ol>
 <p>This post focuses on pattern matching. </p>

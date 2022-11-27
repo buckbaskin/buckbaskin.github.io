@@ -3,7 +3,7 @@ Title: SIMD and Graphs: Graph Matching
 Category: Building
 Tags: Miniseries, FormaK, Graphs, SIMD
 Date: 2022-11-25
-Updated: 2022-11-26
+Updated: 2022-11-27
 Summary: This post is a new episode in a miniseries focused on SIMD instructions. This first post focuses on matching points in the compute graph where we can combine individual instructions to form SIMD instructions.
 Image: img/compute-graph-matching.jpg
 ---
@@ -24,9 +24,9 @@ This miniseries will focus on the steps to go from a symbolic compute graph of
 individual operations to a compute graph of SIMD operations. The steps are
 broken down into the following:
 
-1. Parse the sympy graph into a subset of pattern matches with partial orderings of patterns that contain (depend upon) other patterns. 
+1. Parse the sympy graph into a subset of pattern matches with partial orderings of patterns that contain (depend upon) other patterns. (This post)
 2. Perform common subexpression elimination to deduplicate computations
-3. Run the Coffman-Graham algorithm to get a bounded nearly optimal allocation of the matches
+3. [Run the Coffman-Graham algorithm to get a bounded nearly optimal allocation of the matches](/blog/simd-and-graphs-partitioning-graphs-into-data-dependency-levels.html)
 4. Edit the SIMD compute node in place of matching patterns
 
 This post focuses on pattern matching. 

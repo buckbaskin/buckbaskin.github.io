@@ -13,6 +13,10 @@ instructions. This post focuses on fusing common single operations
 across multiple data. If you haven't read the first post, I recommend reading
 the [first post](/blog/simd-and-graphs-graph-matching.html) on graph matching
 first.
+1. [Parse the sympy graph into a subset of pattern matches with partial orderings of patterns that contain (depend upon) other patterns](/blog/simd-and-graphs-graph-matching.html)
+2. Perform common subexpression elimination to deduplicate computations
+3. Run the Coffman-Graham algorithm to get a bounded nearly optimal allocation of the matches (This post)
+4. Edit the SIMD compute node in place of matching patterns
 
 SIMD (Single Instruction Multiple Data) looks to speed up performing the same
 calculation across multiple sets of data. Now that we have operations that
