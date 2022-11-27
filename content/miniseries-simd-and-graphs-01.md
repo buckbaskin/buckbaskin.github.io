@@ -5,6 +5,7 @@ Tags: Miniseries, FormaK, Graphs, SIMD
 Date: 2022-11-25
 Updated: 2022-11-26
 Summary: This post is a new episode in a miniseries focused on SIMD instructions. This first post focuses on matching points in the compute graph where we can combine individual instructions to form SIMD instructions.
+Image: img/compute-graph-matching.jpg
 ---
 
 This post is a new episode in a miniseries focused on SIMD instructions. This
