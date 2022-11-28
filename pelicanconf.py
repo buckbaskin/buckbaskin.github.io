@@ -19,11 +19,13 @@ TIMEZONE = 'America/Los_Angeles'
 DEFAULT_LANG = 'en'
 
 # Feed generation is usually not desired when developing
+FEED_DOMAIN = 'https://buckbaskin.com/blog'
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
+FEED_ALL_RSS = 'feed'
 
 # Blogroll
 LINKS = (('Pelican', 'http://getpelican.com/'),)
