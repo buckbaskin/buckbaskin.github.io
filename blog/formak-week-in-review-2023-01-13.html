@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Week in Review 2023-01-13 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK Week in Review 2023-01-13 - Building and Breaking"></meta>
+    <meta name="description" content="<p>It's been a little while since I last wrote about Formak ( <a href="https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html">FormaK Under The Hood: Optimization for scikit-learn integration</a> , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.</p>" />
+    <meta name="twitter:description" content="<p>It's been a little while since I last wrote about Formak ( <a href="https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html">FormaK Under The Hood: Optimization for scikit-learn integration</a> , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.</p>"></meta>
+
+    <meta name="tags" content="Project Formak" />
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="bazel" />
+    <meta name="tags" content="Week in Review" />
+    <meta name="tags" content="SIMD" />
+    <meta name="tags" content="Cpp" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="Code Generation" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Week in Review 2023-01-13 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2022-01-13T00:00:00-08:00">
+      Thu 13 January 2022
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/project-formak.html">Project Formak</a>
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/bazel.html">bazel</a>
+            <a href="/blog/tag/week-in-review.html">Week in Review</a>
+            <a href="/blog/tag/simd.html">SIMD</a>
+            <a href="/blog/tag/cpp.html">Cpp</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/code-generation.html">Code Generation</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-week-in-review-2023-01-13.html" rel="bookmark"
+         title="Permalink to FormaK Week in Review 2023-01-13">permalink</a></p>
+    <p>It's been a little while since I last wrote about Formak ( <a href="https://buckbaskin.com/blog/formak-u&#10;nder-the-hood-optimization-for-scikit-learn-integration.html">FormaK Under The
+Hood: Optimization for scikit-learn
+integration</a> , Sat 08 October
+2022)</p>
+<p>Since then, I've been busy adding functionality to FormaK:
+- <a href="https://github.com/buckbaskin/formak/pull/5">Graph Editing / Graph Matching</a> 
+    - <a href="https://buckbaskin.com/blog/simd-and-graphs-graph-matching.html">SIMD and Graphs: Graph Matching</a> 
+- <a href="https://github.com/buckbaskin/formak/pull/6">Coffman Graham Ordering</a> 
+    - <a href="https://buckbaskin.com/blog/simd-and-graphs-partitioning-graphs-into-data-dependency-levels.html">SIMD and Graphs: Partitioning Graphs into data-dependency levels</a> 
+- <a href="https://github.com/buckbaskin/formak/pull/7">CPU Modeling</a> 
+    - <a href="https://buckbaskin.com/blog/cpu-modeling-first-order-latency-and-data-dependencies.html">CPU Modeling: First Order Latency and Data Dependencies</a> </p>
+<p>I've also been <a href="https://github.com/buckbaskin/formak/pull/8">improving the
+tooling</a> for the project, inspired
+by <a href="https://www.b-list.org/weblog/2022/dec/19/boring-python-code-quality/">Boring Python: code
+quality</a></p>
+<p>The latest piece of functionality is the <a href="https://github.com/buckbaskin/formak/pull/9">C++ code
+generation</a>. The PR is in
+progress, but the initial experiments have proved out that the generation
+pipeline is feasible and able to be integrated into bazel.</p>
+<h1 id="c-code-generation">C++ Code Generation<a class="headerlink" href="#c-code-generation" title="Permanent link">¶</a></h1>
+<p>Starting the week, the PR was in a very experimental state. The code was
+configured to generate C++ (really C) code from a sympy model. It's pretty
+simple at this stage:</p>
+<p><code>model = x * y + x + y + 1 
+    ccode_model = ccode(model) 
+    return {  
+        "update_body": "_state += 1;", 
+        "getValue_body": "return _state;", 
+        "SympyModel_model_body": "return {};".format(ccode_model), 
+    }</code></p>
+<h2 id="complete-the-two-file-generation-experiment">Complete the Two File Generation Experiment<a class="headerlink" href="#complete-the-two-file-generation-experiment" title="Permanent link">¶</a></h2>
+<p>The first step this week was to turn the prototype into something closer to the
+final intended process by generating two files: the header file and the source
+file. The initial experiment generated only one file and it turned out to
+require some rethinking to get everything plugged together. Right now, this
+looks like:
+- Split out the template into a header and source template
+- Update a bazel bash command with hand-rolled arguments and point the command at the various template files
+- Update argparse in the Python code to read the hand-rolled arguments
+- Update the code generation to take a simple path to determining the header include [this will come back to bite later]</p>
+<p>This is a kinda long list to get right, so going forward I'd like to focus on simplifying it (or seeing if there can be a single source of truth). This focus might become second priority (and therefore not a priority) if it's something I can hide from the end user.</p>
+<h2 id="design-doc">Design Doc<a class="headerlink" href="#design-doc" title="Permanent link">¶</a></h2>
+<p>The <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/cpp_library_for_model_evaluation.md">design doc</a> was heavily borrowed from the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/python_library_for_model_evaluation.md">Python design doc</a> with updates to accommodate direct code generation vs a simpler sympy -&gt; Python translation. I encourage you to read through it and send me feedback on your thoughts <a href="https://twitter.com/bebaskin">@beBaskin</a>.</p>
+<h2 id="making-things-official-porting-the-experimental-code-to-feature-tests">Making things official: Porting the experimental code to feature tests<a class="headerlink" href="#making-things-official-porting-the-experimental-code-to-feature-tests" title="Permanent link">¶</a></h2>
+<p>Once I had a solid experiment and a design, I moved back to some of the code
+logisitics, specifically setting up the feature tests for the design. There are
+two feature tests:</p>
+<ol>
+<li>UI -&gt; C++: Simple 2D model of a parabolic trajectory converting from <code>ui.Model</code> to <code>cpp.Model</code></li>
+<li>Tooling: Simple 2D model of a parabolic trajectory converting from <code>ui.Model</code> to <code>cpp.ExtendedKalmanFilter</code></li>
+</ol>
+<p>For each test, what I hope to get out isn't too complicated: the Python -&gt; code
+gen -&gt; C++ code should compile and pass a basic test or two. Getting there
+wasn't quite so simple.</p>
+<p>First, I recreated a lot of the Python pipework for C++. This means things like
+test suites, tests and rearranging dependencies to distinguish between
+languages (previously everything essentially behaved as a Python pip
+dependency). To aid in an easy recreation of the experiment, I essentially
+copied over the implementation of the experiment as a feature test and then
+worked forwards (from the generation script) and backwards (from the C++ test)
+to move to the feature test as designed.</p>
+<p>While moving through half steps, the tricky to debug thing was a case of a
+missing import of FormaK in the generation script. As of c5ee64 , this was the
+limiting factor. The solution came down to replacing the <code>genrule</code> with a
+<code>run_binary</code> Skylark rule instead. The underlying problem seems to be that the
+genrule gets run in a very basic environment instead of running with all bazel
+dependencies populated. <code>run_binary</code> restricts what can be done, but when
+configured with a dependency on the Python build target it gets the correct
+environment. 3b8efa is the diff that fixed things if you want to dig further.</p>
+<h2 id="navigating-c-code-generation">Navigating C++ Code Generation<a class="headerlink" href="#navigating-c-code-generation" title="Permanent link">¶</a></h2>
+<p>At this point, we have a C++ compile time error due to inadequacy in the code
+generation. This is actually a good thing (:wave: hello from TDD land) because
+it's fairly straightforward to fix knowing that we can iterate in the land of
+C++. Before this point, problems could be Python problems (e.g. incorrectly
+using the Jinja API), bazel problems (e.g. taking too many shortcuts when
+creating a Skylark function) or C++ problems, but now they're just C++
+problems. This means that we can proceed forward with essentially writing C++
+to get a working solution, then extracting it out of the template into the code
+generation logic and then cleaning things up to iterate towards the correct
+solution.</p>
+<h2 id="a-bazel-win">A <code>bazel</code> win!<a class="headerlink" href="#a-bazel-win" title="Permanent link">¶</a></h2>
+<p>Before I harp on this too much, I do want to celebrate a win: I'm happy with
+how the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/formak_gen.bzl#L5-L70">bazel/Skylark
+rule</a>
+for generating C++ from Python has turned out. Taking some liberties to clean
+it up:</p>
+<p>```
+def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
+    PY_LIBRARY_NAME = name + "py-library-formak-model"
+    PY_BINARY_NAME = name + "py-binary-formak-model"
+    GENRULE_NAME = name + "genrule-formak-model"
+    CC_LIBRARY_NAME = name</p>
+<pre><code>ALWAYS_PY_DEPS = [
+    "//py:formak",
+    requirement("sympy"),
+    requirement("Jinja2"),
+]
+
+if pydeps == None:
+    pydeps = []
+
+py_library(
+    name = PY_LIBRARY_NAME,
+    srcs = pysrcs,
+    deps = pydeps + ALWAYS_PY_DEPS,
+    imports = imports,
+    visibility = ["//visibility:private"],
+)
+
+py_binary(
+    name = PY_BINARY_NAME,
+    srcs = [pymain],
+    main = pymain,
+    deps = [PY_LIBRARY_NAME],
+    visibility = ["//visibility:private"],
+)
+
+MODEL_TEMPLATES = "//py:templates"
+OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
+OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
+OUTPUT_FILES = [
+    OUTPUT_HEADER,
+    OUTPUT_SOURCE,
+]
+
+run_binary(
+    name = GENRULE_NAME,
+    tool = PY_BINARY_NAME,
+    args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
+    outs = OUTPUT_FILES,
+    srcs = ["//py:templates"],
+)
+
+native.cc_library(
+    name = CC_LIBRARY_NAME,
+    srcs = [OUTPUT_SOURCE],
+    hdrs = [OUTPUT_HEADER],
+    strip_include_prefix = "generated",
+    deps = [],
+    visibility = visibility,
+)
+</code></pre>
+<p>```</p>
+<p>Breaking it down, we can see that it's not doing too much magic. The Python
+file(s) are collected into a library, then used to run the binary dependency
+(this seems like it might be an extra step, but I'll stick with it for now).
+The Python binary is then used to run the <code>run_binary</code> step which generates C++
+code files. The code files are then compiled as sources of the final C++
+library. Using bazel visibility rules, we can restrict things to essentially
+just the output C++ library being visible, so the rule (from the outside) looks
+like we give it Python source files and get back a C++ library interface. All
+without having to do anything custom-looking in Bazel land.</p>
+<h1 id="a-taste-of-whats-coming-next">A taste of what’s coming next<a class="headerlink" href="#a-taste-of-whats-coming-next" title="Permanent link">¶</a></h1>
+<ul>
+<li>Completing C++ generation of models</li>
+<li>C++ generation of an EKF to quantify error behavior</li>
+</ul>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
