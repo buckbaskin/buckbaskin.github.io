@@ -14,6 +14,7 @@ nder-the-hood-optimization-for-scikit-learn-integration.html) , Sat 08 October
 2022)
 
 Since then, I've been busy adding functionality to FormaK:
+
 - [Graph Editing / Graph Matching](https://github.com/buckbaskin/formak/pull/5) 
 	- [SIMD and Graphs: Graph Matching](https://buckbaskin.com/blog/simd-and-graphs-graph-matching.html) 
 - [Coffman Graham Ordering](https://github.com/buckbaskin/formak/pull/6) 
