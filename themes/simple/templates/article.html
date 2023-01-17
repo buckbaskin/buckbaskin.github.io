@@ -11,8 +11,8 @@
     <meta name="description" content="{{article.description}}" />
     <meta name="twitter:description" content="{{article.description}}"></meta>
   {% elif article.summary %}
-    <meta name="description" content="{{article.summary}}" />
-    <meta name="twitter:description" content="{{article.summary}}"></meta>
+    <meta name="description" content="{{article.summary | forceescape }}" />
+    <meta name="twitter:description" content="{{article.summary | forceescape }}"></meta>
   {% endif %}
 
   {% for tag in article.tags %}

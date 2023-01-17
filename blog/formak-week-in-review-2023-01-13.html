@@ -13,8 +13,8 @@ te.css" />
 
     <meta name="twitter:creator" content="@beBaskin"></meta>
     <meta name="twitter:title" content="FormaK Week in Review 2023-01-13 - Building and Breaking"></meta>
-    <meta name="description" content="<p>It's been a little while since I last wrote about Formak ( <a href="https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html">FormaK Under The Hood: Optimization for scikit-learn integration</a> , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.</p>" />
-    <meta name="twitter:description" content="<p>It's been a little while since I last wrote about Formak ( <a href="https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html">FormaK Under The Hood: Optimization for scikit-learn integration</a> , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.</p>"></meta>
+    <meta name="description" content="&lt;p&gt;It&#39;s been a little while since I last wrote about Formak ( &lt;a href=&#34;https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html&#34;&gt;FormaK Under The Hood: Optimization for scikit-learn integration&lt;/a&gt; , Sat 08 October 2022). Since then, I&#39;ve been busy adding functionality to FormaK and I&#39;ve also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;It&#39;s been a little while since I last wrote about Formak ( &lt;a href=&#34;https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html&#34;&gt;FormaK Under The Hood: Optimization for scikit-learn integration&lt;/a&gt; , Sat 08 October 2022). Since then, I&#39;ve been busy adding functionality to FormaK and I&#39;ve also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.&lt;/p&gt;"></meta>
 
     <meta name="tags" content="Project Formak" />
     <meta name="tags" content="FormaK" />
@@ -64,13 +64,21 @@ te.css" />
 Hood: Optimization for scikit-learn
 integration</a> , Sat 08 October
 2022)</p>
-<p>Since then, I've been busy adding functionality to FormaK:
-- <a href="https://github.com/buckbaskin/formak/pull/5">Graph Editing / Graph Matching</a> 
-    - <a href="https://buckbaskin.com/blog/simd-and-graphs-graph-matching.html">SIMD and Graphs: Graph Matching</a> 
-- <a href="https://github.com/buckbaskin/formak/pull/6">Coffman Graham Ordering</a> 
-    - <a href="https://buckbaskin.com/blog/simd-and-graphs-partitioning-graphs-into-data-dependency-levels.html">SIMD and Graphs: Partitioning Graphs into data-dependency levels</a> 
-- <a href="https://github.com/buckbaskin/formak/pull/7">CPU Modeling</a> 
-    - <a href="https://buckbaskin.com/blog/cpu-modeling-first-order-latency-and-data-dependencies.html">CPU Modeling: First Order Latency and Data Dependencies</a> </p>
+<p>Since then, I've been busy adding functionality to FormaK:</p>
+<ul>
+<li><a href="https://github.com/buckbaskin/formak/pull/5">Graph Editing / Graph Matching</a> <ul>
+<li><a href="https://buckbaskin.com/blog/simd-and-graphs-graph-matching.html">SIMD and Graphs: Graph Matching</a> </li>
+</ul>
+</li>
+<li><a href="https://github.com/buckbaskin/formak/pull/6">Coffman Graham Ordering</a> <ul>
+<li><a href="https://buckbaskin.com/blog/simd-and-graphs-partitioning-graphs-into-data-dependency-levels.html">SIMD and Graphs: Partitioning Graphs into data-dependency levels</a> </li>
+</ul>
+</li>
+<li><a href="https://github.com/buckbaskin/formak/pull/7">CPU Modeling</a> <ul>
+<li><a href="https://buckbaskin.com/blog/cpu-modeling-first-order-latency-and-data-dependencies.html">CPU Modeling: First Order Latency and Data Dependencies</a> </li>
+</ul>
+</li>
+</ul>
 <p>I've also been <a href="https://github.com/buckbaskin/formak/pull/8">improving the
 tooling</a> for the project, inspired
 by <a href="https://www.b-list.org/weblog/2022/dec/19/boring-python-code-quality/">Boring Python: code
@@ -83,13 +91,15 @@ pipeline is feasible and able to be integrated into bazel.</p>
 <p>Starting the week, the PR was in a very experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:</p>
-<p><code>model = x * y + x + y + 1 
-    ccode_model = ccode(model) 
-    return {  
-        "update_body": "_state += 1;", 
-        "getValue_body": "return _state;", 
-        "SympyModel_model_body": "return {};".format(ccode_model), 
-    }</code></p>
+<pre><code>#!python
+model = x * y + x + y + 1 
+ccode_model = ccode(model) 
+return {  
+    "update_body": "_state += 1;", 
+    "getValue_body": "return _state;", 
+    "SympyModel_model_body": "return {};".format(ccode_model), 
+}
+</code></pre>
 <h2 id="complete-the-two-file-generation-experiment">Complete the Two File Generation Experiment<a class="headerlink" href="#complete-the-two-file-generation-experiment" title="Permanent link">¶</a></h2>
 <p>The first step this week was to turn the prototype into something closer to the
 final intended process by generating two files: the header file and the source
@@ -146,63 +156,63 @@ how the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/fo
 rule</a>
 for generating C++ from Python has turned out. Taking some liberties to clean
 it up:</p>
-<p>```
+<pre><code>#!python
 def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
     PY_LIBRARY_NAME = name + "py-library-formak-model"
     PY_BINARY_NAME = name + "py-binary-formak-model"
     GENRULE_NAME = name + "genrule-formak-model"
-    CC_LIBRARY_NAME = name</p>
-<pre><code>ALWAYS_PY_DEPS = [
-    "//py:formak",
-    requirement("sympy"),
-    requirement("Jinja2"),
-]
+    CC_LIBRARY_NAME = name
 
-if pydeps == None:
-    pydeps = []
+    ALWAYS_PY_DEPS = [
+        "//py:formak",
+        requirement("sympy"),
+        requirement("Jinja2"),
+    ]
 
-py_library(
-    name = PY_LIBRARY_NAME,
-    srcs = pysrcs,
-    deps = pydeps + ALWAYS_PY_DEPS,
-    imports = imports,
-    visibility = ["//visibility:private"],
-)
+    if pydeps == None:
+        pydeps = []
 
-py_binary(
-    name = PY_BINARY_NAME,
-    srcs = [pymain],
-    main = pymain,
-    deps = [PY_LIBRARY_NAME],
-    visibility = ["//visibility:private"],
-)
+    py_library(
+        name = PY_LIBRARY_NAME,
+        srcs = pysrcs,
+        deps = pydeps + ALWAYS_PY_DEPS,
+        imports = imports,
+        visibility = ["//visibility:private"],
+    )
 
-MODEL_TEMPLATES = "//py:templates"
-OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
-OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
-OUTPUT_FILES = [
-    OUTPUT_HEADER,
-    OUTPUT_SOURCE,
-]
+    py_binary(
+        name = PY_BINARY_NAME,
+        srcs = [pymain],
+        main = pymain,
+        deps = [PY_LIBRARY_NAME],
+        visibility = ["//visibility:private"],
+    )
 
-run_binary(
-    name = GENRULE_NAME,
-    tool = PY_BINARY_NAME,
-    args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
-    outs = OUTPUT_FILES,
-    srcs = ["//py:templates"],
-)
+    MODEL_TEMPLATES = "//py:templates"
+    OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
+    OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
+    OUTPUT_FILES = [
+        OUTPUT_HEADER,
+        OUTPUT_SOURCE,
+    ]
 
-native.cc_library(
-    name = CC_LIBRARY_NAME,
-    srcs = [OUTPUT_SOURCE],
-    hdrs = [OUTPUT_HEADER],
-    strip_include_prefix = "generated",
-    deps = [],
-    visibility = visibility,
-)
+    run_binary(
+        name = GENRULE_NAME,
+        tool = PY_BINARY_NAME,
+        args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
+        outs = OUTPUT_FILES,
+        srcs = ["//py:templates"],
+    )
+
+    native.cc_library(
+        name = CC_LIBRARY_NAME,
+        srcs = [OUTPUT_SOURCE],
+        hdrs = [OUTPUT_HEADER],
+        strip_include_prefix = "generated",
+        deps = [],
+        visibility = visibility,
+    )
 </code></pre>
-<p>```</p>
 <p>Breaking it down, we can see that it's not doing too much magic. The Python
 file(s) are collected into a library, then used to run the binary dependency
 (this seems like it might be an extra step, but I'll stick with it for now).

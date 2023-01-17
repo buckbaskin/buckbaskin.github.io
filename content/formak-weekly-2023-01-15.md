@@ -14,6 +14,7 @@ nder-the-hood-optimization-for-scikit-learn-integration.html) , Sat 08 October
 2022)
 
 Since then, I've been busy adding functionality to FormaK:
+
 - [Graph Editing / Graph Matching](https://github.com/buckbaskin/formak/pull/5) 
 	- [SIMD and Graphs: Graph Matching](https://buckbaskin.com/blog/simd-and-graphs-graph-matching.html) 
 - [Coffman Graham Ordering](https://github.com/buckbaskin/formak/pull/6) 
@@ -37,7 +38,7 @@ Starting the week, the PR was in a very experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:
 
-```
+    #!python
     model = x * y + x + y + 1 
     ccode_model = ccode(model) 
     return {  
@@ -45,7 +46,6 @@ simple at this stage:
         "getValue_body": "return _state;", 
         "SympyModel_model_body": "return {};".format(ccode_model), 
     } 
-```
 
 
 ## Complete the Two File Generation Experiment
@@ -117,63 +117,62 @@ rule](https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/formak_gen.bz
 for generating C++ from Python has turned out. Taking some liberties to clean
 it up:
 
-```
-def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
-    PY_LIBRARY_NAME = name + "py-library-formak-model"
-    PY_BINARY_NAME = name + "py-binary-formak-model"
-    GENRULE_NAME = name + "genrule-formak-model"
-    CC_LIBRARY_NAME = name
-
-    ALWAYS_PY_DEPS = [
-        "//py:formak",
-        requirement("sympy"),
-        requirement("Jinja2"),
-    ]
-
-    if pydeps == None:
-        pydeps = []
-
-    py_library(
-        name = PY_LIBRARY_NAME,
-        srcs = pysrcs,
-        deps = pydeps + ALWAYS_PY_DEPS,
-        imports = imports,
-        visibility = ["//visibility:private"],
-    )
-
-    py_binary(
-        name = PY_BINARY_NAME,
-        srcs = [pymain],
-        main = pymain,
-        deps = [PY_LIBRARY_NAME],
-        visibility = ["//visibility:private"],
-    )
-
-    MODEL_TEMPLATES = "//py:templates"
-    OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
-    OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
-    OUTPUT_FILES = [
-        OUTPUT_HEADER,
-        OUTPUT_SOURCE,
-    ]
-
-    run_binary(
-        name = GENRULE_NAME,
-        tool = PY_BINARY_NAME,
-        args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
-        outs = OUTPUT_FILES,
-        srcs = ["//py:templates"],
-    )
-
-    native.cc_library(
-        name = CC_LIBRARY_NAME,
-        srcs = [OUTPUT_SOURCE],
-        hdrs = [OUTPUT_HEADER],
-        strip_include_prefix = "generated",
-        deps = [],
-        visibility = visibility,
-    )
-```
+    #!python
+    def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
+        PY_LIBRARY_NAME = name + "py-library-formak-model"
+        PY_BINARY_NAME = name + "py-binary-formak-model"
+        GENRULE_NAME = name + "genrule-formak-model"
+        CC_LIBRARY_NAME = name
+    
+        ALWAYS_PY_DEPS = [
+            "//py:formak",
+            requirement("sympy"),
+            requirement("Jinja2"),
+        ]
+    
+        if pydeps == None:
+            pydeps = []
+    
+        py_library(
+            name = PY_LIBRARY_NAME,
+            srcs = pysrcs,
+            deps = pydeps + ALWAYS_PY_DEPS,
+            imports = imports,
+            visibility = ["//visibility:private"],
+        )
+    
+        py_binary(
+            name = PY_BINARY_NAME,
+            srcs = [pymain],
+            main = pymain,
+            deps = [PY_LIBRARY_NAME],
+            visibility = ["//visibility:private"],
+        )
+    
+        MODEL_TEMPLATES = "//py:templates"
+        OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
+        OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
+        OUTPUT_FILES = [
+            OUTPUT_HEADER,
+            OUTPUT_SOURCE,
+        ]
+    
+        run_binary(
+            name = GENRULE_NAME,
+            tool = PY_BINARY_NAME,
+            args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
+            outs = OUTPUT_FILES,
+            srcs = ["//py:templates"],
+        )
+    
+        native.cc_library(
+            name = CC_LIBRARY_NAME,
+            srcs = [OUTPUT_SOURCE],
+            hdrs = [OUTPUT_HEADER],
+            strip_include_prefix = "generated",
+            deps = [],
+            visibility = visibility,
+        )
 
 Breaking it down, we can see that it's not doing too much magic. The Python
 file(s) are collected into a library, then used to run the binary dependency
