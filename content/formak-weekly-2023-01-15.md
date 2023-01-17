@@ -38,7 +38,7 @@ Starting the week, the PR was in a very experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:
 
-    #!python
+    :::python
     model = x * y + x + y + 1 
     ccode_model = ccode(model) 
     return {  
@@ -117,7 +117,7 @@ rule](https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/formak_gen.bz
 for generating C++ from Python has turned out. Taking some liberties to clean
 it up:
 
-    #!python
+    :::python
     def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
         PY_LIBRARY_NAME = name + "py-library-formak-model"
         PY_BINARY_NAME = name + "py-binary-formak-model"

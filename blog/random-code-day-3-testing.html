@@ -65,11 +65,12 @@ code</a>,
 we can make a little bit of Python, convert it to an AST, make sure we're
 working on the correct node and make sure we've discovered the right names with
 something like this:</p>
-<pre><code>def test_IfExp():
-    ast = _strip_expr(str_to_ast("""0 if name else 1"""))
-    assert isinstance(ast, IfExp)
-    assert ["name"] == nested_unpack(ast)
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">test_IfExp</span><span class="ss">()</span>:<span class="w"/>
+<span class="w">    </span><span class="nv">ast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_strip_expr</span><span class="ss">(</span><span class="nv">str_to_ast</span><span class="ss">(</span><span class="s2">"""0 if name else 1"""</span><span class="ss">))</span><span class="w"/>
+<span class="w">    </span><span class="nv">assert</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">ast</span>,<span class="w"> </span><span class="nv">IfExp</span><span class="ss">)</span><span class="w"/>
+<span class="w">    </span><span class="nv">assert</span><span class="w"> </span>[<span class="s2">"name"</span>]<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">ast</span><span class="ss">)</span><span class="w"/>
+</code></pre></div>
+
 <p>The only bit of magic is that <code>str_to_ast</code> will remove the Module that Python
 assumes is the start of each string (as if it were its own file). With small
 examples like this, we can fairly easily cover the AST concept by concept.</p>
@@ -81,25 +82,29 @@ do these little tests to build up confidence things are working as expected.</p>
 <p>In the
 <a href="https://github.com/buckbaskin/random-python/commit/2dff8adf4104e5f2b086dcef874c583fa86e00ac#diff-6bb417164f20198c4e59062bb7b6b76426a82e595cb37ac5c1663f9df662c115R47-R49">test</a>
 we have:</p>
-<pre><code>def test_BoolOp():
+<div class="codehilite"><pre><span/><code>def test_BoolOp():
     ast = str_to_ast("""name or False""")
     assert ["name"] == nested_unpack(ast)
-</code></pre>
+</code></pre></div>
+
 <p>But we get an error:</p>
-<pre><code>E       AssertionError: assert ['name'] == [&lt;ast.Name ob...7b7aa5140970&gt;]
+<div class="codehilite"><pre><span/><code>E       AssertionError: assert ['name'] == [&lt;ast.Name ob...7b7aa5140970&gt;]
 E         At index 0 diff: 'name' != &lt;ast.Name object at 0x7b7aa5140970&gt;
-</code></pre>
+</code></pre></div>
+
 <p>The typo came down to returning the wrong thing: When iterating over the values
 in a BoolOp, we kept returning the value instead of the name id...</p>
-<pre><code>for v in element.values:
-    for vid in nested_unpack(v, top_level):
-        yield v
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:<span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">v</span><span class="w"/>
+</code></pre></div>
+
 <p>Becomes</p>
-<pre><code>for v in element.values:
-    for vid in nested_unpack(v, top_level):
-        yield vid
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:<span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">vid</span><span class="w"/>
+</code></pre></div>
+
 <p>Ultimately not a very complicated or insiduous bug, but definitely hard to
 catch trying to drive-by inspect the code while reading a diff</p>
 <h1 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">¶</a></h1>

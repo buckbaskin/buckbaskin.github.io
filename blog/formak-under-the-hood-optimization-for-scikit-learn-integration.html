@@ -110,7 +110,7 @@ The data is pretty arbitrary and set around a simple model of position,
 velocity and acceleration. The 
 <a href="https://github.com/buckbaskin/formak/blob/5116eae67644cacce1a26847219cc35682d38da3/featuretests/scikit_learn_integration/simple_regression_test.py#L32-L51">code to run the fit</a> 
 looks something like this:</p>
-<pre><code>model = python.compile_ekf(
+<div class="codehilite"><pre><span/><code>model = python.compile_ekf(
     ui.Model(dt=dt, state=state, control=control, state_model=state_model), **params
 )
 
@@ -122,82 +122,84 @@ model.fit(readings)
 fit_score = model.score(readings)
 
 assert fit_score &lt; unfit_score
-</code></pre>
+</code></pre></div>
+
 <p>And the 
 <a href="https://github.com/buckbaskin/formak/blob/5116eae67644cacce1a26847219cc35682d38da3/py/formak/python.py#L429-L453">optimization code</a>
 looks something like this:</p>
-<pre><code># Fit the model to data
-def fit(self, X, y=None, sample_weight=None):
-    dt = 0.1
+<div class="codehilite"><pre><span/><code><span class="err">#</span><span class="w"> </span><span class="n">Fit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">data</span><span class="w"/>
+<span class="n">def</span><span class="w"> </span><span class="n">fit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="w"> </span><span class="n">sample_weight</span><span class="o">=</span><span class="k">None</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="w"/>
 
-    x0 = self._flatten_scoring_params(self.params)
-    def minimize_this(x):
-        holdout_params = dict(self.get_params())
+<span class="w">    </span><span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_flatten_scoring_params</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">)</span><span class="w"/>
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">minimize_this</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="n">holdout_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dict</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">get_params</span><span class="p">())</span><span class="w"/>
 
-        scoring_params = self._inverse_flatten_scoring_params(x)
-        self.set_params(**scoring_params)
+<span class="w">        </span><span class="n">scoring_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_inverse_flatten_scoring_params</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">scoring_params</span><span class="p">)</span><span class="w"/>
 
-        score = self.score(X, y, sample_weight)
+<span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">sample_weight</span><span class="p">)</span><span class="w"/>
 
-        self.set_params(**holdout_params)
-        return score
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">holdout_params</span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">score</span><span class="w"/>
 
-    minimize_this(x0)
+<span class="w">    </span><span class="n">minimize_this</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="w"/>
 
-    result = minimize(minimize_this, x0)
+<span class="w">    </span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">minimize</span><span class="p">(</span><span class="n">minimize_this</span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">)</span><span class="w"/>
 
-    if not result.success:
-        print("success", result.success, result.message)
-        assert result.success
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">result</span><span class="p">.</span><span class="nl">success</span><span class="p">:</span><span class="w"/>
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="ss">"success"</span><span class="p">,</span><span class="w"> </span><span class="k">result</span><span class="p">.</span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="k">result</span><span class="p">.</span><span class="n">message</span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="n">assert</span><span class="w"> </span><span class="k">result</span><span class="p">.</span><span class="n">success</span><span class="w"/>
 
-    soln_as_params = self._inverse_flatten_scoring_params(result.x)
-    self.set_params(**soln_as_params)
+<span class="w">    </span><span class="n">soln_as_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_inverse_flatten_scoring_params</span><span class="p">(</span><span class="k">result</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"/>
+<span class="w">    </span><span class="n">self</span><span class="p">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">soln_as_params</span><span class="p">)</span><span class="w"/>
 
-    return self
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="w"/>
 
-def score(self, X, y=None, sample_weight=None):
-    state = np.zeros((self.state_size, 1))
-    covariance = np.eye(self.state_size)
+<span class="n">def</span><span class="w"> </span><span class="n">score</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="w"> </span><span class="n">sample_weight</span><span class="o">=</span><span class="k">None</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">self</span><span class="p">.</span><span class="n">state_size</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"/>
+<span class="w">    </span><span class="n">covariance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">state_size</span><span class="p">)</span><span class="w"/>
 
-    innovations = []
+<span class="w">    </span><span class="n">innovations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"/>
 
-    for idx in range(X.shape[0]):
-        controls_input, the_rest = (
-            X[idx, : self.control_size],
-            X[idx, self.control_size :],
-        )
-        state, covariance = self.process_model(
-            dt, state, covariance, controls_input
-        )
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="n">controls_input</span><span class="p">,</span><span class="w"> </span><span class="n">the_rest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"/>
+<span class="w">            </span><span class="n">X</span><span class="o">[</span><span class="n">idx, : self.control_size</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">            </span><span class="n">X</span><span class="o">[</span><span class="n">idx, self.control_size :</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">covariance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">process_model</span><span class="p">(</span><span class="w"/>
+<span class="w">            </span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">covariance</span><span class="p">,</span><span class="w"> </span><span class="n">controls_input</span><span class="w"/>
+<span class="w">        </span><span class="p">)</span><span class="w"/>
 
-        innovation = []
+<span class="w">        </span><span class="n">innovation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"/>
 
-        for key in sorted(list(self.params["sensor_models"])):
-            sensor_size = len(self.params["sensor_models"][key])
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="o">[</span><span class="n">"sensor_models"</span><span class="o">]</span><span class="p">))</span><span class="err">:</span><span class="w"/>
+<span class="w">            </span><span class="n">sensor_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="o">[</span><span class="n">"sensor_models"</span><span class="o">][</span><span class="n">key</span><span class="o">]</span><span class="p">)</span><span class="w"/>
 
-            sensor_input, the_rest = (
-                the_rest[:sensor_size],
-                the_rest[sensor_size:],
-            )
-            state, covariance = self.sensor_model(
-                key, state, covariance, sensor_input
-            )
+<span class="w">            </span><span class="n">sensor_input</span><span class="p">,</span><span class="w"> </span><span class="n">the_rest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"/>
+<span class="w">                </span><span class="n">the_rest</span><span class="o">[</span><span class="n">:sensor_size</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">                </span><span class="n">the_rest</span><span class="o">[</span><span class="n">sensor_size:</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">            </span><span class="p">)</span><span class="w"/>
+<span class="w">            </span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">covariance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">sensor_model</span><span class="p">(</span><span class="w"/>
+<span class="w">                </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">covariance</span><span class="p">,</span><span class="w"> </span><span class="n">sensor_input</span><span class="w"/>
+<span class="w">            </span><span class="p">)</span><span class="w"/>
 
-            # Normalized by the uncertainty at the time of the measurement
-            innovation.append(
-                np.matmul(
-                    self.innovations[key],
-                    np.linalg.inv(self.sensor_prediction_uncertainty[key]),
-                )
-            )
+<span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="n">Normalized</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">uncertainty</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nc">time</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">measurement</span><span class="w"/>
+<span class="w">            </span><span class="n">innovation</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="w"/>
+<span class="w">                </span><span class="n">np</span><span class="p">.</span><span class="n">matmul</span><span class="p">(</span><span class="w"/>
+<span class="w">                    </span><span class="n">self</span><span class="p">.</span><span class="n">innovations</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">                    </span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">sensor_prediction_uncertainty</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">),</span><span class="w"/>
+<span class="w">                </span><span class="p">)</span><span class="w"/>
+<span class="w">            </span><span class="p">)</span><span class="w"/>
 
-        innovations.append(innovation)
+<span class="w">        </span><span class="n">innovations</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">innovation</span><span class="p">)</span><span class="w"/>
 
-    x = np.sum(np.square(innovations))
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">square</span><span class="p">(</span><span class="n">innovations</span><span class="p">))</span><span class="w"/>
 
-    # minima at x = 1, innovations match noise model
-    return (1.0 / x + x) / 2.0
-</code></pre>
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">minima</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">innovations</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">noise</span><span class="w"> </span><span class="n">model</span><span class="w"/>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="w"/>
+</code></pre></div>
+
 <p>This took some tweaking to get right, but the outcome is going from an error
 score of 1.29 down to 1.00. It's only a couple of data points, so the numbers
 aren't meaningful, but we can see that the minimization is working to decrease
@@ -207,20 +209,21 @@ the model error by manipulating the noise parameters.</p>
 working on your behalf to pick model parameters based on your data.</p>
 <p>To use this with FormaK, all you have to do is define your model and call fit
 on your data.</p>
-<pre><code># define physics
-physics_model = {
-    x: x + dt * v,
-    v: v,
-}
-# load some data
-data = ...
-# prepare the model
-model = python.compile_ekf(
-    ui.Model(dt=dt, state=state, control=control, state_model=physics_model), **params
-)
-physics_model.fit(data)
-# profit
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="c1"># define physics</span><span class="w"/>
+<span class="n">physics_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">    </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="n">v</span><span class="p">:</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"/>
+<span class="p">}</span><span class="w"/>
+<span class="c1"># load some data</span><span class="w"/>
+<span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...</span><span class="w"/>
+<span class="c1"># prepare the model</span><span class="w"/>
+<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">python</span><span class="o">.</span><span class="n">compile_ekf</span><span class="p">(</span><span class="w"/>
+<span class="w">    </span><span class="n">ui</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">control</span><span class="o">=</span><span class="n">control</span><span class="p">,</span><span class="w"> </span><span class="n">state_model</span><span class="o">=</span><span class="n">physics_model</span><span class="p">),</span><span class="w"> </span><span class="o">**</span><span class="n">params</span><span class="w"/>
+<span class="p">)</span><span class="w"/>
+<span class="n">physics_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"/>
+<span class="c1"># profit</span><span class="w"/>
+</code></pre></div>
+
 <p>From there, you're off to the races working with an optimal model :)</p>
 <p>If you want to try this out, check out the 
 <a href="https://github.com/buckbaskin/formak/pull/3">pull request</a> or play with the 

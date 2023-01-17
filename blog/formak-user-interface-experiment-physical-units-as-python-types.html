@@ -68,41 +68,42 @@ programs would be ideal. In fact, can we take that approach to develop a
 physical units system based on Python's types?</p>
 <h1 id="the-experiment">The Experiment<a class="headerlink" href="#the-experiment" title="Permanent link">¶</a></h1>
 <p><a href="https://github.com/buckbaskin/formak/blob/physical-units-demo/demo/src/physical_units.py">source</a></p>
-<pre><code># ... some hacky code ...
+<div class="codehilite"><pre><span/><code><span class="c1"># ... some hacky code ...</span>
 
-class UnitMeta(type):
-    def __getitem__(cls, key: Tuple[int, int]):
-        meters, seconds = key
-        env = dict(UnitImpl.__dict__)
-        env["meters"] = meters
-        env["seconds"] = seconds
+<span class="k">class</span> <span class="n">UnitMeta</span>(<span class="nb">type</span>):
+    <span class="n">def</span> <span class="n">__getitem__</span>(<span class="n">cls</span>, <span class="n">key:</span> <span class="n">Tuple</span>[<span class="n">int</span>, <span class="n">int</span>]):
+        <span class="n">meters</span>, <span class="n">seconds</span> = <span class="nb">key</span>
+        <span class="n">env</span> = <span class="n">dict</span>(<span class="n">UnitImpl</span>.<span class="n">__dict__</span>)
+        <span class="n">env</span>[<span class="s">"meters"</span>] = <span class="n">meters</span>
+        <span class="n">env</span>[<span class="s">"seconds"</span>] = <span class="n">seconds</span>
 
-        Type = type("Unit", (UnitImpl,), env)
-        return GenericAlias(Type, key)
-
-
-class Unit(UnitImpl, metaclass=UnitMeta):
-    def __add__(self, rhs: Unit):
-        return super().__add__(rhs)
+        <span class="n">Type</span> = <span class="nb">type</span>(<span class="s">"Unit"</span>, (<span class="n">UnitImpl</span>,), <span class="n">env</span>)
+        <span class="k">return</span> <span class="n">GenericAlias</span>(<span class="n">Type</span>, <span class="nb">key</span>)
 
 
-dt = Unit[0, 1]("dt")  # Unit[0,1]
-accel = Unit[1, -2]("accel")  # Unit[1,-2]
-jerk = Unit[1, -3]("jerk")  # Unit[1,-3]
+<span class="k">class</span> <span class="n">Unit</span>(<span class="n">UnitImpl</span>, <span class="n">metaclass</span>=<span class="n">UnitMeta</span>):
+    <span class="n">def</span> <span class="n">__add__</span>(<span class="nb">self</span>, <span class="n">rhs:</span> <span class="n">Unit</span>):
+        <span class="k">return</span> <span class="n">super</span>().<span class="n">__add__</span>(<span class="n">rhs</span>)
 
-print("a", accel)
-print("dt", dt)
-print("a * dt", accel * dt)
 
-vel = accel * dt + jerk * (dt * dt) / 2
-print("vel", vel)
+<span class="n">dt</span> = <span class="n">Unit</span>[<span class="mi">0</span>, <span class="mi">1</span>](<span class="s">"dt"</span>)  <span class="c1"># Unit[0,1]</span>
+<span class="n">accel</span> = <span class="n">Unit</span>[<span class="mi">1</span>, -<span class="mi">2</span>](<span class="s">"accel"</span>)  <span class="c1"># Unit[1,-2]</span>
+<span class="n">jerk</span> = <span class="n">Unit</span>[<span class="mi">1</span>, -<span class="mi">3</span>](<span class="s">"jerk"</span>)  <span class="c1"># Unit[1,-3]</span>
 
-position = Unit[1, 0]("position")  # Unit[1,0]
+<span class="nb">print</span>(<span class="s">"a"</span>, <span class="n">accel</span>)
+<span class="nb">print</span>(<span class="s">"dt"</span>, <span class="n">dt</span>)
+<span class="nb">print</span>(<span class="s">"a * dt"</span>, <span class="n">accel</span> * <span class="n">dt</span>)
 
-position = (
-    vel + position
-)  # Expect to fail here (velocity not the same units as position)
-</code></pre>
+<span class="n">vel</span> = <span class="n">accel</span> * <span class="n">dt</span> + <span class="n">jerk</span> * (<span class="n">dt</span> * <span class="n">dt</span>) / <span class="mi">2</span>
+<span class="nb">print</span>(<span class="s">"vel"</span>, <span class="n">vel</span>)
+
+<span class="n">position</span> = <span class="n">Unit</span>[<span class="mi">1</span>, <span class="mi">0</span>](<span class="s">"position"</span>)  <span class="c1"># Unit[1,0]</span>
+
+<span class="n">position</span> = (
+    <span class="n">vel</span> + <span class="n">position</span>
+)  <span class="c1"># Expect to fail here (velocity not the same units as position)</span>
+</code></pre></div>
+
 <p>Mypy command: <code>python3 -m pip install -U mypy typing; mypy physical_units.py</code></p>
 <p>Mypy "error" message: <code>Success: no issues found in 1 source file</code></p>
 <p>Unfortunately, at this time I've not been able to get to a point where I can

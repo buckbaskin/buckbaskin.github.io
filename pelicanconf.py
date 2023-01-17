@@ -40,6 +40,9 @@ MARKDOWN = {
         'markdown.extensions.toc': {
             'permalink': True,
         },
+        'codehilite': {
+            'use_pygments': True
+        },
     }
 }
 

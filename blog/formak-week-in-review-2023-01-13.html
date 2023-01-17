@@ -91,15 +91,15 @@ pipeline is feasible and able to be integrated into bazel.</p>
 <p>Starting the week, the PR was in a very experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:</p>
-<pre><code>#!python
-model = x * y + x + y + 1 
-ccode_model = ccode(model) 
-return {  
-    "update_body": "_state += 1;", 
-    "getValue_body": "return _state;", 
-    "SympyModel_model_body": "return {};".format(ccode_model), 
-}
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="n">model</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span> 
+<span class="n">ccode_model</span> <span class="o">=</span> <span class="n">ccode</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> 
+<span class="k">return</span> <span class="p">{</span>  
+    <span class="s2">"update_body"</span><span class="p">:</span> <span class="s2">"_state += 1;"</span><span class="p">,</span> 
+    <span class="s2">"getValue_body"</span><span class="p">:</span> <span class="s2">"return _state;"</span><span class="p">,</span> 
+    <span class="s2">"SympyModel_model_body"</span><span class="p">:</span> <span class="s2">"return </span><span class="si">{}</span><span class="s2">;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ccode_model</span><span class="p">),</span> 
+<span class="p">}</span>
+</code></pre></div>
+
 <h2 id="complete-the-two-file-generation-experiment">Complete the Two File Generation Experiment<a class="headerlink" href="#complete-the-two-file-generation-experiment" title="Permanent link">¶</a></h2>
 <p>The first step this week was to turn the prototype into something closer to the
 final intended process by generating two files: the header file and the source
@@ -156,63 +156,63 @@ how the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/fo
 rule</a>
 for generating C++ from Python has turned out. Taking some liberties to clean
 it up:</p>
-<pre><code>#!python
-def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
-    PY_LIBRARY_NAME = name + "py-library-formak-model"
-    PY_BINARY_NAME = name + "py-binary-formak-model"
-    GENRULE_NAME = name + "genrule-formak-model"
-    CC_LIBRARY_NAME = name
+<div class="codehilite"><pre><span/><code><span class="k">def</span> <span class="nf">cc_formak_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pymain</span><span class="p">,</span> <span class="n">pysrcs</span><span class="p">,</span> <span class="n">pydeps</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">python_version</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">imports</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">visibility</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">PY_LIBRARY_NAME</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">"py-library-formak-model"</span>
+    <span class="n">PY_BINARY_NAME</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">"py-binary-formak-model"</span>
+    <span class="n">GENRULE_NAME</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">"genrule-formak-model"</span>
+    <span class="n">CC_LIBRARY_NAME</span> <span class="o">=</span> <span class="n">name</span>
 
-    ALWAYS_PY_DEPS = [
-        "//py:formak",
-        requirement("sympy"),
-        requirement("Jinja2"),
-    ]
+    <span class="n">ALWAYS_PY_DEPS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"//py:formak"</span><span class="p">,</span>
+        <span class="n">requirement</span><span class="p">(</span><span class="s2">"sympy"</span><span class="p">),</span>
+        <span class="n">requirement</span><span class="p">(</span><span class="s2">"Jinja2"</span><span class="p">),</span>
+    <span class="p">]</span>
 
-    if pydeps == None:
-        pydeps = []
+    <span class="k">if</span> <span class="n">pydeps</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pydeps</span> <span class="o">=</span> <span class="p">[]</span>
 
-    py_library(
-        name = PY_LIBRARY_NAME,
-        srcs = pysrcs,
-        deps = pydeps + ALWAYS_PY_DEPS,
-        imports = imports,
-        visibility = ["//visibility:private"],
-    )
+    <span class="n">py_library</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">PY_LIBRARY_NAME</span><span class="p">,</span>
+        <span class="n">srcs</span> <span class="o">=</span> <span class="n">pysrcs</span><span class="p">,</span>
+        <span class="n">deps</span> <span class="o">=</span> <span class="n">pydeps</span> <span class="o">+</span> <span class="n">ALWAYS_PY_DEPS</span><span class="p">,</span>
+        <span class="n">imports</span> <span class="o">=</span> <span class="n">imports</span><span class="p">,</span>
+        <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"//visibility:private"</span><span class="p">],</span>
+    <span class="p">)</span>
 
-    py_binary(
-        name = PY_BINARY_NAME,
-        srcs = [pymain],
-        main = pymain,
-        deps = [PY_LIBRARY_NAME],
-        visibility = ["//visibility:private"],
-    )
+    <span class="n">py_binary</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">PY_BINARY_NAME</span><span class="p">,</span>
+        <span class="n">srcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pymain</span><span class="p">],</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="n">pymain</span><span class="p">,</span>
+        <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="n">PY_LIBRARY_NAME</span><span class="p">],</span>
+        <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"//visibility:private"</span><span class="p">],</span>
+    <span class="p">)</span>
 
-    MODEL_TEMPLATES = "//py:templates"
-    OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
-    OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
-    OUTPUT_FILES = [
-        OUTPUT_HEADER,
-        OUTPUT_SOURCE,
-    ]
+    <span class="n">MODEL_TEMPLATES</span> <span class="o">=</span> <span class="s2">"//py:templates"</span>
+    <span class="n">OUTPUT_HEADER</span> <span class="o">=</span> <span class="s2">"generated/formak/</span><span class="si">%s</span><span class="s2">.h"</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,)</span>
+    <span class="n">OUTPUT_SOURCE</span> <span class="o">=</span> <span class="s2">"generated/formak/</span><span class="si">%s</span><span class="s2">.cpp"</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,)</span>
+    <span class="n">OUTPUT_FILES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">OUTPUT_HEADER</span><span class="p">,</span>
+        <span class="n">OUTPUT_SOURCE</span><span class="p">,</span>
+    <span class="p">]</span>
 
-    run_binary(
-        name = GENRULE_NAME,
-        tool = PY_BINARY_NAME,
-        args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
-        outs = OUTPUT_FILES,
-        srcs = ["//py:templates"],
-    )
+    <span class="n">run_binary</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">GENRULE_NAME</span><span class="p">,</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="n">PY_BINARY_NAME</span><span class="p">,</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"--templates"</span><span class="p">,</span> <span class="s2">"$(locations "</span> <span class="o">+</span> <span class="n">MODEL_TEMPLATES</span> <span class="o">+</span> <span class="s2">")"</span><span class="p">,</span> <span class="s2">"--header"</span><span class="p">,</span> <span class="s2">"$(location generated/formak/</span><span class="si">%s</span><span class="s2">.h)"</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,),</span> <span class="s2">"--source"</span><span class="p">,</span> <span class="s2">"$(location generated/formak/</span><span class="si">%s</span><span class="s2">.cpp)"</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,)],</span>
+        <span class="n">outs</span> <span class="o">=</span> <span class="n">OUTPUT_FILES</span><span class="p">,</span>
+        <span class="n">srcs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"//py:templates"</span><span class="p">],</span>
+    <span class="p">)</span>
 
-    native.cc_library(
-        name = CC_LIBRARY_NAME,
-        srcs = [OUTPUT_SOURCE],
-        hdrs = [OUTPUT_HEADER],
-        strip_include_prefix = "generated",
-        deps = [],
-        visibility = visibility,
-    )
-</code></pre>
+    <span class="n">native</span><span class="o">.</span><span class="n">cc_library</span><span class="p">(</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">CC_LIBRARY_NAME</span><span class="p">,</span>
+        <span class="n">srcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">OUTPUT_SOURCE</span><span class="p">],</span>
+        <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">OUTPUT_HEADER</span><span class="p">],</span>
+        <span class="n">strip_include_prefix</span> <span class="o">=</span> <span class="s2">"generated"</span><span class="p">,</span>
+        <span class="n">deps</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">visibility</span> <span class="o">=</span> <span class="n">visibility</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+
 <p>Breaking it down, we can see that it's not doing too much magic. The Python
 file(s) are collected into a library, then used to run the binary dependency
 (this seems like it might be an extra step, but I'll stick with it for now).
