@@ -91,13 +91,15 @@ pipeline is feasible and able to be integrated into bazel.</p>
 <p>Starting the week, the PR was in a very experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:</p>
-<p><code>model = x * y + x + y + 1 
-    ccode_model = ccode(model) 
-    return {  
-        "update_body": "_state += 1;", 
-        "getValue_body": "return _state;", 
-        "SympyModel_model_body": "return {};".format(ccode_model), 
-    }</code></p>
+<pre><code>#!python
+model = x * y + x + y + 1 
+ccode_model = ccode(model) 
+return {  
+    "update_body": "_state += 1;", 
+    "getValue_body": "return _state;", 
+    "SympyModel_model_body": "return {};".format(ccode_model), 
+}
+</code></pre>
 <h2 id="complete-the-two-file-generation-experiment">Complete the Two File Generation Experiment<a class="headerlink" href="#complete-the-two-file-generation-experiment" title="Permanent link">¶</a></h2>
 <p>The first step this week was to turn the prototype into something closer to the
 final intended process by generating two files: the header file and the source
@@ -154,63 +156,63 @@ how the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/py/private/fo
 rule</a>
 for generating C++ from Python has turned out. Taking some liberties to clean
 it up:</p>
-<p>```
+<pre><code>#!python
 def cc_formak_model(name, pymain, pysrcs, pydeps = None, python_version = None, imports = None, visibility = None, **kwargs):
     PY_LIBRARY_NAME = name + "py-library-formak-model"
     PY_BINARY_NAME = name + "py-binary-formak-model"
     GENRULE_NAME = name + "genrule-formak-model"
-    CC_LIBRARY_NAME = name</p>
-<pre><code>ALWAYS_PY_DEPS = [
-    "//py:formak",
-    requirement("sympy"),
-    requirement("Jinja2"),
-]
+    CC_LIBRARY_NAME = name
 
-if pydeps == None:
-    pydeps = []
+    ALWAYS_PY_DEPS = [
+        "//py:formak",
+        requirement("sympy"),
+        requirement("Jinja2"),
+    ]
 
-py_library(
-    name = PY_LIBRARY_NAME,
-    srcs = pysrcs,
-    deps = pydeps + ALWAYS_PY_DEPS,
-    imports = imports,
-    visibility = ["//visibility:private"],
-)
+    if pydeps == None:
+        pydeps = []
 
-py_binary(
-    name = PY_BINARY_NAME,
-    srcs = [pymain],
-    main = pymain,
-    deps = [PY_LIBRARY_NAME],
-    visibility = ["//visibility:private"],
-)
+    py_library(
+        name = PY_LIBRARY_NAME,
+        srcs = pysrcs,
+        deps = pydeps + ALWAYS_PY_DEPS,
+        imports = imports,
+        visibility = ["//visibility:private"],
+    )
 
-MODEL_TEMPLATES = "//py:templates"
-OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
-OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
-OUTPUT_FILES = [
-    OUTPUT_HEADER,
-    OUTPUT_SOURCE,
-]
+    py_binary(
+        name = PY_BINARY_NAME,
+        srcs = [pymain],
+        main = pymain,
+        deps = [PY_LIBRARY_NAME],
+        visibility = ["//visibility:private"],
+    )
 
-run_binary(
-    name = GENRULE_NAME,
-    tool = PY_BINARY_NAME,
-    args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
-    outs = OUTPUT_FILES,
-    srcs = ["//py:templates"],
-)
+    MODEL_TEMPLATES = "//py:templates"
+    OUTPUT_HEADER = "generated/formak/%s.h" % (name,)
+    OUTPUT_SOURCE = "generated/formak/%s.cpp" % (name,)
+    OUTPUT_FILES = [
+        OUTPUT_HEADER,
+        OUTPUT_SOURCE,
+    ]
 
-native.cc_library(
-    name = CC_LIBRARY_NAME,
-    srcs = [OUTPUT_SOURCE],
-    hdrs = [OUTPUT_HEADER],
-    strip_include_prefix = "generated",
-    deps = [],
-    visibility = visibility,
-)
+    run_binary(
+        name = GENRULE_NAME,
+        tool = PY_BINARY_NAME,
+        args = ["--templates", "$(locations " + MODEL_TEMPLATES + ")", "--header", "$(location generated/formak/%s.h)" % (name,), "--source", "$(location generated/formak/%s.cpp)" % (name,)],
+        outs = OUTPUT_FILES,
+        srcs = ["//py:templates"],
+    )
+
+    native.cc_library(
+        name = CC_LIBRARY_NAME,
+        srcs = [OUTPUT_SOURCE],
+        hdrs = [OUTPUT_HEADER],
+        strip_include_prefix = "generated",
+        deps = [],
+        visibility = visibility,
+    )
 </code></pre>
-<p>```</p>
 <p>Breaking it down, we can see that it's not doing too much magic. The Python
 file(s) are collected into a library, then used to run the binary dependency
 (this seems like it might be an extra step, but I'll stick with it for now).
