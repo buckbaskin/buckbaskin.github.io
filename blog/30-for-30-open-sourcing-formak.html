@@ -66,22 +66,23 @@ code that is easy to use.</p>
 that looks like this:</p>
 <p>```python
     dt = Symbol("dt")</p>
-<pre><code>tp = trajectory_properties = {k: Symbol(k) for k in ["mass", "z", "v", "a"]}
+<div class="codehilite"><pre><span/><code><span class="n">tp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trajectory_properties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="nl">k</span><span class="p">:</span><span class="w"> </span><span class="n">Symbol</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="o">[</span><span class="n">"mass", "z", "v", "a"</span><span class="o">]</span><span class="err">}</span><span class="w"/>
 
-thrust = Symbol("thrust")
+<span class="n">thrust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Symbol</span><span class="p">(</span><span class="ss">"thrust"</span><span class="p">)</span><span class="w"/>
 
-state = set(tp.values())
-control = set([thrust])
+<span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">set</span><span class="p">(</span><span class="n">tp</span><span class="p">.</span><span class="k">values</span><span class="p">())</span><span class="w"/>
+<span class="n">control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">set</span><span class="p">(</span><span class="o">[</span><span class="n">thrust</span><span class="o">]</span><span class="p">)</span><span class="w"/>
 
-state_model = {
-    tp["mass"]: tp["mass"],
-    tp["z"]: tp["z"] + dt * tp["v"],
-    tp["v"]: tp["v"] + dt * tp["a"],
-    tp["a"]: -9.81 * tp["mass"] + thrust,
-}
+<span class="n">state_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"/>
+<span class="w">    </span><span class="n">tp</span><span class="o">[</span><span class="n">"mass"</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"mass"</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="n">tp</span><span class="o">[</span><span class="n">"z"</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"z"</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"v"</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="n">tp</span><span class="o">[</span><span class="n">"v"</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"v"</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"a"</span><span class="o">]</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="n">tp</span><span class="o">[</span><span class="n">"a"</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="o">-</span><span class="mf">9.81</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tp</span><span class="o">[</span><span class="n">"mass"</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">thrust</span><span class="p">,</span><span class="w"/>
+<span class="err">}</span><span class="w"/>
 
-model = Model(dt=dt, state=state, control=control, state_model=state_model)
-</code></pre>
+<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Model</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="k">state</span><span class="o">=</span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">control</span><span class="o">=</span><span class="n">control</span><span class="p">,</span><span class="w"> </span><span class="n">state_model</span><span class="o">=</span><span class="n">state_model</span><span class="p">)</span><span class="w"/>
+</code></pre></div>
+
 <p>```</p>
 <h2 id="useable-c">Useable C++<a class="headerlink" href="#useable-c" title="Permanent link">¶</a></h2>
 <p>... becomes code you can use that looks like this:</p>

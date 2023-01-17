@@ -107,20 +107,21 @@ the AST, then run it through the transformer. We can then assert on the scope.
 The
 <a href="https://github.com/buckbaskin/random-python/blob/b4a9d4d3c5307d34e4504efaedf58ff52bf2b0c0/test/scoping_test.py#L35-L47">tests</a>
 look something like this:</p>
-<pre><code>def test_FunctionDef_annotation():
-    input_text = """
-def main(i: i):
-    return 1
-"""
-    ast = str_to_ast(input_text)
-    transformer = build_transformer(ast)
-    result = transformer.visit(ast)
+<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">test_FunctionDef_annotation</span><span class="ss">()</span>:<span class="w"/>
+<span class="w">    </span><span class="nv">input_text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="err">"</span>
+<span class="err">def main(i: i):</span>
+<span class="err">    return 1</span><span class="w"/>
+<span class="s2">""</span><span class="err">"</span>
+<span class="err">    ast = str_to_ast(input_text)</span>
+<span class="err">    transformer = build_transformer(ast)</span>
+<span class="err">    result = transformer.visit(ast)</span>
 
-    assert isinstance(result, FunctionDef)
-    args = result.args
-    assert isinstance(args, arguments)
-    assert "i" not in args._ending_scope
-</code></pre>
+<span class="err">    assert isinstance(result, FunctionDef)</span>
+<span class="err">    args = result.args</span>
+<span class="err">    assert isinstance(args, arguments)</span><span class="w"/>
+<span class="w">    </span><span class="nv">assert</span><span class="w"> </span><span class="s2">"i"</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">args</span>.<span class="nv">_ending_scope</span><span class="w"/>
+</code></pre></div>
+
 <h2 id="easy-littering">Easy Littering<a class="headerlink" href="#easy-littering" title="Permanent link">¶</a></h2>
 <p>Remembering to assign these scopes in all of the relevant places can be easy to
 forget for functions with multiple returns or otherwise require copying around

@@ -110,74 +110,76 @@ their dependencies recently added to the sorted ordering before nodes with less
 recent dependencies. Intuitively, this has the effect of performing a
 depth-first ordering of the data dependencies to order longer chains earlier and
 bundle together chains of dependencies.</p>
-<pre><code>ordered_nodes, unordered_nodes = setup_coffman_graham(graph, matcher)
-assert len(ordered_nodes) &gt; 0
+<div class="codehilite"><pre><span/><code><span class="n">ordered_nodes</span><span class="p">,</span><span class="w"> </span><span class="n">unordered_nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setup_coffman_graham</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">)</span><span class="w"/>
+<span class="nb">assert</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">ordered_nodes</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"/>
 
-def coffman_graham_filter_criteria(node):
-    path_to_expr, expr = node
+<span class="n">def</span><span class="w"> </span><span class="n">coffman_graham_filter_criteria</span><span class="p">(</span><span class="n">node</span><span class="p">):</span><span class="w"/>
+<span class="w">    </span><span class="n">path_to_expr</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="w"/>
 
-    for idx in range(len(expr.args)):
-        if tuple(path_to_expr + (idx,)) in unordered_nodes:
-            # Don't try to insert nodes that depend on unordered nodes
-            return False
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span><span class="w"/>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">tuple</span><span class="p">(</span><span class="n">path_to_expr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="p">,))</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">unordered_nodes</span><span class="p">:</span><span class="w"/>
+<span class="w">            </span><span class="c1"># Don't try to insert nodes that depend on unordered nodes</span><span class="w"/>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">False</span><span class="w"/>
 
-    # Node only depends on ordered nodes
-    return True
+<span class="w">    </span><span class="c1"># Node only depends on ordered nodes</span><span class="w"/>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">True</span><span class="w"/>
 
-def coffman_graham_sort_criteria(node):
-    path_to_expr, expr = node
-    args_depth_from_end = []
+<span class="n">def</span><span class="w"> </span><span class="n">coffman_graham_sort_criteria</span><span class="p">(</span><span class="n">node</span><span class="p">):</span><span class="w"/>
+<span class="w">    </span><span class="n">path_to_expr</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="w"/>
+<span class="w">    </span><span class="n">args_depth_from_end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"/>
 
-    for arg_idx, arg in enumerate(expr.args):
-        arg_path = path_to_expr + (arg_idx,)
-        for ordered_idx, (ordered_path, ordered_expr) in enumerate(
-            reversed(ordered_nodes)
-        ):
-            if arg_path == ordered_path:
-                args_depth_from_end.append(ordered_idx)
-                break
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">arg_idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span><span class="w"/>
+<span class="w">        </span><span class="n">arg_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path_to_expr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">arg_idx</span><span class="p">,)</span><span class="w"/>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">ordered_idx</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">ordered_path</span><span class="p">,</span><span class="w"> </span><span class="n">ordered_expr</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="w"/>
+<span class="w">            </span><span class="n">reversed</span><span class="p">(</span><span class="n">ordered_nodes</span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="p">):</span><span class="w"/>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">arg_path</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ordered_path</span><span class="p">:</span><span class="w"/>
+<span class="w">                </span><span class="n">args_depth_from_end</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ordered_idx</span><span class="p">)</span><span class="w"/>
+<span class="w">                </span><span class="k">break</span><span class="w"/>
 
-    return sorted(args_depth_from_end)
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sorted</span><span class="p">(</span><span class="n">args_depth_from_end</span><span class="p">)</span><span class="w"/>
 
-while len(unordered_nodes) &gt; 0:
-    next_in_order = min(
-        filter(coffman_graham_filter_criteria, unordered_nodes.items()),
-        key=coffman_graham_sort_criteria,
-    )
-    path, _expr = next_in_order
+<span class="k">while</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">unordered_nodes</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="w"/>
+<span class="w">    </span><span class="n">next_in_order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="w"/>
+<span class="w">        </span><span class="n">filter</span><span class="p">(</span><span class="n">coffman_graham_filter_criteria</span><span class="p">,</span><span class="w"> </span><span class="n">unordered_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span><span class="w"/>
+<span class="w">        </span><span class="n">key</span><span class="o">=</span><span class="n">coffman_graham_sort_criteria</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="p">)</span><span class="w"/>
+<span class="w">    </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">_expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next_in_order</span><span class="w"/>
 
-    ordered_nodes.append(next_in_order)
-    del unordered_nodes[tuple(path)]
-</code></pre>
+<span class="w">    </span><span class="n">ordered_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_in_order</span><span class="p">)</span><span class="w"/>
+<span class="w">    </span><span class="n">del</span><span class="w"> </span><span class="n">unordered_nodes</span><span class="p">[</span><span class="n">tuple</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span><span class="w"/>
+</code></pre></div>
+
 <h3 id="leveling">Leveling<a class="headerlink" href="#leveling" title="Permanent link">¶</a></h3>
 <p>In the second phase, nodes are processed in the reversed order from the first
 phase. Nodes are assigned to the lowest possible level that is at least one
 level above their downstream dependencies. The ordering of the first phase leads
 us to the smallest possible level stack (the minimal-length schedule). This is
 modified slightly to bump dependencies to the next level if the level is full.</p>
-<pre><code>levels = []
+<div class="codehilite"><pre><span/><code><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"/>
 
-for idx, node in enumerate(reversed(ordered_nodes)):
-    min_level = -1
-    for inv_level_idx, level in enumerate(reversed(levels)):
-        for maybe_dependency in level:
-            if is_dependency_of(node, maybe_dependency):
-                min_level = len(levels) - inv_level_idx - 1
-                # need to go to a greater level
-                break
-        if min_level &gt; -1:
-            break
+<span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">reversed</span><span class="p">(</span><span class="n">ordered_nodes</span><span class="p">))</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="n">min_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">inv_level_idx</span><span class="p">,</span><span class="w"> </span><span class="k">level</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">reversed</span><span class="p">(</span><span class="n">levels</span><span class="p">))</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">maybe_dependency</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">level</span><span class="err">:</span><span class="w"/>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">is_dependency_of</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">maybe_dependency</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">                </span><span class="n">min_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">inv_level_idx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"/>
+<span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">go</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="k">level</span><span class="w"/>
+<span class="w">                </span><span class="k">break</span><span class="w"/>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">min_level</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="err">:</span><span class="w"/>
+<span class="w">            </span><span class="k">break</span><span class="w"/>
 
-    for level_idx in range(min_level + 1, len(levels)):
-        if len(levels[level_idx]) &lt; width:
-            levels[level_idx].append(node)
-            break
-    else:
-        # We didn't find an acceptable level, so put it at a new higher level
-        levels.append([node])
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">level_idx</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">min_level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">levels</span><span class="p">))</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">levels</span><span class="o">[</span><span class="n">level_idx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nl">width</span><span class="p">:</span><span class="w"/>
+<span class="w">            </span><span class="n">levels</span><span class="o">[</span><span class="n">level_idx</span><span class="o">]</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="w"/>
+<span class="w">            </span><span class="k">break</span><span class="w"/>
+<span class="w">    </span><span class="k">else</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">We</span><span class="w"> </span><span class="n">didn</span><span class="err">'</span><span class="n">t</span><span class="w"> </span><span class="n">find</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">acceptable</span><span class="w"> </span><span class="k">level</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">put</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">higher</span><span class="w"> </span><span class="k">level</span><span class="w"/>
+<span class="w">        </span><span class="n">levels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">[</span><span class="n">node</span><span class="o">]</span><span class="p">)</span><span class="w"/>
 
-return levels
-</code></pre>
+<span class="k">return</span><span class="w"> </span><span class="n">levels</span><span class="w"/>
+</code></pre></div>
+
 <h2 id="filtervisitor-pattern">FilterVisitor Pattern<a class="headerlink" href="#filtervisitor-pattern" title="Permanent link">¶</a></h2>
 <p>This solution leans on the visitor pattern and matching structure from the
 previous post to set up the problem, which I'll refer to as the FilterVisitor.</p>
@@ -186,21 +188,23 @@ ordered list of nodes with no dependencies (leaves, usually symbols and
 constants) and an unordered map. By visiting the tree and matching our target
 operations, we can push them into the set of unordered operations and push the
 leaves into the ordered list.</p>
-<pre><code>def visit_sympy_expr(expr, matcher, base=None):
-    if base is None:
-        base = tuple()
+<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="o">=</span><span class="n">None</span><span class="p">):</span><span class="w"/>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">None</span><span class="p">:</span><span class="w"/>
+<span class="w">        </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tuple</span><span class="p">()</span><span class="w"/>
 
-    if matcher(expr):
-        yield base, expr
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"/>
+<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"/>
 
-    for idx, arg in enumerate(expr.args):
-        for result in visit_sympy_expr(arg, matcher, base + (idx,)):
-            yield result
-</code></pre>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span><span class="w"/>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="p">,)):</span><span class="w"/>
+<span class="w">            </span><span class="nb">yield</span><span class="w"> </span><span class="n">result</span><span class="w"/>
+</code></pre></div>
+
 <p>The matcher used for this example is:</p>
-<pre><code>def match_Add(expr):
-    return expr.func == sympy.core.add.Add or len(expr.args) == 0
-</code></pre>
+<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">match_Add</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"/>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">expr</span><span class="o">.</span><span class="k">func</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">sympy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">Add</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"/>
+</code></pre></div>
+
 <h2 id="related-work">Related Work<a class="headerlink" href="#related-work" title="Permanent link">¶</a></h2>
 <h3 id="llvm">LLVM<a class="headerlink" href="#llvm" title="Permanent link">¶</a></h3>
 <p>LLVM's <a href="https://www.llvm.org/docs/Vectorizers.html">auto-vectorization</a>
