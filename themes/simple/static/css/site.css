@@ -24,7 +24,7 @@ body {
     margin-right: auto;
     overflow-wrap: break-word;
 }
-p {
+p, pre {
     padding-left: 20px;
     padding-right: 20px;
 }
