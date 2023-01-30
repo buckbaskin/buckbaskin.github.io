@@ -52,5 +52,5 @@ For more posts about the project, check out the
 
 # Behind the Scenes
 
-1. [Behind the Scenes 2023-01-13](/blog/behind-the-scenes-2023-01-13-supercharging-evernote.html)
+1. [Behind the Scenes 2023-01-13](/blog/behind-the-scenes-2023-01-13.html)
 
