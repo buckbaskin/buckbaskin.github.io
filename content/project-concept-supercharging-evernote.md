@@ -1,7 +1,7 @@
 ---
 Title: Project Concept: Supercharging Evernote
 Category: Building
-Tags: Python, Knowledge Base, Evernote, scikit-learn
+Tags: Project Supercharging Evernote, Python, Knowledge Base, Evernote, scikit-learn
 Date: 2023-01-14
 Updated: 2023-01-29
 Summary: I'll admit it. I'm a document hoarder. For years I've been collecting and tagging notes in Evernote as I'll read through them to save for later. Can I use that hoarding to learn better?
@@ -47,4 +47,10 @@ collected and multiply the value that I get from my notes. The next step is to
 actually parse the notes into a format scikit-learn expects, adapt the tutorial
 and mine the clusters for insight.
 
-For more posts about the project, check out the [tag](/blog/tag/knowledge-base.html).
+For more posts about the project, check out the
+[project page](/blog/tag/project-supercharging-evernote.html).
+
+# Behind the Scenes
+
+1. [Behind the Scenes 2023-01-13](/blog/behind-the-scenes-2023-01-13-supercharging-evernote.html)
+

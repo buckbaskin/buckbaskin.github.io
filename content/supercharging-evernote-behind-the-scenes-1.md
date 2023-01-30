@@ -1,7 +1,7 @@
 ---
-Title: Behind the Scenes 2023-01-13 - Supercharging Evernote
+Title: Behind the Scenes 2023-01-13
 Category: Building
-Tags: Python, Knowledge Base, Evernote, scikit-learn, Markdown
+Tags: Project Supercharging Evernote, Python, Knowledge Base, Evernote, scikit-learn, Markdown
 Date: 2023-01-15
 Updated: 2023-01-29
 Summary: The first day of the project started with a focus on getting TF-IDF set up and connecting the data to the format that scikit-learn expects. Also, a brief diversion to start with small data before going to the big data approach.
@@ -83,6 +83,7 @@ introduction](/blog/project-concept-supercharging-evernote.html) for more about
 TF-IDF). With the tutorial's guidance, the dataset created and scikit-learn's
 high quality interface, the vectorization step is pretty concise:
 
+    :::python
     vectorizer = TfidfVectorizer(
         lowercase=True,
         token_pattern=r"(?u)\b\w\w\w+\b",  # 3 or more alphanumeric
@@ -110,3 +111,5 @@ per cluster). With that built, we'll be able to meet the goals of the project,
 including finding missing tags and discovering new combinations of ideas in the
 data.
 
+For more posts about the project, check out the
+[project page](/blog/tag/project-supercharging-evernote.html).
