@@ -1,82 +1,95 @@
+@charset utf-8;
+
+
 .skipprint {
     display: inline;
 }
+
 .printonly {
     display: none;
 }
 
-@media print{
+@media print {
+        border: 0;
+        margin: 0;
+        padding: 0;
     h1, h2, h3, h4, h5, h6 {
         font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
-    }
+}
+
     h1 {
+        float: left;
         font-size: 16px;
         padding-right: 20px;
-        float: left;
-    }
+}
+
     h2 {
         font-size: 14px;
         padding-top: 8px;
-    }
+}
     h3 {
         font-size: 13px;
-    }
+}
+
     p {
         font-size: 12px;
-    }
+}
     body {
         font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
         font-size: 12px;
-        max-width: 8.5in;
-        min-width: 8.5in;
-        max-height: 11in;
-        min-height: 11in;
         margin: 0.5in;
-    }
+        max-height: 11in;
+        max-width: 8.5in;
+        min-height: 11in;
+        min-width: 8.5in;
+}
+
     .code {
         font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-    }
+}
+
     .title {
-        font-weight: bolder;
         font-size: 40px;
-    }
+        font-weight: bolder;
+}
     .subtitle {
         font-size: 20px;
-    }
+}
+
     .skipprint {
         display: none;
-    }
+}
     .printonly {
         display: inline;
-    }
+}
+
     .slideleft {
         float: left;
-    }
+}
     .slideright {
         float: right;
-    }
+}
+
     .slidedone {
         clear: both;
-    }
+}
     .nomargin {
-        margin: 0px;
-        padding: 0px;
-    }
+        margin: 0;
+        padding: 0;
+}
+
     hr {
-        height: 3px;
-        color: black;
         background-color: black;
+        border: 0;
         border-color: black;
-        border: 0px;
-        margin: 0px;
+        color: black;
+        height: 3px;
+        margin: 0;
         margin-top: 8px;
-    }
+}
+
     .titleheight {
         height: 18px;
         line-height: 18px;
-    }
 }
-
+}
