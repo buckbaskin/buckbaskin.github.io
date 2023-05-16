@@ -20,6 +20,22 @@ else
     done
     wait
 
+    for filename in $(find content/img/full/*.JPG -mmin -240); do
+        echo Compressing ${filename}
+
+        BASE=$(basename $filename .JPG)
+        convert $filename -sampling-factor 4:2:0 -strip -resize 1040x585\
+        -quality 85 -interlace JPEG -colorspace sRGB content/img/$BASE.jpg &
+
+        num_children=`ps --no-headers -o pid --ppid=$$ | wc -w`
+        if [ $num_children -gt ${CORES_MINUS} ]
+        then
+            echo waiting for reduced job count
+            wait
+        fi
+    done
+    wait
+
     echo "Done with JPG"
     echo "Starting PNG"
 
