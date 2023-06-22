@@ -1,7 +1,7 @@
 ---
 Title: Bike Graphics
 Category: Building
-Tags: Visual Design, Restoration, 3D Printing
+Tags: Visual Design, Restoration, 3D Printing, Peugeot
 Date: 2023-04-24
 Updated: 2023-05-16
 Image: img/IMG_3016.jpg

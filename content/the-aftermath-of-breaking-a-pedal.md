@@ -1,7 +1,7 @@
 ---
 Title: The Aftermath of Breaking a Pedal
 Category: Breaking
-Tags: 3D Printing
+Tags: 3D Printing, Peugeot, Restoration
 Date: 2021-01-19
 Updated: 2023-05-16
 Image: img/IMG_0586.jpg
