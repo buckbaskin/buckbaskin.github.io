@@ -13,4 +13,4 @@ and discovery tool for Mastodon to help you find more people to connect with in
 the #Fediverse. Built with Python and scikit-learn (I love using scikit-learn
 and their documentation)
 
-https://github.com/buckbaskin/mast
+[https://github.com/buckbaskin/mast](https://github.com/buckbaskin/mast)

@@ -18,4 +18,4 @@ matching! Try searching for "soft robotics"
 - Improved Author Rendering (just copy into a Mastodon UI to get to the user)
 - User controllable logging (try -v or -vv)
 
-https://github.com/buckbaskin/mast/releases/tag/v1.1.0
+[https://github.com/buckbaskin/mast/releases/tag/v1.1.0](https://github.com/buckbaskin/mast/releases/tag/v1.1.0)
