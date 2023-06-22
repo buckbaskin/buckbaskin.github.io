@@ -4,7 +4,7 @@ Category: Building
 Tags: Release, Mast, Open Source, Python, scikit-learn
 Date: 2023-05-28
 Updated: 2023-06-21
-Image: https://github.com/buckbaskin/mast/blob/main/logo.png
+Image: img/mast.jpg
 Summary: Launch day is here! Presenting Mast, an open source, privacy first recommender and discovery tool for Mastodon
 ---
 
