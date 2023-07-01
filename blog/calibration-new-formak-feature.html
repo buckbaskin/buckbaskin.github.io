@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Calibration - New FormaK Feature - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="Calibration - New FormaK Feature - Building and Breaking"></meta>
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: generating models with calibrated sensors&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: generating models with calibrated sensors&lt;/p&gt;"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="NASA" />
+    <meta name="tags" content="Rocket Science" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Code Generation" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Calibration - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2023-05-06T00:00:00-07:00">
+      Sat 06 May 2023
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/nasa.html">NASA</a>
+            <a href="/blog/tag/rocket-science.html">Rocket Science</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/code-generation.html">Code Generation</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/calibration-new-formak-feature.html" rel="bookmark"
+         title="Permalink to Calibration - New FormaK Feature">permalink</a></p>
+    <p>This feature started with a relatively straightforward idea: use FormaK to model
+a rocket launch based on NASA data. NASA provides data from a launch in October
+2020 with a number of sensors aboard including an IMU, LiDaR and a black and
+white camera. The mission collected data to help prototype a lunar lander with a
+similar sensor suite.</p>
+<p><img alt="Sequence of black and white images of mountainous terrain viewed from the sky" src="/blog/img/nasa_flight_sample.gif" class="wideimage"/></p>
+<p>As a first goal, I wanted to model the motion of the rocket via the IMU data by
+integrating the IMU as a motion model, with the intent to fuse the IMU data with
+LiDaR readings. This runs into the small snag of understanding the orientation
+of the IMU and LiDaR with respect to the rocket's coordinate frame. In theory,
+the offset and orientation could be estimated online, but the problem is highly
+nonlinear for the IMU case and it's not clear to me that online estimation of
+the LiDaR calibration is feasible.</p>
+<p>Fortunately, the NASA dataset comes with calibration information for the pose
+and orientation of the sensors along with other data about how the sensor
+information was captured.</p>
+<p>Unfortunately, FormaK doesn't support calibration information. FormaK only
+supports online control inputs (which could be leveraged to pass in known
+information into the state vector, but not sensor models) and online estimated
+states.</p>
+<p>Fortunately, we can enhance FormaK to support this use case. Inserting
+calibration into the mix involved adding it to lots of files; however, its use
+is fairly straightforward (no estimation involved, no generated models, just
+static values). In addition, the rocket model itself provides a *good test of
+the feature where I can set up the model with the calibration values from NASA
+and then iterate until it's working.</p>
+<p>Overall, this change was fairly mechanical in nature, but it unlocks a new class
+of models that support runtime configuration. This supports the use case of
+providing calibration values from NASA's dataset, but the new feature can also
+be applied to other areas too. For example, a single model could be defined for
+a time of flight ranging system and then multiple instances of the model could
+be used by launching them with different calibration parameters.</p>
+<p>Check out the code or get the latest updates for FormaK on
+<a href="https://github.com/buckbaskin/formak">Github</a>.</p>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
+<p>One problem I did run into was the templating that underlies the current C++
+code generation. Supporting optional calibration terms with the various input
+types, function arguments and logical steps made a huge mess of the template
+file.</p>
+<div class="codehilite"><pre><span/><code><span class="w">        </span><span class="n">StateAndVariance</span>
+<span class="w">        </span><span class="n">ExtendedKalmanFilter</span><span class="p">::</span><span class="n">process_model</span><span class="p">(</span>
+<span class="w">            </span><span class="n">double</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">StateAndVariance</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Calibration</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_calibration</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Control</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_control</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">        </span><span class="p">)</span>
+</code></pre></div>
+
+<p>This mess felt unsustainable: if I tried to add any additional features or even
+change the features I had, this pile of if statements and formatting comments
+(and the occasional actual code) needed a different approach.</p>
+<h1 id="2023-06-25">2023-06-25<a class="headerlink" href="#2023-06-25" title="Permanent link">¶</a></h1>
+<p>* I did find a gap in the original testing of the calibration feature: I had
+missed including the calibration in the calculation of the jacobian of sensor
+models. This test escape also makes sense in the context of my focus for the
+model: process model and IMU data first, all other sensor data second. This
+jacobian issue would have been caught if I'd put any meaningful amount of
+additional thought into testing the sensor update.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
