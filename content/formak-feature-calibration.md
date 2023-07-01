@@ -47,8 +47,8 @@ be applied to other areas too. For example, a single model could be defined for
 a time of flight ranging system and then multiple instances of the model could
 be used by launching them with different calibration parameters.
 
-Check out the code or get the latest updates for FormaK on
-[Github](https://github.com/buckbaskin/formak).
+Check out the [code](https://github.com/buckbaskin/formak/pull/12) or get the
+latest updates for FormaK on [Github](https://github.com/buckbaskin/formak).
 
 # What's next?
 
@@ -80,6 +80,8 @@ file.
 This mess felt unsustainable: if I tried to add any additional features or even
 change the features I had, this pile of if statements and formatting comments
 (and the occasional actual code) needed a different approach.
+
+[Read the post about revising code generation](blog/ast-code-generation-new-formak-feature.html)
 
 # 2023-06-25
 

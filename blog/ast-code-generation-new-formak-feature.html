@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-          <title>Calibration - New FormaK Feature - Building and Breaking</title>
+          <title>AST Code Generation - New FormaK Feature - Building and Breaking</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/blog/theme/css/si
 te.css" />
@@ -12,13 +12,11 @@ te.css" />
         <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
 
     <meta name="twitter:creator" content="@beBaskin"></meta>
-    <meta name="twitter:title" content="Calibration - New FormaK Feature - Building and Breaking"></meta>
-    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: generating models with calibrated sensors&lt;/p&gt;" />
-    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: generating models with calibrated sensors&lt;/p&gt;"></meta>
+    <meta name="twitter:title" content="AST Code Generation - New FormaK Feature - Building and Breaking"></meta>
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: improved model generation by leveraging a subset of the C++ Abstract Syntax Tree&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: improved model generation by leveraging a subset of the C++ Abstract Syntax Tree&lt;/p&gt;"></meta>
 
     <meta name="tags" content="FormaK" />
-    <meta name="tags" content="NASA" />
-    <meta name="tags" content="Rocket Science" />
     <meta name="tags" content="Project FormaK" />
     <meta name="tags" content="Code Generation" />
     <meta name="tags" content="Python" />
@@ -35,20 +33,18 @@ te.css" />
         <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h1 id="main-title" class="entry-title">Calibration - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
+    <h1 id="main-title" class="entry-title">AST Code Generation - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
  
   </header>
   <footer class="post-info">
-    <time class="published" datetime="2023-05-06T00:00:00-07:00">
-      Sat 06 May 2023
+    <time class="published" datetime="2023-06-12T00:00:00-07:00">
+      Mon 12 June 2023
     </time>
     <address class="vcard author">
       By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
     </address>
     <div class="tags">
             <a href="/blog/tag/formak.html">FormaK</a>
-            <a href="/blog/tag/nasa.html">NASA</a>
-            <a href="/blog/tag/rocket-science.html">Rocket Science</a>
             <a href="/blog/tag/project-formak.html">Project FormaK</a>
             <a href="/blog/tag/code-generation.html">Code Generation</a>
             <a href="/blog/tag/python.html">Python</a>
@@ -56,47 +52,15 @@ te.css" />
     </div>
   </footer><!-- /.post-info -->
   <div class="entry-content">
-    <p><a href="/blog/calibration-new-formak-feature.html" rel="bookmark"
-         title="Permalink to Calibration - New FormaK Feature">permalink</a></p>
-    <p>This feature started with a relatively straightforward idea: use FormaK to model
-a rocket launch based on NASA data. NASA provides data from a launch in October
-2020 with a number of sensors aboard including an IMU, LiDaR and a black and
-white camera. The mission collected data to help prototype a lunar lander with a
-similar sensor suite.</p>
-<p><img alt="Sequence of black and white images of mountainous terrain viewed from the sky" src="/blog/img/nasa_flight_sample.gif" class="wideimage"/></p>
-<p>As a first goal, I wanted to model the motion of the rocket via the IMU data by
-integrating the IMU as a motion model, with the intent to fuse the IMU data with
-LiDaR readings. This runs into the small snag of understanding the orientation
-of the IMU and LiDaR with respect to the rocket's coordinate frame. In theory,
-the offset and orientation could be estimated online, but the problem is highly
-nonlinear for the IMU case and it's not clear to me that online estimation of
-the LiDaR calibration is feasible.</p>
-<p>Fortunately, the NASA dataset comes with calibration information for the pose
-and orientation of the sensors along with other data about how the sensor
-information was captured.</p>
-<p>Unfortunately, FormaK doesn't support calibration information. FormaK only
-supports online control inputs (which could be leveraged to pass in known
-information into the state vector, but not sensor models) and online estimated
-states.</p>
-<p>Fortunately, we can enhance FormaK to support this use case. Inserting
-calibration into the mix involved adding it to lots of files; however, its use
-is fairly straightforward (no estimation involved, no generated models, just
-static values). In addition, the rocket model itself provides a *good test of
-the feature where I can set up the model with the calibration values from NASA
-and then iterate until it's working.</p>
-<p>Overall, this change was fairly mechanical in nature, but it unlocks a new class
-of models that support runtime configuration. This supports the use case of
-providing calibration values from NASA's dataset, but the new feature can also
-be applied to other areas too. For example, a single model could be defined for
-a time of flight ranging system and then multiple instances of the model could
-be used by launching them with different calibration parameters.</p>
-<p>Check out the <a href="https://github.com/buckbaskin/formak/pull/12">code</a> or get the
-latest updates for FormaK on <a href="https://github.com/buckbaskin/formak">Github</a>.</p>
-<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
-<p>One problem I did run into was the templating that underlies the current C++
-code generation. Supporting optional calibration terms with the various input
-types, function arguments and logical steps made a huge mess of the template
-file.</p>
+    <p><a href="/blog/ast-code-generation-new-formak-feature.html" rel="bookmark"
+         title="Permalink to AST Code Generation - New FormaK Feature">permalink</a></p>
+    <p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>The new feature provides an extension to the fifth of the Five Keys "C++
+interfaces to support a variety of model uses" by reworking how C++ generation
+is done for easier extensions. After the 
+<a href="blog/calibration-new-formak-feature.html">Calibration</a> design, a lot of the code
+templates looked like:</p>
 <div class="codehilite"><pre><span/><code><span class="w">        </span><span class="n">StateAndVariance</span>
 <span class="w">        </span><span class="n">ExtendedKalmanFilter</span><span class="p">::</span><span class="n">process_model</span><span class="p">(</span>
 <span class="w">            </span><span class="n">double</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span>
@@ -115,20 +79,58 @@ file.</p>
 <span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Control</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_control</span>
 <span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
 <span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
-<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </code></pre></div>
 
-<p>This mess felt unsustainable: if I tried to add any additional features or even
-change the features I had, this pile of if statements and formatting comments
-(and the occasional actual code) needed a different approach.</p>
-<p><a href="blog/ast-code-generation-new-formak-feature.html">Read the post about revising code generation</a></p>
-<h1 id="2023-06-25">2023-06-25<a class="headerlink" href="#2023-06-25" title="Permanent link">¶</a></h1>
-<p>* I did find a gap in the original testing of the calibration feature: I had
-missed including the calibration in the calculation of the jacobian of sensor
-models. This test escape also makes sense in the context of my focus for the
-model: process model and IMU data first, all other sensor data second. This
-jacobian issue would have been caught if I'd put any meaningful amount of
-additional thought into testing the sensor update.</p>
+<p>Instead of relying on increasingly intricate Jinja templating and managing
+formatting via flagging clang-format on and off, I instead opted for another
+approach: generate the code from an abstract syntax tree (AST) that approximates
+the Python and C++ AST. The reason to go with something that approximates the
+Python AST is to have an inspiration and a guide from an AST that has
+accumulated experience instead of reinventing the wheel (too much).</p>
+<p>Afterwards, the code can look like:</p>
+<div class="codehilite"><pre><span/><code><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"double"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dt"</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const StateAndVariance&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_state"</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="p">:</span>
+<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Calibration&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_calibration"</span><span class="p">))</span>
+<span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="p">:</span>
+<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Control&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_control"</span><span class="p">))</span>
+<span class="k">return</span><span class="w"> </span><span class="n">FunctionDeclaration</span><span class="p">(</span>
+<span class="w">    </span><span class="s2">"StateAndVariance"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"process_model"</span><span class="p">,</span>
+<span class="w">    </span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+<span class="w">    </span><span class="n">modifier</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>This approach isn't necessarily shorter, but it allows for replacing Jinja
+templating with manipulating Python structures (primarily lists) in code. It
+also generates cleaner code without droppings for clang-formatting.</p>
+<p>Check out the <a href="https://github.com/buckbaskin/formak/pull/13">code</a> or get the
+latest updates for FormaK on <a href="https://github.com/buckbaskin/formak">Github</a>.</p>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
+<h2 id="improving-the-ast-tooling">Improving the AST Tooling<a class="headerlink" href="#improving-the-ast-tooling" title="Permanent link">¶</a></h2>
+<p>One stumbling block that I ran into while working on the code is consistency:
+the AST has a structure that's repetitive (many functions with similar
+arguments) but also every function has its own peculiarities, so I iterated
+through multiple patterns for implementing this in a clear way. This indicates
+to me an opportunity for improving the AST or providing a helper library that
+uses the AST as a structure and helps streamline the code generation.</p>
+<p>There is one code smell in the implementation of the AST generation that I opted
+to leave in to meet my timeline for continuing onto the next feature: Escape.
+The Escape AST member wraps a string and inserts the string during code
+generation without any other structure. This was useful for quick hacks but
+should probably get removed.</p>
+<h1 id="2023-06-29">2023-06-29<a class="headerlink" href="#2023-06-29" title="Permanent link">¶</a></h1>
+<p>Implementing the BasicBlock pattern during the
+<a href="https://github.com/buckbaskin/formak/pull/14">Common Subexpression Elimination PR</a>
+allowed for cleaning up the last remaining uses of the Escape class in the AST
+to inject a literal string.  This was achieved by more tightly integrating the
+BasicBlock code generation into the AST by yielding AST elements instead of
+strings. In this way, I could instead "compile" the BasicBlock directly into the
+AST instead of generating a string and passing it in as an Escape.</p>
   </div><!-- /.entry-content -->
 </div>
         </main><!-- /#content -->
