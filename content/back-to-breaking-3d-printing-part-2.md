@@ -1,7 +1,7 @@
 ---
 Title: Back to Breaking: 3D Printing Edition - Part 2
-Category: Breaking, Peugeot
-Tags: 3D Printing
+Category: Breaking
+Tags: 3D Printing, Peugeot
 Date: 2023-05-01
 Updated: 2023-05-15
 Image: img/IMG_3027.jpg
