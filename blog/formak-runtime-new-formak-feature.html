@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Runtime - New FormaK Feature - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="FormaK Runtime - New FormaK Feature - Building and Breaking"></meta>
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: The FormaK runtime. The first tool in the runtime is a Managed Filter that handles coordinating process and sensor updates.&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: The FormaK runtime. The first tool in the runtime is a Managed Filter that handles coordinating process and sensor updates.&lt;/p&gt;"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Runtime - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2023-08-04T00:00:00-07:00">
+      Fri 04 August 2023
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-runtime-new-formak-feature.html" rel="bookmark"
+         title="Permalink to FormaK Runtime - New FormaK Feature">permalink</a></p>
+    <p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>The new feature provides an extension to the fifth of the Five Keys "C++
+interfaces to support a variety of model uses" and "Python implementation of
+the model and supporting tooling" by simplifying how Kalman Filters are managed
+into a single interface.</p>
+<p>After the original <a href="blog/formak-python-code-generation.html">Python design</a>
+and 
+<a href="https://github.com/buckbaskin/formak/blob/main/docs/designs/cpp_library_for_model_evaluation.md">C++ design</a>,
+the EKF interface from the library provided the wrappers around the math for
+updating the state and variances and code generation to implement the models
+but not much else. The code to run the filter looked something like:</p>
+<div class="codehilite"><pre><span/><code><span class="nx">double</span><span class="w"> </span><span class="nx">process_dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">currentTime</span><span class="p">;</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">process_model</span><span class="p">(</span><span class="nx">process_dt</span><span class="p">,</span><span class="w"> </span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="p">);</span>
+<span class="nx">currentTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">currentTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">process_dt</span><span class="p">;</span>
+
+<span class="nx">featuretest</span><span class="o">::</span><span class="nx">Simple</span><span class="w"> </span><span class="nx">zero_sensor_reading</span><span class="p">(</span><span class="nx">SimpleOptions</span><span class="p">{});</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">sensor_model</span><span class="p">(</span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">zero_sensor_reading</span><span class="p">);</span>
+
+<span class="nx">process_dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">6</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">currentTime</span><span class="p">;</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">process_model</span><span class="p">(</span><span class="nx">process_dt</span><span class="p">,</span><span class="w"> </span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="p">);</span>
+<span class="nx">currentTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">currentTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">process_dt</span><span class="p">;</span>
+
+<span class="nx">featuretest</span><span class="o">::</span><span class="nx">Simple</span><span class="w"> </span><span class="nx">one_sensor_reading</span><span class="p">(</span><span class="nx">SimpleOptions</span><span class="p">{});</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">sensor_model</span><span class="p">(</span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">one_sensor_reading</span><span class="p">);</span>
+
+<span class="nx">process_dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">7</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">currentTime</span><span class="p">;</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">process_model</span><span class="p">(</span><span class="nx">process_dt</span><span class="p">,</span><span class="w"> </span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="p">);</span>
+<span class="nx">currentTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">currentTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">process_dt</span><span class="p">;</span>
+
+<span class="nx">featuretest</span><span class="o">::</span><span class="nx">Simple</span><span class="w"> </span><span class="nx">two_sensor_reading</span><span class="p">(</span><span class="nx">SimpleOptions</span><span class="p">{});</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">sensor_model</span><span class="p">(</span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">two_sensor_reading</span><span class="p">);</span>
+
+<span class="nx">process_dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">output_dt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">currentTime</span><span class="p">;</span>
+<span class="nx">combined</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">ekf</span><span class="p">.</span><span class="nx">process_model</span><span class="p">(</span><span class="nx">process_dt</span><span class="p">,</span><span class="w"> </span><span class="nx">combined</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="p">);</span>
+<span class="nx">currentTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">currentTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">process_dt</span><span class="p">;</span>
+</code></pre></div>
+
+<p>To simplify the interface down to the essential, a new class was created: the
+<code>ManagedFilter</code>. This provides a single tick interface to handle both process
+updates and sensor updates.</p>
+<div class="codehilite"><pre><span/><code><span class="nx">mf</span><span class="p">.</span><span class="nx">tick</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output_dt</span><span class="p">,</span><span class="w"> </span><span class="nx">control</span><span class="p">,</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">mf</span><span class="p">.</span><span class="nx">wrap</span><span class="p">&lt;</span><span class="nx">Simple</span><span class="p">&gt;(</span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">5</span><span class="p">,</span>
+<span class="w">                            </span><span class="nx">SimpleOptions</span><span class="p">{}),</span>
+<span class="w">            </span><span class="nx">mf</span><span class="p">.</span><span class="nx">wrap</span><span class="p">&lt;</span><span class="nx">Simple</span><span class="p">&gt;(</span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">6</span><span class="p">,</span>
+<span class="w">                            </span><span class="nx">SimpleOptions</span><span class="p">{}),</span>
+<span class="w">            </span><span class="nx">mf</span><span class="p">.</span><span class="nx">wrap</span><span class="p">&lt;</span><span class="nx">Simple</span><span class="p">&gt;(</span><span class="nx">options</span><span class="p">.</span><span class="nx">reading_dt_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Double">0.0</span><span class="mi">7</span><span class="p">,</span>
+<span class="w">                            </span><span class="nx">SimpleOptions</span><span class="p">{}),</span>
+<span class="w">        </span><span class="p">});</span>
+</code></pre></div>
+
+<p>The ManagedFilter supports both FormaK-generated and non-FormaK implementations
+of a Kalman Filter.</p>
+<p>Check out the <a href="https://github.com/buckbaskin/formak/pull/17">code</a> or get the
+latest updates for FormaK on <a href="https://github.com/buckbaskin/formak">Github</a>.</p>
+<h2 id="sfinae">SFINAE<a class="headerlink" href="#sfinae" title="Permanent link">¶</a></h2>
+<p>One area of the filter that I'm proud of is the C++ foo I had to sort out to
+get the feature working. The ManagedFilter class doesn't use any code
+generation, but it does interface with generated code from the C++ generation
+of the Extended Kalman Filter. This means that it needs to deal with both
+interfaces that have a <code>Control</code> and <code>Calibration</code> type and interfaces that
+have only one or neither.</p>
+<p>In C++, a pattern called
+<a href="https://en.cppreference.com/w/cpp/language/sfinae">SFINAE</a> or Substitution
+Failure Is Not An Error can be used to achieve this interface without code
+generation. At a high level, the idea is to template the members of the class
+(even if they otherwise wouldn't require a template) so that when the type is
+substituted into the template it can pass (and become part of the interface) or
+fail (and not be a part of the interface) based on the filter implementation it
+supports.</p>
+<p>Getting the details of SFINAE to work was a large chunk of the time spent on
+the feature, but in the end I think I've achieved a reasonable solution to the
+problem and something I can build on and extend for future features. That said,
+I am only cautiously optimistic I could extend the SFINAE approach further
+becuase it could become too verbose or go beyond my understanding of how to
+make it work. We shall see.</p>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
+<h2 id="filter-improvements">Filter Improvements<a class="headerlink" href="#filter-improvements" title="Permanent link">¶</a></h2>
+<p>A design for adding innovation filtering is coming soon...</p>
+<h2 id="improved-netcode">Improved Netcode<a class="headerlink" href="#improved-netcode" title="Permanent link">¶</a></h2>
+<p>With the manipulation of the process updates and sensor updates wrapped into a
+neat single interface, additional improvements can be made. For example, it
+becomes easier to optionally include rollback "netcode" into the ManagedFilter
+to better handle out of order sensor updates.</p>
+<p>In the current system, if a sensor reading comes in from before output time of
+the previous tick, the process update is used to go back in time to that sensor
+reading before returning forward in time to the new tick time. This adds
+additional variance that isn't strictly necessary due to exta use of the
+process update.</p>
+<p>With rollback, a history of recent states can be saved and then played forward.
+For the sensor reading earlier in time, the state would be rolled back to
+before this sensor reading, then played forward along with interim sensor
+readings to provide the lowest variance estimate of the state by recreating a
+monotonically ordered timeline of sensor updates. This approach adds compute
+overhead and memory overhead for storing and re-running sensor data, sensor
+updates and process updates but promises the best possible estimator accuracy.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
