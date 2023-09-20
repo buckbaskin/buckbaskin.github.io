@@ -61,14 +61,14 @@ Github.</p>
 <p>In the AST visiting logic, there are a handful of functions that all need to
 dispatch to different logic based on the type of the node they're working with.
 They all look something like:</p>
-<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">interesting_node_logic</span><span class="ss">(</span><span class="nv">node</span><span class="ss">)</span>:
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">FunctionDef</span><span class="ss">)</span>:
-<span class="w">        </span>...
-<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">Lambda</span><span class="ss">)</span>:
-<span class="w">        </span>...
-<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">ListComp</span><span class="ss">)</span>:
-<span class="w">        </span>...
-<span class="w">    </span>...
+<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">interesting_node_logic</span><span class="ss">(</span><span class="nv">node</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">FunctionDef</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span>...<span class="w"/>
+<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">Lambda</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span>...<span class="w"/>
+<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">node</span>,<span class="w"> </span><span class="nv">ListComp</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span>...<span class="w"/>
+<span class="w">    </span>...<span class="w"/>
 </code></pre></div>
 
 <p>This continues on for quite a while because there are 40 or 50 different types
@@ -95,28 +95,28 @@ handful of AST nodes that we know will not contain a name to check and will not
 have children with a name to check. These include: <code>break</code>, <code>pass</code> and
 constants. This means that we can create a simple abstract base class that
 collects these names into a single consistent idea. The class looks like:</p>
-<div class="codehilite"><pre><span/><code><span class="k">class</span><span class="w"> </span><span class="n">NotNameParent</span><span class="p">(</span><span class="n">ABC</span><span class="p">)</span><span class="err">:</span>
-<span class="w">    </span><span class="n">_doesnt_contain_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span>
-<span class="w">        </span><span class="ss">"Break"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"Constant"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"Import"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"ImportFrom"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"JoinedStr"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"NoneType"</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">"Pass"</span><span class="p">,</span>
-<span class="w">    </span><span class="err">}</span>
+<div class="codehilite"><pre><span/><code><span class="k">class</span><span class="w"> </span><span class="n">NotNameParent</span><span class="p">(</span><span class="n">ABC</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="n">_doesnt_contain_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w"/>
+<span class="w">        </span><span class="ss">"Break"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"Constant"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"Import"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"ImportFrom"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"JoinedStr"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"NoneType"</span><span class="p">,</span><span class="w"/>
+<span class="w">        </span><span class="ss">"Pass"</span><span class="p">,</span><span class="w"/>
+<span class="w">    </span><span class="err">}</span><span class="w"/>
 
-<span class="w">    </span><span class="nv">@classmethod</span>
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__subclasshook__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">)</span><span class="err">:</span>
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">__name__</span>
-<span class="w">        </span><span class="nf">log</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="ss">"NotNameParent.__subclasshook__ %s"</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cls</span><span class="p">.</span><span class="n">_doesnt_contain_names</span>
+<span class="w">    </span><span class="nv">@classmethod</span><span class="w"/>
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__subclasshook__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">__name__</span><span class="w"/>
+<span class="w">        </span><span class="nf">log</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="ss">"NotNameParent.__subclasshook__ %s"</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"/>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cls</span><span class="p">.</span><span class="n">_doesnt_contain_names</span><span class="w"/>
 </code></pre></div>
 
 <p>And allows us to simplify the type dispatching logic to <a href="https://github.com/buckbaskin/random-python/blob/1d9d170b6b907759be2a9b2b900c62e0939ec147/random_code/impl.py#L496-L497">lines
 like</a>:</p>
-<div class="codehilite"><pre><span/><code><span class="k">if</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">element</span>,<span class="w"> </span><span class="nv">NotNameParent</span><span class="ss">)</span>:
-<span class="w">    </span><span class="k">return</span><span class="w"> </span>[]
+<div class="codehilite"><pre><span/><code><span class="k">if</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">element</span>,<span class="w"> </span><span class="nv">NotNameParent</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>[]<span class="w"/>
 </code></pre></div>
 
 <h1 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h1>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Innovation Filtering - New FormaK Feature - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="Innovation Filtering - New FormaK Feature - Building and Breaking"></meta>
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: Innovation filtering. Automatically make Kalman Filters more robust.&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: Innovation filtering. Automatically make Kalman Filters more robust.&lt;/p&gt;"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+    <meta name="tags" content="Kalman Filter" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Innovation Filtering - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2023-09-19T00:00:00-07:00">
+      Tue 19 September 2023
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+            <a href="/blog/tag/kalman-filter.html">Kalman Filter</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/innovation-filtering-new-formak-feature.html" rel="bookmark"
+         title="Permalink to Innovation Filtering - New FormaK Feature">permalink</a></p>
+    <p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>The new feature provides an extension to the Python and C++ models to
+efficiently provide additional error handling capabilities: innovation
+filtering (aka innovation editing).</p>
+<p>How should the filter measure the errors? The filter can use the
+measurement innovation $$\tilde{z} = z_{t} - \hat{z_{t}}$$ where $z_{t}$ is the
+measurement, $\hat{z_{t}}$ the predicted reading and $\tilde{z}$ is the
+resulting innovation. Given the innovation, the definition of too large can be
+calculated from the expected covariance: $$\tilde{z}^{T} S^{-1} \tilde{z} - m &gt;
+k \sqrt{2m}$$ where $S$ is the expected covariance of the measurement, $m$ is
+the dimension of the measurement vector and $k$ is the editing threshold. If
+this inequality is true, then the measurement is "too large" and should be
+filtered (edited). [1] [2]</p>
+<p>[1] This approach to innovation filtering, referred to as editing in the text,
+is adapted from "Advanced Kalman Filtering, Least Squares and Modeling" by
+Bruce P. Gibbs (referred to as [1] or AKFLSM)
+[2] The notion follows the convention defined in the
+<a href="../mathematical-glossary.md">Mathematical Glossary</a> which itself is based on
+"Probabilistic Robotics" by Thrun et al.</p>
+<p>This feature originally was intended to be paired with automatic model fitting;
+however, that was not to be. I got myself stuck in a large refactoring trying
+to make the interface better. Over 3 weeks and 30 hours I made it through but I
+came close to giving up on the feature multiple times when I'd get stuck
+finding more refactoring I need to do. Beware the forest of refactoring.</p>
+<p>Pull Request: <a href="https://github.com/buckbaskin/formak/pull/18">#18</a>
+Commit: <a href="https://github.com/buckbaskin/formak/tree/16ba541e799dfe1b289618a7b27ec48847191172">16ba541</a></p>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
+<h2 id="model-fitting">Model fitting<a class="headerlink" href="#model-fitting" title="Permanent link">¶</a></h2>
+<p>I spent a lot of time in the 
+<a href="https://github.com/buckbaskin/formak/blob/16ba541e799dfe1b289618a7b27ec48847191172/docs/designs/innovation_filtering.md">original design document</a>
+describing the model selection process. Now that I've moved past the refactor
+and onto the next thing, I'm looking forward to implementing the automatic
+model selection process.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

@@ -65,10 +65,10 @@ code</a>,
 we can make a little bit of Python, convert it to an AST, make sure we're
 working on the correct node and make sure we've discovered the right names with
 something like this:</p>
-<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">test_IfExp</span><span class="ss">()</span>:
-<span class="w">    </span><span class="nv">ast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_strip_expr</span><span class="ss">(</span><span class="nv">str_to_ast</span><span class="ss">(</span><span class="s2">"""0 if name else 1"""</span><span class="ss">))</span>
-<span class="w">    </span><span class="nv">assert</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">ast</span>,<span class="w"> </span><span class="nv">IfExp</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">assert</span><span class="w"> </span>[<span class="s2">"name"</span>]<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">ast</span><span class="ss">)</span>
+<div class="codehilite"><pre><span/><code><span class="nv">def</span><span class="w"> </span><span class="nv">test_IfExp</span><span class="ss">()</span>:<span class="w"/>
+<span class="w">    </span><span class="nv">ast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_strip_expr</span><span class="ss">(</span><span class="nv">str_to_ast</span><span class="ss">(</span><span class="s2">"""0 if name else 1"""</span><span class="ss">))</span><span class="w"/>
+<span class="w">    </span><span class="nv">assert</span><span class="w"> </span><span class="nv">isinstance</span><span class="ss">(</span><span class="nv">ast</span>,<span class="w"> </span><span class="nv">IfExp</span><span class="ss">)</span><span class="w"/>
+<span class="w">    </span><span class="nv">assert</span><span class="w"> </span>[<span class="s2">"name"</span>]<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">ast</span><span class="ss">)</span><span class="w"/>
 </code></pre></div>
 
 <p>The only bit of magic is that <code>str_to_ast</code> will remove the Module that Python
@@ -94,15 +94,15 @@ E         At index 0 diff: 'name' != &lt;ast.Name object at 0x7b7aa5140970&gt;
 
 <p>The typo came down to returning the wrong thing: When iterating over the values
 in a BoolOp, we kept returning the value instead of the name id...</p>
-<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:
-<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">v</span>
+<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:<span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">v</span><span class="w"/>
 </code></pre></div>
 
 <p>Becomes</p>
-<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:
-<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">vid</span>
+<div class="codehilite"><pre><span/><code><span class="k">for</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">element</span>.<span class="nv">values</span>:<span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">vid</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">nested_unpack</span><span class="ss">(</span><span class="nv">v</span>,<span class="w"> </span><span class="nv">top_level</span><span class="ss">)</span>:<span class="w"/>
+<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">vid</span><span class="w"/>
 </code></pre></div>
 
 <p>Ultimately not a very complicated or insiduous bug, but definitely hard to
