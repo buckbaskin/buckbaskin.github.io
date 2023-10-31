@@ -4,6 +4,7 @@ Category: Building
 Tags: FormaK, Project FormaK, Code Generation, Python, C++
 Date: 2023-06-12
 Updated: 2023-10-30
+Image: img/FstyleK.jpg
 Summary: A new feature for FormaK has landed: improved model generation by leveraging a subset of the C++ Abstract Syntax Tree
 ---
 

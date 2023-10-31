@@ -4,6 +4,7 @@ Category: Building
 Tags: FormaK, Project FormaK, Python, C++
 Date: 2023-08-04
 Updated: 2023-08-06
+Image: img/FstyleK.jpg
 Summary: A new feature for FormaK has landed: The FormaK runtime. The first tool in the runtime is a Managed Filter that handles coordinating process and sensor updates.
 ---
 
