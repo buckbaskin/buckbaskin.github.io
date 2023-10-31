@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Behind the Scenes of the Strapdown IMU Reference Model - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@beBaskin"></meta>
+        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="twitter:creator" content="@beBaskin"></meta>
+    <meta name="twitter:title" content="Behind the Scenes of the Strapdown IMU Reference Model - Building and Breaking"></meta>
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn&#39;t make it into the final design and feature.&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn&#39;t make it into the final design and feature.&lt;/p&gt;"></meta>
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+    <meta name="tags" content="IMU" />
+    <meta name="tags" content="Strapdown IMU" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Behind the Scenes of the Strapdown IMU Reference Model - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2023-10-30T00:00:00-07:00">
+      Mon 30 October 2023
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+            <a href="/blog/tag/imu.html">IMU</a>
+            <a href="/blog/tag/strapdown-imu.html">Strapdown IMU</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/behind-the-scenes-of-the-strapdown-imu-reference-model.html" rel="bookmark"
+         title="Permalink to Behind the Scenes of the Strapdown IMU Reference Model">permalink</a></p>
+    <p>A new feature for FormaK has landed: the Strapdown IMU Reference model. The
+model is now available for inclusion into new models and use as a reference for
+implementing future models. This post covers some of the aspects of the design
+and development that didn't make it into the final design and feature.</p>
+<p>If you're interested in the reference model, you can read the
+<a href="blog/strapdown-imu-reference-model-new-formak-feature.html">launch announcement</a>.</p>
+<p>Pull Request: <a href="https://github.com/buckbaskin/formak/pull/19">#19</a></p>
+<p>Commit: <a href="https://github.com/buckbaskin/formak/tree/16ba541e799dfe1b289618a7b27ec48847191172">16ba541</a></p>
+<h1 id="the-rotation-class">The Rotation Class<a class="headerlink" href="#the-rotation-class" title="Permanent link">¶</a></h1>
+<p>A few days into the project I decided it'd be a good idea to develop a general
+purpose Rotation class that could serve as a simple conceptual object that
+could also be easily be compiled into different representations for any model.</p>
+<p>This was mostly an exercise in learning that I should do a bit of searching
+around before I make such an attempt. I spent three weeks making this class,
+testing it to a 80% level of completion, then refactoring to pull it out and
+replace it with the
+<a href="https://docs.sympy.org/latest/modules/algebras.html">Sympy Quaternion</a> class
+that offered the same feature set but in working order and with tests.</p>
+<p>N.B. Scipy also has a 
+<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Rotation.html">Rotation class</a></p>
+<h1 id="pytest-features">Pytest Features<a class="headerlink" href="#pytest-features" title="Permanent link">¶</a></h1>
+<p>Pytest has functionality for
+<a href="https://docs.pytest.org/en/6.2.x/skipping.html">skipping failing tests</a>. It
+also supports marking tests as
+<a href="https://docs.pytest.org/en/6.2.x/skipping.html#xfail-mark-test-functions-as-expected-to-fail"><code>xfail</code></a>,
+which will run the test and then fail the test run if the test passes.</p>
+<div class="codehilite"><pre><span/><code><span class="nv">@pytest</span><span class="p">.</span><span class="n">mark</span><span class="p">.</span><span class="n">xfail</span><span class="w"/>
+<span class="n">def</span><span class="w"> </span><span class="n">test_function</span><span class="p">()</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="p">...</span><span class="w"/>
+</code></pre></div>
+
+<p>Pytest also supports
+<a href="https://docs.pytest.org/en/7.1.x/example/parametrize.html">parameterized tests</a>
+. While I was implementing a generic Rotation class with multiple underlying
+representations (Euler angles, rotation matrices and quaternions), I could use
+the feature to easily run the same test across all representations to make sure
+it passed. It leads to nicely formatted test outputs (until you multiply your
+failures then there's just too much text scrolling by).</p>
+<p>Abridged Code:</p>
+<div class="codehilite"><pre><span/><code><span class="n">REPRESENTATIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">"quaternion", "matrix", "euler"</span><span class="o">]</span><span class="w"/>
+
+<span class="nv">@pytest</span><span class="p">.</span><span class="n">mark</span><span class="p">.</span><span class="n">parametrize</span><span class="p">(</span><span class="ss">"representation"</span><span class="p">,</span><span class="w"> </span><span class="n">REPRESENTATIONS</span><span class="p">)</span><span class="w"/>
+<span class="n">def</span><span class="w"> </span><span class="n">test_principal_axis</span><span class="p">(</span><span class="n">representation</span><span class="p">)</span><span class="err">:</span><span class="w"/>
+<span class="w">    </span><span class="p">...</span><span class="w"/>
+</code></pre></div>
+
+<p>Sample Output:</p>
+<div class="codehilite"><pre><span/><code><span class="o">===========================</span><span class="w"> </span><span class="n">short</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">============================</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_principal_axis</span><span class="o">[</span><span class="n">matrix</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">assert</span><span class="w"> </span><span class="k">False</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_construct_to_output_consistency_euler</span><span class="o">[</span><span class="n">quaternion</span><span class="o">]</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_construct_to_output_consistency_euler</span><span class="o">[</span><span class="n">matrix</span><span class="o">]</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_construct_to_output_consistency_quaternion</span><span class="o">[</span><span class="n">matrix</span><span class="o">]</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_construct_to_output_consistency_matrix</span><span class="o">[</span><span class="n">quaternion</span><span class="o">]</span><span class="w"/>
+<span class="n">FAILED</span><span class="w"> </span><span class="n">py</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">unit</span><span class="o">/</span><span class="n">rotation_test</span><span class="p">.</span><span class="nl">py</span><span class="p">:</span><span class="err">:</span><span class="n">test_construct_to_output_consistency_matrix</span><span class="o">[</span><span class="n">euler</span><span class="o">]</span><span class="w"/>
+</code></pre></div>
+
+<p>What you don't see here is the absurd amount of log spam I created for
+myself... we'll let that one blow away into the sands of time.</p>
+<h1 id="simplify-doesnt-scale">Simplify Doesn't Scale<a class="headerlink" href="#simplify-doesnt-scale" title="Permanent link">¶</a></h1>
+<p>Something in Sympy's implementation of the 
+<a href="https://docs.sympy.org/latest/modules/simplify/simplify.html#simplify"><code>simplify</code></a>
+function leads to excessive runtimes for my development machine (on the order
+of 300 seconds / 5 minutes). I suspect it's a loop of iteratively making small
+changes, then re-evaluating everything on the small change. This is the second
+time (or maybe third?) that I've wanted to include simplification into the
+project and each time I manage to wander into a case where it's performance is
+a hard block on its usefulness. I love Sympy and want to love simplify, so it
+seems like something of an outlier to run into a performance issue like this.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
+                        on Twitter. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
