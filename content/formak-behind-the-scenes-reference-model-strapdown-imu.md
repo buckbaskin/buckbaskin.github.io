@@ -14,7 +14,7 @@ implementing future models. This post covers some of the aspects of the design
 and development that didn't make it into the final design and feature.
 
 If you're interested in the reference model, you can read the
-[launch announcement](blog/strapdown-imu-reference-model-new-formak-feature.html).
+[launch announcement](/blog/strapdown-imu-reference-model-new-formak-feature.html).
 
 Pull Request: [#19](https://github.com/buckbaskin/formak/pull/19)
 
