@@ -3,7 +3,7 @@ Title: random-code Day 2
 Category: Building
 Tags: Open Source, random-python, Project Random
 Date: 2022-07-30
-Updated: 2022-08-03
+Updated: 2023-10-30
 Summary: Progress on a better understanding of Python while generating random code
 ---
 
@@ -49,7 +49,7 @@ check and pretty elegantly fits into the scope checking code.
 
 ## Scoping
 
-Each each element, we know if we've defined more names (e.g. for an `Assign`)
+Each element, we know if we've defined more names (e.g. for an `Assign`)
 or gotten into a new scope (e.g. for a FunctionDef) and new names (e.g.
 arguments in a `FunctionDef`).
 

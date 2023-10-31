@@ -1,6 +1,7 @@
 ---
 Title: AT Hiker Plays Firewatch: Day 1
 Date: 2018-07-22
+Updated: 2023-10-30
 Category: Building
 Tags: Firewatch
 Summary: I've had the game Firewatch for a while, but I just started playing the game today. What makes the game particularly special to me now is that I spent last summer hiking the Appalachian Trail. Many aspects of the game bring back memories from that experience which I think is kind of amazing. This probably will spoil some of the game for you if you haven't already played. Day 1!
@@ -16,7 +17,7 @@ played.
 
 ### Day 1 (Firewatch Land)
 
-- My initial impression is that the story and setup is very impactful, way more
+- My initial impression is that the story and setup is impactful, way more
 than I expected from anything that I'd heard about the game.
 
 - Small Thing I'm Impressed by #1: When you're picking up beer cans, you can
@@ -31,7 +32,7 @@ way back down the canyon to get back because the mapped looked too steep to get
 back any other way past Widowmaker. I wasn't confident and went another way,
 but it turned out I was right and had just missed the trail sign at the lake.
 
-- I avoid jogging in game because that's not how I hike. Even when I personally
+- I avoid jogging in game because that's not how I hike. Even when I
 needed to go longer distances, I always tried to maintain a relaxed pace, and
 the game's atmosphere makes it feel like I should keep that mentality. It's not
 some open world game where I want to rush to get to the next mini game.

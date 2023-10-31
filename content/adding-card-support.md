@@ -3,7 +3,7 @@ Title: Adding Card Support
 Category: Building
 Tags: Social Media
 Date: 2018-12-31
-Updated: 2018-12-31
+Updated: 2023-10-30
 Summary: What are cards? How can I automate making a nicely rendered preview for the articles I write?
 ---
 
@@ -11,7 +11,7 @@ What are cards? How can I automate making a nicely rendered preview for the arti
 
 # What are cards anyway?
 
-They're nice previews that Twitter or other social media sites can use to dress up a link when it's shared. It provides extra information to hopefully make a user more likely to click the link.
+They're nice previews that Twitter or other social media sites can use to dress up a link when it's shared. It provides extra information to encourage a user to click the link.
 
 # Can I automate them?
 

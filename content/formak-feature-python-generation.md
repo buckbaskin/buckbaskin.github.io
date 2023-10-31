@@ -3,7 +3,7 @@ Title: FormaK: Python Code Generation
 Category: Building
 Tags: FormaK, Project FormaK,30 for 30, Code Generation, Python
 Date: 2022-10-05
-Updated: 2022-10-02
+Updated: 2023-10-30
 Summary: The second feature for FormaK landed: generating Python models
 ---
 
@@ -60,7 +60,7 @@ The key classes involved are:
 - `py.Model`: (new) Class encapsulating the model for running a model efficiently in Python code
 - `py.ExtendedKalmanFilter`: (new)
 	- Looking ahead to model fitting, characterize model quality, data variance by fitting an EKF
-	- Constructor accepts state type, state to state process model (as a `ui.Model`), process noise, sensor types, state to sensor sensor models and sensor noise
+	- Constructor accepts state type, state to state process model (as a `ui.Model`), process noise, sensor types, state to sensor models and sensor noise
 	- Process Model Function: take in current state, current variance, dt/update time. Return new state, new variance
 	- Sensor Model Function: take in current state, current variance, sensor id, sensor reading
 

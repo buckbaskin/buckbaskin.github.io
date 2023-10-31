@@ -3,7 +3,7 @@ Title: AST Code Generation - New FormaK Feature
 Category: Building
 Tags: FormaK, Project FormaK, Code Generation, Python, C++
 Date: 2023-06-12
-Updated: 2023-06-30
+Updated: 2023-10-30
 Summary: A new feature for FormaK has landed: improved model generation by leveraging a subset of the C++ Abstract Syntax Tree
 ---
 
@@ -89,7 +89,7 @@ should probably get removed.
 Implementing the BasicBlock pattern during the
 [Common Subexpression Elimination PR](https://github.com/buckbaskin/formak/pull/14)
 allowed for cleaning up the last remaining uses of the Escape class in the AST
-to inject a literal string.  This was achieved by more tightly integrating the
+to inject a literal string. This was achieved by more tightly integrating the
 BasicBlock code generation into the AST by yielding AST elements instead of
 strings. In this way, I could instead "compile" the BasicBlock directly into the
 AST instead of generating a string and passing it in as an Escape.

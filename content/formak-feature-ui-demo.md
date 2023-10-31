@@ -3,7 +3,7 @@ Title: FormaK: User Interface
 Category: Building
 Tags: FormaK, Project FormaK,User Interface, 30 for 30
 Date: 2022-10-04
-Updated: 2022-10-01
+Updated: 2022-10-30
 Summary: The first feature for FormaK landed: the user interface!
 ---
 
@@ -24,7 +24,7 @@ provides:
 
 - Model that describes the physics of the system
 - Execution criteria (e.g. memory usage, execution time)
-- Time series data for for the system
+- Time series data for the system
 
 And the user gets a performant model that satisfies their execution criteria and
 optimally fits the data.
@@ -41,7 +41,7 @@ This feature provides the first of the Five Keys: the Python Interface to define
 # Feature Preview
 
 The user interface is designed to be easy to use and familiar to folks that
-work with Python. Setting up a very simple physics model for a rocket looks
+work with Python. Setting up a simple physics model for a rocket looks
 like:
 
 
@@ -72,7 +72,7 @@ like:
 Based on [orbital_test.py](https://github.com/buckbaskin/formak/tree/master/featuretests/python_ui_demo/orbital_test.py)
 
 One of the areas that I'm working on improving further is the way to set up
-symbols. In a very complicated system, having to specify everything in a
+symbols. In a complicated system, having to specify everything in a
 verbose way isn't necessarily sustainable.
 
 # Solution Approach

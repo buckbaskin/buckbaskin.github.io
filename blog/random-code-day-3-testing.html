@@ -87,7 +87,7 @@ we have:</p>
     assert ["name"] == nested_unpack(ast)
 </code></pre></div>
 
-<p>But we get an error:</p>
+<p>which results in an error:</p>
 <div class="codehilite"><pre><span/><code>E       AssertionError: assert ['name'] == [&lt;ast.Name ob...7b7aa5140970&gt;]
 E         At index 0 diff: 'name' != &lt;ast.Name object at 0x7b7aa5140970&gt;
 </code></pre></div>
@@ -105,7 +105,7 @@ in a BoolOp, we kept returning the value instead of the name id...</p>
 <span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">vid</span><span class="w"/>
 </code></pre></div>
 
-<p>Ultimately not a very complicated or insiduous bug, but definitely hard to
+<p>Ultimately not a complicated or insiduous bug, but definitely hard to
 catch trying to drive-by inspect the code while reading a diff</p>
 <h1 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">¶</a></h1>
 <p>The other quick win for the day was logging. I'd originally been trying to

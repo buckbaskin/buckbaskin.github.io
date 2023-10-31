@@ -3,7 +3,7 @@ Title: I Love Bazel, I Hate Bazel
 Category: Building
 Tags: Bazel, FormaK, Project FormaK, Selenium, 30 for 30
 Date: 2022-10-02
-Updated: 2022-10-01
+Updated: 2023-10-30
 Summary: I love Bazel. It's one of those satisfying tools where computer science algorithms and data structures fuse with good software practice to create something that's satisfying on many levels. It knows how to minimally rebuild things. It knows how to hermetically build things in a repeatable way. I also hate Bazel.
 Image: img/bazel-sketch.jpg
 ---
@@ -22,7 +22,7 @@ mix of a large amount of documentation and a large amount of documentation that
 doesn't explain what I'm hoping to understand. Python in particular is somewhat
 inscrutable in that when trying to build a pytest test, it seemed to repeatedly
 break the hermeticity I was hoping I had. Its complexity led to me repeatedly
-break things that I thought that I'd fixed.  The diff to fix what I thought was
+break things that I thought that I'd fixed. The diff to fix what I thought was
 the right system is largely one made of witch incantations over a cauldron made
 by dumping an existing project in and skimming stuff off the top that seemed
 passable.

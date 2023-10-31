@@ -10,7 +10,7 @@ Image: img/IMG_0640.jpg
 
 I had the unfortunate luck of being the owner who gets to figure out what to do
 when the pedal crank on my old Peugeot road bike snapped in half while riding.
-After some luck in (hopefully) finding the right part, I've set about getting
+After some luck in finding the right part, I've set about getting
 the rest of the bike back in more suitable condition. 
 
 The first step is

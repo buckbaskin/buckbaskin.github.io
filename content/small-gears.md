@@ -3,7 +3,7 @@ Title: Working with small gears
 Category: Building
 Tags: 3D Printing, Additive Manufacturing, Macro, Project RC Build
 Date: 2020-10-24
-Updated: 2020-11-03
+Updated: 2023-10-30
 Summary: How small can we get with a functional gear part on a FDM printer?
 Image: img/IMG_0336.jpg
 ---
@@ -12,7 +12,7 @@ How small can we get with a functional gear part on a FDM printer? At this point
 
 # XMods Differential
 
-Existing XMods use a very compact design that works fairly well; however, it's
+Existing XMods use a compact design that works fairly well; however, it's
 hard to take apart without permanently damaging it so I've stuck to replicating
 other designs.
 
@@ -22,7 +22,7 @@ other designs.
 
 One of the key elements to replicating the XMods differential is a right angle
 drive from a longitudinal motor (or revisiting whether or not a longitudinal
-motor makes sense). So far, the right-angle gears haven't come out at a very
+motor makes sense). So far, the right-angle gears haven't come out at a
 high quality, in part because they weren't designed with the extrusion width in
 mind. Another avenue of improvement is reducing the gear reduction required
 between the drive motor and the differential, which could reduce the number of
@@ -36,7 +36,7 @@ When taking into account the width of the extruder, it is easier to get small
 gears of various designs to print well. There are opportunities to go down a
 step in terms of extruder widths to print an even smaller gear; however, at this
 time, I've left some margin in an attempt to have a more reliable print and
-hopefully maintain some strength. In the end, gears used in the differential are
+to maintain some strength. In the end, gears used in the differential are
 responsible for transmitting drive torque from the motor.
 
 ![Image]({attach}/img/IMG_0324.jpg)

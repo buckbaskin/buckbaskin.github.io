@@ -127,7 +127,7 @@ should probably get removed.</p>
 <p>Implementing the BasicBlock pattern during the
 <a href="https://github.com/buckbaskin/formak/pull/14">Common Subexpression Elimination PR</a>
 allowed for cleaning up the last remaining uses of the Escape class in the AST
-to inject a literal string.  This was achieved by more tightly integrating the
+to inject a literal string. This was achieved by more tightly integrating the
 BasicBlock code generation into the AST by yielding AST elements instead of
 strings. In this way, I could instead "compile" the BasicBlock directly into the
 AST instead of generating a string and passing it in as an Escape.</p>

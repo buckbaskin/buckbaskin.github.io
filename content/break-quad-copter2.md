@@ -1,6 +1,7 @@
 ---
 Title: Tearing Down a Quadcopter: Part 2 - Power Systems
 Date: 2018-07-23
+Updated: 2023-10-30
 Category: Breaking
 Tags: quadcopter, multimeter, reverse engineering, Project Quadcopter
 Summary: Mechanically, it's in shambles. What's left in the rubble? I dive into the electronics to figure it out.
@@ -48,7 +49,7 @@ In a now somewhat obvious mistake, I bought
 super-mini-ultra-micro-gigga-fantastic small motors that turned out to be about
 half the diameter that I thought they were in order to have a backup set/set for
 building out a new design. After taking the time to measure these motors, they
-seem to fit the bill of a relatively standard size of 8.5mm in diameter x 20mm
+match a standard size of 8.5mm in diameter x 20mm
 in body length, with an overall length of a little over 25.5mm including the
 drive gear. This matches the size of some other motors that pop up in an Amazon
 search for the size; however, I'm not finding ones (yet) with the same markings

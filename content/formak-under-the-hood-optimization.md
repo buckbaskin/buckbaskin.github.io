@@ -3,7 +3,7 @@ Title: FormaK Under The Hood: Optimization for scikit-learn integration
 Category: Building
 Tags: FormaK, Project FormaK, 30 for 30, Python, Scikit-Learn, Scipy, optimization
 Date: 2022-10-08
-Updated: 2022-10-05
+Updated: 2023-10-30
 Summary: For the new scikit-learn feature, let's dive into how the model gets fit to data.
 Image: img/hand-innovation-loss-function.jpg
 ---
@@ -39,7 +39,7 @@ innovation and the score for how that matches the distribution is the
 
 Normally approach approaches zero; however, for the Kalman filter model we
 actually want to approach mean zero and standard deviation of 1 when normalized
-by the expected variance.  Zero mean and standard deviation of 1 indicates that
+by the expected variance. Zero mean and standard deviation of 1 indicates that
 we don't have any biases in the model and our assessment of the noise in the
 system matches the noise in the data.
 

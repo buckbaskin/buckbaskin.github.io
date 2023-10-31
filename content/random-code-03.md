@@ -3,7 +3,7 @@ Title: random-code Day 3 - Testing
 Category: Building
 Tags: Open Source, random-python, Project Random, testing, logging
 Date: 2022-07-31
-Updated: 2022-08-04
+Updated: 2023-10-30
 Summary: Starting testing and immediately finding some bugs
 ---
 
@@ -46,7 +46,7 @@ we have:
         ast = str_to_ast("""name or False""")
         assert ["name"] == nested_unpack(ast)
 
-But we get an error:
+which results in an error:
 
     E       AssertionError: assert ['name'] == [<ast.Name ob...7b7aa5140970>]
     E         At index 0 diff: 'name' != <ast.Name object at 0x7b7aa5140970>
@@ -64,7 +64,7 @@ Becomes
         for vid in nested_unpack(v, top_level):
             yield vid
 
-Ultimately not a very complicated or insiduous bug, but definitely hard to
+Ultimately not a complicated or insiduous bug, but definitely hard to
 catch trying to drive-by inspect the code while reading a diff
 
 # Logging

@@ -3,7 +3,7 @@ Title: Back to Breaking: 3D Printing Edition - Part 2
 Category: Breaking
 Tags: 3D Printing, Peugeot
 Date: 2023-05-01
-Updated: 2023-05-15
+Updated: 2023-10-30
 Image: img/IMG_3027.jpg
 Summary: On the topic of broken parts, the 3D printed seat support that I'd made has also failed. 
 ---
@@ -32,6 +32,6 @@ I've already mistakenly gotten the wrong size once...
 
 # 2023-05-12 Update
 
-But maybe I have the right size this time
+... Maybe I have the right size this time
 
 ![Bike seat post fully inserted into 3D printed part]({attach}/img/IMG_3083.jpg)

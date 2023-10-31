@@ -86,7 +86,7 @@ contain multiple sub-elements flatten the list from their sub-elements and call
 the recursion. This rolls up to a list at the top level of 0 or more names to
 check and pretty elegantly fits into the scope checking code.</p>
 <h2 id="scoping">Scoping<a class="headerlink" href="#scoping" title="Permanent link">¶</a></h2>
-<p>Each each element, we know if we've defined more names (e.g. for an <code>Assign</code>)
+<p>Each element, we know if we've defined more names (e.g. for an <code>Assign</code>)
 or gotten into a new scope (e.g. for a FunctionDef) and new names (e.g.
 arguments in a <code>FunctionDef</code>).</p>
 <p>This isn't something I've found a good general pattern for and haven't yet

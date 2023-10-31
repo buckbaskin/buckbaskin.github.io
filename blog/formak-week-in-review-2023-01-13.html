@@ -88,7 +88,7 @@ generation</a>. The PR is in
 progress, but the initial experiments have proved out that the generation
 pipeline is feasible and able to be integrated into bazel.</p>
 <h1 id="c-code-generation">C++ Code Generation<a class="headerlink" href="#c-code-generation" title="Permanent link">¶</a></h1>
-<p>Starting the week, the PR was in a very experimental state. The code was
+<p>Starting the week, the PR was in an experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:</p>
 <div class="codehilite"><pre><span/><code><span class="n">model</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span> 
@@ -135,7 +135,7 @@ to move to the feature test as designed.</p>
 missing import of FormaK in the generation script. As of c5ee64 , this was the
 limiting factor. The solution came down to replacing the <code>genrule</code> with a
 <code>run_binary</code> Skylark rule instead. The underlying problem seems to be that the
-genrule gets run in a very basic environment instead of running with all bazel
+genrule gets run in a basic environment instead of running with all bazel
 dependencies populated. <code>run_binary</code> restricts what can be done, but when
 configured with a dependency on the Python build target it gets the correct
 environment. 3b8efa is the diff that fixed things if you want to dig further.</p>

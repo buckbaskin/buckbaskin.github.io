@@ -1,6 +1,7 @@
 ---
 Title: AT Hiker Plays Firewatch: Day 2
 Date: 2018-07-29
+Updated: 2023-10-30
 Category: Building
 Tags: Firewatch, spoiler, PG-13
 Summary: Back playing Firewatch. The game is more than just scenic views.
@@ -44,7 +45,7 @@ Back playing Firewatch. The game is more than just scenic views.
 
 - I like being able to be a little sarcastic and witty with my voice lines
 
-- Getting punched was freaky and very very uncomfortable
+- Getting punched was freaky and disconcerting
 
 - Also, the cairn is a nice touch
 

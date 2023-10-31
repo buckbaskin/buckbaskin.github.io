@@ -66,7 +66,7 @@ provides:</p>
 <ul>
 <li>Model that describes the physics of the system</li>
 <li>Execution criteria (e.g. memory usage, execution time)</li>
-<li>Time series data for for the system</li>
+<li>Time series data for the system</li>
 </ul>
 <p>And the user gets a performant model that satisfies their execution criteria and
 optimally fits the data.</p>
@@ -79,7 +79,7 @@ optimally fits the data.</p>
 <p>This feature provides the first of the Five Keys: the Python Interface to define models.</p>
 <h1 id="feature-preview">Feature Preview<a class="headerlink" href="#feature-preview" title="Permanent link">¶</a></h1>
 <p>The user interface is designed to be easy to use and familiar to folks that
-work with Python. Setting up a very simple physics model for a rocket looks
+work with Python. Setting up a simple physics model for a rocket looks
 like:</p>
 <div class="codehilite"><pre><span/><code><span class="n">vp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vehicle_properties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="nl">k</span><span class="p">:</span><span class="w"> </span><span class="n">Symbol</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="o">[</span><span class="n">"m", "x", "v", "a"</span><span class="o">]</span><span class="err">}</span><span class="w"/>
 <span class="n">fuel_burn_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Symbol</span><span class="p">(</span><span class="ss">"fuel_burn_rate"</span><span class="p">)</span><span class="w"/>
@@ -107,7 +107,7 @@ like:</p>
 
 <p>Based on <a href="https://github.com/buckbaskin/formak/tree/master/featuretests/python_ui_demo/orbital_test.py">orbital_test.py</a></p>
 <p>One of the areas that I'm working on improving further is the way to set up
-symbols. In a very complicated system, having to specify everything in a
+symbols. In a complicated system, having to specify everything in a
 verbose way isn't necessarily sustainable.</p>
 <h1 id="solution-approach">Solution Approach<a class="headerlink" href="#solution-approach" title="Permanent link">¶</a></h1>
 <p>To start, the user interface leans on the

@@ -3,7 +3,7 @@ Title: CPU Modeling: First Order Latency and Data Dependencies
 Category: Building
 Tags: Miniseries, FormaK, CPU, SIMD
 Date: 2022-12-01
-Updated: 2022-12-01
+Updated: 2023-10-30
 Summary: This post is a new episode in a miniseries focused on modeling the workings of a CPU to use for generating optimal code. This post focuses on taking a sequence of instructions and simulating their results while respecting the latency of each instruction execution and data dependencies between instructions.
 ---
 
@@ -47,7 +47,7 @@ applied.
 With a model of latencies and register storage, the "CPU" can run a fixed list
 of instructions by continually iterating through the list until all
 instructions are consumed and all registers become available. The unsurprising
-but happy result of this baby CPU model is that we can see (with a very simple
+but happy result of this baby CPU model is that we can see (with a simple
 program) an increase in cycle count for a set of instructions with a data
 dependency vs one without a data dependency.
 

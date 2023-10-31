@@ -3,7 +3,7 @@ Title: Gears and Batteries
 Category: Building
 Tags: 3D Printing, Additive Manufacturing, Macro, Project RC Build
 Date: 2020-11-04
-Updated: 2020-11-07
+Updated: 2023-10-30
 Summary: How small can we get with a functional gear part on a FDM printer? What about packing in extra batteries?
 Image: img/IMG_0352.jpg
 ---
@@ -32,7 +32,7 @@ being off by 0.1mm is enough to prevent the design from working.
 In the process of trying to fit the center gear onto the motor driveshaft, I got
 a little too enthusiastic with a small file and ended up stretching out one side
 of the gear. On one hand, it's unfortunate to damage the part, but it's also
-very quick to print another.
+quick to print another.
 
 ![Image]({attach}/img/IMG_0390.jpg)
 

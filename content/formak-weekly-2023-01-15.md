@@ -3,7 +3,7 @@ Title: FormaK Week in Review 2023-01-13
 Category: Building
 Tags: Project Formak, FormaK, bazel, Week in Review, SIMD, Cpp, Python, Code Generation
 Date: 2023-01-13
-Updated: 2023-01-15
+Updated: 2023-10-30
 Summary: It's been a little while since I last wrote about Formak ( [FormaK Under The Hood: Optimization for scikit-learn integration](https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html) , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.
 ---
 
@@ -34,7 +34,7 @@ pipeline is feasible and able to be integrated into bazel.
 
 # C++ Code Generation
 
-Starting the week, the PR was in a very experimental state. The code was
+Starting the week, the PR was in an experimental state. The code was
 configured to generate C++ (really C) code from a sympy model. It's pretty
 simple at this stage:
 
@@ -91,7 +91,7 @@ While moving through half steps, the tricky to debug thing was a case of a
 missing import of FormaK in the generation script. As of c5ee64 , this was the
 limiting factor. The solution came down to replacing the `genrule` with a
 `run_binary` Skylark rule instead. The underlying problem seems to be that the
-genrule gets run in a very basic environment instead of running with all bazel
+genrule gets run in a basic environment instead of running with all bazel
 dependencies populated. `run_binary` restricts what can be done, but when
 configured with a dependency on the Python build target it gets the correct
 environment. 3b8efa is the diff that fixed things if you want to dig further.
