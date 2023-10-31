@@ -4,6 +4,7 @@ Category: Building
 Tags: FormaK, Project FormaK, Python, C++, Kalman Filter
 Date: 2023-09-19
 Updated: 2023-09-19
+Image: img/FstyleK.jpg
 Summary: A new feature for FormaK has landed: Innovation filtering. Automatically make Kalman Filters more robust.
 ---
 

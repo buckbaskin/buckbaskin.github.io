@@ -4,6 +4,7 @@ Category: Building
 Tags: FormaK, Project FormaK, Python, C++, IMU, Strapdown IMU
 Date: 2023-10-29
 Updated: 2023-10-30
+Image: img/biased_imu_accel_data.jpg
 Summary: A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models.
 ---
 
