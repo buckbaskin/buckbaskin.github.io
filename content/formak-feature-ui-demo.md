@@ -1,7 +1,7 @@
 ---
 Title: FormaK: User Interface
 Category: Building
-Tags: FormaK, Project FormaK,User Interface, 30 for 30
+Tags: FormaK, Project FormaK,User Interface, 30 for 30, Sympy
 Date: 2022-10-04
 Updated: 2022-10-30
 Summary: The first feature for FormaK landed: the user interface!

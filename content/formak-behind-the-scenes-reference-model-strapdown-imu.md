@@ -1,7 +1,7 @@
 ---
 Title: Behind the Scenes of the Strapdown IMU Reference Model
 Category: Building
-Tags: FormaK, Project FormaK, Python, C++, IMU, Strapdown IMU
+Tags: FormaK, Project FormaK, Python, C++, IMU, Strapdown IMU, Sympy
 Date: 2023-10-30
 Updated: 2023-10-30
 Image: img/FstyleK.jpg

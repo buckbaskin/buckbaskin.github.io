@@ -1,7 +1,7 @@
 ---
 Title: SIMD and Graphs: Partitioning Graphs into data-dependency levels
 Category: Building
-Tags: Miniseries, FormaK, Graphs, SIMD
+Tags: Miniseries, FormaK, Graphs, SIMD, Sympy
 Date: 2022-11-26
 Updated: 2022-11-27
 Summary: This post is a new episode in a miniseries focused on SIMD instructions. This second post focuses on fusing common single operations across multiple data

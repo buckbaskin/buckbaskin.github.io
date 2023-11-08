@@ -1,7 +1,7 @@
 ---
 Title: FormaK Week in Review 2023-01-13
 Category: Building
-Tags: Project Formak, FormaK, bazel, Week in Review, SIMD, Cpp, Python, Code Generation
+Tags: Project Formak, FormaK, bazel, Week in Review, SIMD, Cpp, Python, Code Generation, Sympy
 Date: 2023-01-13
 Updated: 2023-10-30
 Summary: It's been a little while since I last wrote about Formak ( [FormaK Under The Hood: Optimization for scikit-learn integration](https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html) , Sat 08 October 2022). Since then, I've been busy adding functionality to FormaK and I've also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.

@@ -1,7 +1,7 @@
 ---
 Title: SIMD and Graphs: Graph Matching
 Category: Building
-Tags: Miniseries, FormaK, Graphs, SIMD
+Tags: Miniseries, FormaK, Graphs, SIMD, Sympy
 Date: 2022-11-25
 Updated: 2022-11-27
 Summary: This post is a new episode in a miniseries focused on SIMD instructions. This first post focuses on matching points in the compute graph where we can combine individual instructions to form SIMD instructions.
