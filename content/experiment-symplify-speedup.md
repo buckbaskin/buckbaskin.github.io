@@ -8,10 +8,12 @@ Image: img/pstats_simplify.svg
 Summary: A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn't make it into the final design and feature.
 ---
 
-Over multiple iterations of improving FormaK (reference IMU model, rocket
-model, the original Python modeling), I've wanted to leverage the power of
-Sympy to provide efficient implementations of symbolic concepts before
-converting to Python or C++.
+Over multiple iterations of improving FormaK ([reference IMU
+model](/blog/strapdown-imu-reference-model-new-formak-feature.html), [rocket
+model](/blog/calibration-new-formak-feature.html), the [original Python code
+generation](/blog/formak-python-code-generation.html)), I've wanted to leverage
+the power of Sympy to provide efficient implementations of symbolic concepts
+before converting to Python or C++.
 
 The tool for this job is
 [`simplify`](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html#simplify)
@@ -38,7 +40,15 @@ simplification burden. To find a slow-but-not-too-slow expression, I performed
 a bottoms up traversal of the slow expression until I got an expression taking
 ~10 seconds to simplify.
 
-    (a/4 + e/4 + i/4 - (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 - (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)/(a/4 + e/4 + i/4 + (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 + (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)
+    (a/4 + e/4 + i/4 - (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h -
+    c*e*g)**(1/3))*sign(-b + d)**2/4 - (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g
+    + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i
+    + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i +
+    b*f*g + c*d*h - c*e*g)**(1/3)/4)/(a/4 + e/4 + i/4 + (-a - e + i + (a*e*i -
+    a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 + (-a + e - i
+    + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a
+    - e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f +
+    h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)
 
 # Profiling
 
@@ -52,7 +62,10 @@ and convert it to a profiling exercise that can yield information about its
 inner timings:
 
     cProfile.runctx(
-        "simplify(expr, inverse=False)", globals=globals(), locals={"expr": expr}, filename=filename
+        "simplify(expr, inverse=False)",
+        globals=globals(),
+        locals={"expr": expr},
+        filename=filename
     )
 
 This profiling provides lots of information, such as the cumulative time in a

@@ -54,10 +54,12 @@ te.css" />
   <div class="entry-content">
     <p><a href="/blog/the-simplify-speedup-experiment.html" rel="bookmark"
          title="Permalink to The Simplify Speedup Experiment">permalink</a></p>
-    <p>Over multiple iterations of improving FormaK (reference IMU model, rocket
-model, the original Python modeling), I've wanted to leverage the power of
-Sympy to provide efficient implementations of symbolic concepts before
-converting to Python or C++.</p>
+    <p>Over multiple iterations of improving FormaK (<a href="/blog/strapdown-imu-reference-model-new-formak-feature.html">reference IMU
+model</a>, <a href="/blog/calibration-new-formak-feature.html">rocket
+model</a>, the <a href="/blog/formak-python-code-generation.html">original Python code
+generation</a>), I've wanted to leverage
+the power of Sympy to provide efficient implementations of symbolic concepts
+before converting to Python or C++.</p>
 <p>The tool for this job is
 <a href="https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html#simplify"><code>simplify</code></a>
 (<a href="https://docs.sympy.org/latest/modules/simplify/simplify.html#sympy.simplify.simplify.simplify">API
@@ -79,7 +81,15 @@ then back to rotation matrices.</p>
 simplification burden. To find a slow-but-not-too-slow expression, I performed
 a bottoms up traversal of the slow expression until I got an expression taking
 ~10 seconds to simplify.</p>
-<div class="codehilite"><pre><span/><code>(a/4 + e/4 + i/4 - (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 - (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)/(a/4 + e/4 + i/4 + (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 + (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)
+<div class="codehilite"><pre><span/><code>(a/4 + e/4 + i/4 - (-a - e + i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h -
+c*e*g)**(1/3))*sign(-b + d)**2/4 - (-a + e - i + (a*e*i - a*f*h - b*d*i + b*f*g
++ c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a - e - i + (a*e*i - a*f*h - b*d*i
++ b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f + h)**2/4 + (a*e*i - a*f*h - b*d*i +
+b*f*g + c*d*h - c*e*g)**(1/3)/4)/(a/4 + e/4 + i/4 + (-a - e + i + (a*e*i -
+a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-b + d)**2/4 + (-a + e - i
++ (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(c - g)**2/4 + (a
+- e - i + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3))*sign(-f +
+h)**2/4 + (a*e*i - a*f*h - b*d*i + b*f*g + c*d*h - c*e*g)**(1/3)/4)
 </code></pre></div>
 
 <h1 id="profiling">Profiling<a class="headerlink" href="#profiling" title="Permanent link">¶</a></h1>
@@ -92,7 +102,10 @@ performant, but it's easy enough to take a function invocation:</p>
 <p>and convert it to a profiling exercise that can yield information about its
 inner timings:</p>
 <div class="codehilite"><pre><span/><code>cProfile.runctx(
-    "simplify(expr, inverse=False)", globals=globals(), locals={"expr": expr}, filename=filename
+    "simplify(expr, inverse=False)",
+    globals=globals(),
+    locals={"expr": expr},
+    filename=filename
 )
 </code></pre></div>
 
