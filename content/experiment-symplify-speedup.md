@@ -103,14 +103,14 @@ in the FormaK design and development process.
 
 I got a suggestion from [@hugovk](https://mastodon.social/@hugovk) to try out the latest Python release:
 
-https://fosstodon.org/@hugovk@mastodon.social/111351314621822006
+[https://fosstodon.org/@hugovk@mastodon.social/111351314621822006](https://fosstodon.org/@hugovk@mastodon.social/111351314621822006)
 
 > If you're not already, you could compare Python 3.12:
 > 
 > "Dictionary, list, and set comprehensions are now inlined, rather than creating a new single-use function object for each execution of the comprehension. This speeds up execution of a comprehension by up to two times." 
 > 
-> https://docs.python.org/3/whatsnew/3.12.html#whatsnew312-pep709
-> #Python #Python312 #PEP709
+> [https://docs.python.org/3/whatsnew/3.12.html#whatsnew312-pep709](https://docs.python.org/3/whatsnew/3.12.html#whatsnew312-pep709)
+> \#Python \#Python312 \#PEP709
 
 The overall trend that I found was the performance on 3.10 and 3.11 were close,
 but 3.12 performance was actually slower than the other two. It seems like lots
