@@ -13,8 +13,8 @@ te.css" />
 
     <meta name="twitter:creator" content="@beBaskin"></meta>
     <meta name="twitter:title" content="The Simplify Speedup Experiment - Building and Breaking"></meta>
-    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn&#39;t make it into the final design and feature.&lt;/p&gt;" />
-    <meta name="twitter:description" content="&lt;p&gt;A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn&#39;t make it into the final design and feature.&lt;/p&gt;"></meta>
+    <meta name="description" content="&lt;p&gt;Over multiple iterations of improving FormaK (reference IMU model rocket model, the original Python code generation), I&#39;ve wanted to leverage the power of Sympy to provide efficient implementations of symbolic concepts before converting to Python or C++. The tool for this job is &lt;code&gt;simplify&lt;/code&gt;. With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with Common Subexpression Elimination and we have a powerful pair of tools to write efficient code regardless of the model. There&#39;s just one problem: Sympy can be incredibly sluggish for some functions. Each call can take 10s of seconds. These 10s of seconds can stack up to minutes of time spent waiting and hoping for a result. For this experiment, I take some time to dive into what&#39;s going on and try to understand why it can be so darn slow sometimes.&lt;/p&gt;" />
+    <meta name="twitter:description" content="&lt;p&gt;Over multiple iterations of improving FormaK (reference IMU model rocket model, the original Python code generation), I&#39;ve wanted to leverage the power of Sympy to provide efficient implementations of symbolic concepts before converting to Python or C++. The tool for this job is &lt;code&gt;simplify&lt;/code&gt;. With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with Common Subexpression Elimination and we have a powerful pair of tools to write efficient code regardless of the model. There&#39;s just one problem: Sympy can be incredibly sluggish for some functions. Each call can take 10s of seconds. These 10s of seconds can stack up to minutes of time spent waiting and hoping for a result. For this experiment, I take some time to dive into what&#39;s going on and try to understand why it can be so darn slow sometimes.&lt;/p&gt;"></meta>
 
     <meta name="tags" content="FormaK" />
     <meta name="tags" content="Project FormaK" />
@@ -63,12 +63,17 @@ before converting to Python or C++.</p>
 <p>The tool for this job is
 <a href="https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html#simplify"><code>simplify</code></a>
 (<a href="https://docs.sympy.org/latest/modules/simplify/simplify.html#sympy.simplify.simplify.simplify">API
-docs</a>). With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with <a href="https://docs.sympy.org/latest/modules/rewriting.html#common-subexpression-detection-and-collection">Common Subexpression Elimination</a> and we have a powerful pair of tools to write efficient code regardless of the model.</p>
-<p>There's just one problem: Sympy can be incredibly sluggish for some functions.
-When called on an expression like the following, it can take 10s of seconds.
-These 10s of seconds can stack up to minutes of time spent waiting and hoping
-for a result. For this experiment, I wanted to take some time to dive into
-what's going on and try to understand why it can be so darn slow sometimes.</p>
+docs</a>).
+With one call, it can simplify polynomials, simplify trigonometry and other
+approaches. Combine this with <a href="https://docs.sympy.org/latest/modules/rewriting.html#common-subexpression-detection-and-collection">Common Subexpression
+Elimination</a>
+and we have a powerful pair of tools to write efficient code regardless of the
+model.</p>
+<p>There's just one problem: Sympy can be incredibly sluggish for some
+expressions. Each call can take 10s of seconds. These 10s of seconds can stack
+up to minutes of time spent waiting and hoping for a result. For this
+experiment, I wanted to take some time to dive into what's going on and try to
+understand why <code>simplify</code> can be so darn slow sometimes.</p>
 <h1 id="experiment-setup">Experiment Setup<a class="headerlink" href="#experiment-setup" title="Permanent link">¶</a></h1>
 <p>The first part of the experiment was to make a slow expression. Taking
 inspiration from a particularly slow case in the reference IMU design, I opted
@@ -99,8 +104,8 @@ performant, but it's easy enough to take a function invocation:</p>
 <div class="codehilite"><pre><span/><code>simplify(expr)
 </code></pre></div>
 
-<p>and convert it to a profiling exercise that can yield information about its
-inner timings:</p>
+<p>and convert the function call to a profiling exercise that can yield
+information about the function's inner timings:</p>
 <div class="codehilite"><pre><span/><code>cProfile.runctx(
     "simplify(expr, inverse=False)",
     globals=globals(),
@@ -111,8 +116,9 @@ inner timings:</p>
 
 <p>This profiling provides lots of information, such as the cumulative time in a
 function or the time spent in the function specifically (excluding
-sub-functions) but it is often too much information to understand intuitively
-in an exploratory exercise such as this where I'm not familiar with the code.</p>
+sub-functions). Unfortunately, that lots of information is often too much
+information to understand intuitively during an exploratory exercise such as
+this one where I'm not familiar with the code.</p>
 <h2 id="flamegraphs">Flamegraphs<a class="headerlink" href="#flamegraphs" title="Permanent link">¶</a></h2>
 <p>Flamegraphs to the rescue! Flamegraphs show function timing via samples (on the
 horizontal axis) and then the call dependencies on the vertical axis. I love
@@ -179,7 +185,6 @@ libraries executing on 3.10.</p>
 <p>Reruns:</p>
 <ul>
 <li>83462111 function calls (71463102 primitive calls) in 59.368 seconds</li>
-<li>83462111 function calls (71463102 primitive calls) in 59.368 seconds (duplicate??)</li>
 <li>83402767 function calls (71409367 primitive calls) in 60.314 seconds</li>
 </ul>
 <h2 id="311-version-486a2eb">3.11 Version 486a2eb<a class="headerlink" href="#311-version-486a2eb" title="Permanent link">¶</a></h2>

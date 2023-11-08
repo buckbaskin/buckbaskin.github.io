@@ -5,7 +5,7 @@ Tags: FormaK, Project FormaK, Python, Sympy, Profiling
 Date: 2023-11-07
 Updated: 2023-11-07
 Image: img/pstats_simplify.svg
-Summary: A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn't make it into the final design and feature.
+Summary: Over multiple iterations of improving FormaK (reference IMU model rocket model, the original Python code generation), I've wanted to leverage the power of Sympy to provide efficient implementations of symbolic concepts before converting to Python or C++. The tool for this job is `simplify`. With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with Common Subexpression Elimination and we have a powerful pair of tools to write efficient code regardless of the model. There's just one problem: Sympy can be incredibly sluggish for some functions. Each call can take 10s of seconds. These 10s of seconds can stack up to minutes of time spent waiting and hoping for a result. For this experiment, I take some time to dive into what's going on and try to understand why it can be so darn slow sometimes.
 ---
 
 Over multiple iterations of improving FormaK ([reference IMU
@@ -18,13 +18,18 @@ before converting to Python or C++.
 The tool for this job is
 [`simplify`](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html#simplify)
 ([API
-docs](https://docs.sympy.org/latest/modules/simplify/simplify.html#sympy.simplify.simplify.simplify)). With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with [Common Subexpression Elimination](https://docs.sympy.org/latest/modules/rewriting.html#common-subexpression-detection-and-collection) and we have a powerful pair of tools to write efficient code regardless of the model.
+docs](https://docs.sympy.org/latest/modules/simplify/simplify.html#sympy.simplify.simplify.simplify)).
+With one call, it can simplify polynomials, simplify trigonometry and other
+approaches. Combine this with [Common Subexpression
+Elimination](https://docs.sympy.org/latest/modules/rewriting.html#common-subexpression-detection-and-collection)
+and we have a powerful pair of tools to write efficient code regardless of the
+model.
 
-There's just one problem: Sympy can be incredibly sluggish for some functions.
-When called on an expression like the following, it can take 10s of seconds.
-These 10s of seconds can stack up to minutes of time spent waiting and hoping
-for a result. For this experiment, I wanted to take some time to dive into
-what's going on and try to understand why it can be so darn slow sometimes.
+There's just one problem: Sympy can be incredibly sluggish for some
+expressions. Each call can take 10s of seconds. These 10s of seconds can stack
+up to minutes of time spent waiting and hoping for a result. For this
+experiment, I wanted to take some time to dive into what's going on and try to
+understand why `simplify` can be so darn slow sometimes.
 
 # Experiment Setup
 
@@ -58,8 +63,8 @@ performant, but it's easy enough to take a function invocation:
 
     simplify(expr)
 
-and convert it to a profiling exercise that can yield information about its
-inner timings:
+and convert the function call to a profiling exercise that can yield
+information about the function's inner timings:
 
     cProfile.runctx(
         "simplify(expr, inverse=False)",
@@ -70,8 +75,9 @@ inner timings:
 
 This profiling provides lots of information, such as the cumulative time in a
 function or the time spent in the function specifically (excluding
-sub-functions) but it is often too much information to understand intuitively
-in an exploratory exercise such as this where I'm not familiar with the code.
+sub-functions). Unfortunately, that lots of information is often too much
+information to understand intuitively during an exploratory exercise such as
+this one where I'm not familiar with the code.
 
 ## Flamegraphs
 
@@ -151,7 +157,6 @@ I've included the data from profiling below.
 Reruns:
 
 - 83462111 function calls (71463102 primitive calls) in 59.368 seconds
-- 83462111 function calls (71463102 primitive calls) in 59.368 seconds (duplicate??)
 - 83402767 function calls (71409367 primitive calls) in 60.314 seconds
 
 ## 3.11 Version 486a2eb

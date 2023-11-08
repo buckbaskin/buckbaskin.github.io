@@ -40,7 +40,7 @@ te.css" />
                 <time class="published" datetime="2023-11-07T00:00:00-08:00"> Tue 07 November 2023 </time>
             </footer><!-- /.post-info -->
             <div class="entry-content"> 
-                <p>A new feature for FormaK has landed: the Strapdown IMU Reference model. The model is now available for inclusion into new models and use as a reference for implementing future models. This post covers some of the aspects of the design and development that didn't make it into the final design and feature.</p>
+                <p>Over multiple iterations of improving FormaK (reference IMU model rocket model, the original Python code generation), I've wanted to leverage the power of Sympy to provide efficient implementations of symbolic concepts before converting to Python or C++. The tool for this job is <code>simplify</code>. With one call, it can simplify polynomials, simplify trigonometry and other approaches. Combine this with Common Subexpression Elimination and we have a powerful pair of tools to write efficient code regardless of the model. There's just one problem: Sympy can be incredibly sluggish for some functions. Each call can take 10s of seconds. These 10s of seconds can stack up to minutes of time spent waiting and hoping for a result. For this experiment, I take some time to dive into what's going on and try to understand why it can be so darn slow sometimes.</p>
                 <p>
                 <a href="/blog/the-simplify-speedup-experiment.html" rel="bookmark"
                                                           title="Permalink to The Simplify Speedup Experiment">Continue
