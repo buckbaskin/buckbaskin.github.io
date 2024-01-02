@@ -61,25 +61,25 @@ interfaces to support a variety of model uses" by reworking how C++ generation
 is done for easier extensions. After the 
 <a href="blog/calibration-new-formak-feature.html">Calibration</a> design, a lot of the code
 templates looked like:</p>
-<div class="codehilite"><pre><span/><code><span class="w">        </span><span class="n">StateAndVariance</span><span class="w"/>
-<span class="w">        </span><span class="n">ExtendedKalmanFilter</span><span class="p">::</span><span class="n">process_model</span><span class="p">(</span><span class="w"/>
-<span class="w">            </span><span class="n">double</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span><span class="w"/>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">StateAndVariance</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span><span class="w"/>
-<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span><span class="w"/>
-<span class="w">            </span><span class="p">,</span><span class="w"/>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Calibration</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_calibration</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span><span class="w"/>
-<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span><span class="w"/>
-<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span><span class="w"/>
-<span class="w">            </span><span class="p">,</span><span class="w"/>
-<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Control</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_control</span><span class="w"/>
-<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span><span class="w"/>
-<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span><span class="w"/>
-<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<div class="codehilite"><pre><span/><code><span class="w">        </span><span class="n">StateAndVariance</span>
+<span class="w">        </span><span class="n">ExtendedKalmanFilter</span><span class="p">::</span><span class="n">process_model</span><span class="p">(</span>
+<span class="w">            </span><span class="n">double</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">StateAndVariance</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Calibration</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_calibration</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">            </span><span class="p">,</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">Control</span><span class="o">&amp;</span><span class="w"> </span><span class="n">input_control</span>
+<span class="w">            </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">off</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">clang</span><span class="o">-</span><span class="n">format</span><span class="w"> </span><span class="n">on</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </code></pre></div>
 
 <p>Instead of relying on increasingly intricate Jinja templating and managing
@@ -89,20 +89,20 @@ the Python and C++ AST. The reason to go with something that approximates the
 Python AST is to have an inspiration and a guide from an AST that has
 accumulated experience instead of reinventing the wheel (too much).</p>
 <p>Afterwards, the code can look like:</p>
-<div class="codehilite"><pre><span/><code><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"/>
-<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"double"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dt"</span><span class="p">),</span><span class="w"/>
-<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const StateAndVariance&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_state"</span><span class="p">),</span><span class="w"/>
-<span class="p">]</span><span class="w"/>
-<span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="p">:</span><span class="w"/>
-<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Calibration&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_calibration"</span><span class="p">))</span><span class="w"/>
-<span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="p">:</span><span class="w"/>
-<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Control&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_control"</span><span class="p">))</span><span class="w"/>
-<span class="k">return</span><span class="w"> </span><span class="n">FunctionDeclaration</span><span class="p">(</span><span class="w"/>
-<span class="w">    </span><span class="s2">"StateAndVariance"</span><span class="p">,</span><span class="w"/>
-<span class="w">    </span><span class="s2">"process_model"</span><span class="p">,</span><span class="w"/>
-<span class="w">    </span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span><span class="w"/>
-<span class="w">    </span><span class="n">modifier</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span><span class="w"/>
-<span class="p">)</span><span class="w"/>
+<div class="codehilite"><pre><span/><code><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"double"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dt"</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const StateAndVariance&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_state"</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="k">if</span><span class="w"> </span><span class="n">enable_calibration</span><span class="p">:</span>
+<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Calibration&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_calibration"</span><span class="p">))</span>
+<span class="k">if</span><span class="w"> </span><span class="n">enable_control</span><span class="p">:</span>
+<span class="w">    </span><span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Arg</span><span class="p">(</span><span class="s2">"const Control&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"input_control"</span><span class="p">))</span>
+<span class="k">return</span><span class="w"> </span><span class="n">FunctionDeclaration</span><span class="p">(</span>
+<span class="w">    </span><span class="s2">"StateAndVariance"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"process_model"</span><span class="p">,</span>
+<span class="w">    </span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+<span class="w">    </span><span class="n">modifier</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
 
 <p>This approach isn't necessarily shorter, but it allows for replacing Jinja
