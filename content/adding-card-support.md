@@ -3,7 +3,7 @@ Title: Adding Card Support
 Category: Building
 Tags: Social Media
 Date: 2018-12-31
-Updated: 2023-10-30
+Updated: 2024-01-02
 Summary: What are cards? How can I automate making a nicely rendered preview for the articles I write?
 ---
 
@@ -35,3 +35,8 @@ The article HTML adds the following:
 - `<meta name="twitter:description" content="{{article.summary}}"></meta>`
 
 This post is a little shorter than usual, but it adds an interesting feature that I enjoy.
+
+# 2024-01-02 Update
+
+I've opted to remove much of the Twitter specific functionality, but may
+maintain some functionality for compatibilty and "nice" sharing on Mastodon.

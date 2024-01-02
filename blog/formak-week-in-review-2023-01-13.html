@@ -6,15 +6,9 @@
         <link rel="stylesheet" href="/blog/theme/css/si
 te.css" />
         <meta name="tag" content="tag data">
-        <meta name="twitter:card" content="summary"></meta>
-        <meta name="twitter:site" content="@beBaskin"></meta>
-        <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/3441311?s=400&v=4"></meta>
         <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
 
-    <meta name="twitter:creator" content="@beBaskin"></meta>
-    <meta name="twitter:title" content="FormaK Week in Review 2023-01-13 - Building and Breaking"></meta>
     <meta name="description" content="&lt;p&gt;It&#39;s been a little while since I last wrote about Formak ( &lt;a href=&#34;https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html&#34;&gt;FormaK Under The Hood: Optimization for scikit-learn integration&lt;/a&gt; , Sat 08 October 2022). Since then, I&#39;ve been busy adding functionality to FormaK and I&#39;ve also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.&lt;/p&gt;" />
-    <meta name="twitter:description" content="&lt;p&gt;It&#39;s been a little while since I last wrote about Formak ( &lt;a href=&#34;https://buckbaskin.com/blog/formak-u nder-the-hood-optimization-for-scikit-learn-integration.html&#34;&gt;FormaK Under The Hood: Optimization for scikit-learn integration&lt;/a&gt; , Sat 08 October 2022). Since then, I&#39;ve been busy adding functionality to FormaK and I&#39;ve also been improving the tooling for the project, inspired by Boring Python: code quality. The latest piece of functionality is the C++ code generation. The PR is in progress, but the initial experiments have proved out that the generation pipeline is feasible and able to be integrated into bazel.&lt;/p&gt;"></meta>
 
     <meta name="tags" content="Project Formak" />
     <meta name="tags" content="FormaK" />
@@ -114,7 +108,7 @@ looks like:
 - Update the code generation to take a simple path to determining the header include [this will come back to bite later]</p>
 <p>This is a kinda long list to get right, so going forward I'd like to focus on simplifying it (or seeing if there can be a single source of truth). This focus might become second priority (and therefore not a priority) if it's something I can hide from the end user.</p>
 <h2 id="design-doc">Design Doc<a class="headerlink" href="#design-doc" title="Permanent link">¶</a></h2>
-<p>The <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/cpp_library_for_model_evaluation.md">design doc</a> was heavily borrowed from the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/python_library_for_model_evaluation.md">Python design doc</a> with updates to accommodate direct code generation vs a simpler sympy -&gt; Python translation. I encourage you to read through it and send me feedback on your thoughts <a href="https://twitter.com/bebaskin">@beBaskin</a>.</p>
+<p>The <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/cpp_library_for_model_evaluation.md">design doc</a> was heavily borrowed from the <a href="https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/python_library_for_model_evaluation.md">Python design doc</a> with updates to accommodate direct code generation vs a simpler sympy -&gt; Python translation. I encourage you to read through it and send me feedback on your thoughts <a href="https://fosstodon.org/@buck">@buck</a>.</p>
 <h2 id="making-things-official-porting-the-experimental-code-to-feature-tests">Making things official: Porting the experimental code to feature tests<a class="headerlink" href="#making-things-official-porting-the-experimental-code-to-feature-tests" title="Permanent link">¶</a></h2>
 <p>Once I had a solid experiment and a design, I moved back to some of the code
 logisitics, specifically setting up the feature tests for the design. There are
@@ -236,12 +230,12 @@ without having to do anything custom-looking in Bazel land.</p>
         <footer id="contentinfo" class="body">
                 <author>
                         If you liked this and want to see more, let me know
-                        <a href="https://twitter.com/beBaskin">@beBaskin</a> 
-                        on Twitter. Check out the 
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
                         <a href="/blog/projects.html">projects</a>!
                 </author><!-- /#about -->
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>. Hosted on <a href="https://pages.github.com/">Github Pages</a>.
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
                 </address><!-- /#author -->
         </footer><!-- /#contentinfo -->
 </body>

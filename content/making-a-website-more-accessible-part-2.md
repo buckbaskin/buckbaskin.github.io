@@ -32,4 +32,4 @@ For me, I'm interested in banner and main. I might get into some of the other ro
 
 # Conclusion
 
-In conclusion, I've added some additional semantic labels to my templates that should make my pages more easy to navigate with a screen reader. It's been a fun experiment into making websites more accessible. I hope to learn more about accessibility and demonstrate it here. If there's something I'm missing or doing incorrectly, let me know on Twitter [@beBaskin](https://twitter.com/beBaskin).
+In conclusion, I've added some additional semantic labels to my templates that should make my pages more easy to navigate with a screen reader. It's been a fun experiment into making websites more accessible. I hope to learn more about accessibility and demonstrate it here. If there's something I'm missing or doing incorrectly, let me know on Mastodon [@buck](https://fosstodon.org/@buck).

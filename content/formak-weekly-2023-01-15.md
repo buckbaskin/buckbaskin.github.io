@@ -64,7 +64,7 @@ This is a kinda long list to get right, so going forward I'd like to focus on si
 
 ## Design Doc
 
-The [design doc](https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/cpp_library_for_model_evaluation.md) was heavily borrowed from the [Python design doc](https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/python_library_for_model_evaluation.md) with updates to accommodate direct code generation vs a simpler sympy -> Python translation. I encourage you to read through it and send me feedback on your thoughts [@beBaskin](https://twitter.com/bebaskin).
+The [design doc](https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/cpp_library_for_model_evaluation.md) was heavily borrowed from the [Python design doc](https://github.com/buckbaskin/formak/blob/cpp-gen/docs/designs/python_library_for_model_evaluation.md) with updates to accommodate direct code generation vs a simpler sympy -> Python translation. I encourage you to read through it and send me feedback on your thoughts [@buck](https://fosstodon.org/@buck).
 
 ## Making things official: Porting the experimental code to feature tests
 
