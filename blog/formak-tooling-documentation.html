@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>FormaK Tooling: Documentation - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;FormaK implements a new documentation builder to make documentation much easier to navigate and look better too.&lt;/p&gt;" />
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="GitHub" />
+    <meta name="tags" content="GitHub Actions" />
+    <meta name="tags" content="Documentation" />
+    <meta name="tags" content="Open Source" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">FormaK Tooling: Documentation - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2024-01-17T00:00:00-08:00">
+      Wed 17 January 2024
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/github.html">GitHub</a>
+            <a href="/blog/tag/github-actions.html">GitHub Actions</a>
+            <a href="/blog/tag/documentation.html">Documentation</a>
+            <a href="/blog/tag/open-source.html">Open Source</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/formak-tooling-documentation.html" rel="bookmark"
+         title="Permalink to FormaK Tooling: Documentation">permalink</a></p>
+    <p>TLDR: FormaK moved to Sphinx documentation and documentation checks in CI for
+new commits as of
+<a href="https://github.com/buckbaskin/formak/commit/c8ae13e9810a9915f8a8721c40e185b04d47ceee">c8ae13e</a></p>
+<p>This post aims to be a short review of FormaK’s tooling for documentation.</p>
+<h1 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">¶</a></h1>
+<p>The goal for this effort was to improve the organization and the look and feel
+of the FormaK documentation. Many Python projects have nice looking
+documentation and FormaK documentation felt out of place. In addition, ease of
+use is a key value for the FormaK project and the documentation was decidedly
+not easy to use.</p>
+<p><img alt="Documentation before the changes with a black and white style and no navigation" src="/blog/img/FormaKDocsBefore.jpg" class="wideimage"/></p>
+<p>As an additional motivating factor, the helpful resource <a href="https://producingoss.com/">Producing Open
+Source Software</a> heavily emphasizes the importance
+of
+<a href="https://producingoss.com/en/getting-started.html#documentation">documentation</a>.
+As part of getting off to a good start for the year, I've been re-reviewing the
+suggestions there and trying to more enthusiastically adopt them to fit the
+FormaK project.</p>
+<h1 id="solution-approach">Solution Approach<a class="headerlink" href="#solution-approach" title="Permanent link">¶</a></h1>
+<p>My initial familiarity for documentation tooling was largely based on the blog
+(built on Pelican) which quite blog focused and requires significant effort for
+applying a theme.</p>
+<p>I had the following criteria for the tooling:
+- it shouldn't be blog focused
+- it should have easy support for existing Markdown documentation
+- it should be easy to apply a good-enough looking theme</p>
+<h2 id="research">Research<a class="headerlink" href="#research" title="Permanent link">¶</a></h2>
+<p>I started my research with the <a href="https://scikit-learn.org/">scikit-learn
+documentation</a>. It's quite good looking, it has
+useful organizational and navigational information and it's style seems
+representative of Python documentation that I like. Poking around the site
+turns up the documentation for <a href="https://scikit-learn.org/dev/developers/contributing.html#documentation">contributing
+documentation</a>
+and specifically <a href="https://scikit-learn.org/dev/developers/contributing.html#building-the-documentation">building the
+documentation</a>.
+In that we can see that the tool
+<a href="https://www.sphinx-doc.org/en/master/">Sphinx</a> is the first pip dependency.</p>
+<p>Taking a look through Sphinx, it was pretty clearly documentation focused and
+has a focus on aesthetics. The remaining hurdle was understanding if it could
+inter-operate with minimal changes to existing documentation.</p>
+<p>Out of the gate, Sphinx is designed to work with reStructuredText markup
+language, but also supports a flavor of Markdown called <a href="https://www.sphinx-doc.org/en/master/usage/markdown.html#markdown">MyST
+markdown</a>.
+Boom, we have our tool.</p>
+<h2 id="steps-along-the-way">Steps along the way<a class="headerlink" href="#steps-along-the-way" title="Permanent link">¶</a></h2>
+<p>Identifying sphinx and setting up a pip dependency didn't immediately lead to
+nice documentation. Sphinx has nice <a href="https://www.sphinx-doc.org/en/master/usage/quickstart.html">Getting
+Started</a>
+documentation, but then I immediately had to divert to the <a href="https://www.sphinx-doc.org/en/master/usage/markdown.html#markdown">Markdown
+documentation</a>.
+In switching to Markdown early, I missed the concept of the <code>toctree</code> and had
+to re-discover this later in the process. Save yourself the trouble and read
+the full Getting Started page first before jumping around.</p>
+<p>The documentation I'd written so far makes use of LaTeX for mathematical
+notation. This was initially broken in the first few rounds of documentation
+generation, but now it's supported via MyST <a href="https://myst-parser.readthedocs.io/en/latest/syntax/optional.html">Syntax
+Extensions</a>.
+<code>amsmath</code> and <code>dollarmath</code> where the two keys for LaTeX support, but I opted to
+enable a number of additional extensions:
+- "fieldlist" (leading metadata for design docs)
+- "linkify" (better link handling)
+- "strikethrough"
+- "tasklist" (add support for [ ], [x] tasks)</p>
+<p>The final piece of the puzzle is <code>autodoc</code>. This is the Sphinx integrated
+tooling for automatically generating API documentation from Python files. This
+is something that's only partially useful (due to my lack of docstrings, yes,
+I'm working on it), but will improve as the project ages and more of the
+modules, functions and classes get docstrings as they're updated.</p>
+<p>On the theme front, I ended up swapping to the "classic" theme to get something
+that looked even more Pythonic than the default theme too. </p>
+<p>Keeping docs up to date has a few approaches. There are ways to integrate
+third-party tools (like Read The Docs) or to use Github Actions to generate new
+docs on the fly; however, I opted for a simpler approach. As of PR
+<a href="https://github.com/buckbaskin/formak/pull/23">#23</a>, the documentation is
+checked into the source tree and then a Github Action merely checks to see if
+there's a diff when re-generating the documentation. This has the benefit of
+having the documentation available immediately for anyone downloading the
+project and removes any complexity of managing git branches via Github Actions
+or trying to add commits via Github Actions to generate the documentation.</p>
+<p>There were also some hidden benefits to Sphinx. For one, it does some amount of
+validation of the documentation structure for pages that aren't accessible as
+part of a table of contents. It also does validation of the documentation
+structure to ensure it makes sense (e.g. not skipping header levels).</p>
+<p>P.S. Sphinx plays much better with Github Pages if you include the <code>.nojekyll</code>
+file in the top level of the docuemnts directory. If not, static files will be
+skipped by Github Pages and it'll break the javascript and CSS for the site.</p>
+<h1 id="the-result">The Result<a class="headerlink" href="#the-result" title="Permanent link">¶</a></h1>
+<p>Before</p>
+<p><img alt="Documentation before the changes with a black and white style and no navigation" src="/blog/img/FormaKDocsBefore.jpg" class="wideimage"/></p>
+<p>After</p>
+<p><img alt="Documentation after the changes with a blue style and a table of contents" src="/blog/img/FormaKDocsAfter.jpg" class="wideimage"/></p>
+<p>One of the key things to note is the navigation aids (table of contents on the
+left, breadcrumbs for file organization along the top). Overall it is much
+better and the improvements will continue to compound as the project grows its
+API documentation and user documentation.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
