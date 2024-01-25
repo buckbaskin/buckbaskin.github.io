@@ -101,13 +101,13 @@ match whichever function we'd like and provide flexibility for the user. For
 example, for the SIMD function <code>_mm_add_ps</code> we want to match up to 4 add
 operations, so the logic for matching is a simple 
 <code>expr.func == sympy.core.add.Add</code>.</p>
-<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span><span class="w"/>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"/>
-<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"/>
+<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span><span class="w"/>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span><span class="w"/>
-<span class="w">            </span><span class="nb">yield</span><span class="w"> </span><span class="n">result</span><span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span>
+<span class="w">            </span><span class="nb">yield</span><span class="w"> </span><span class="n">result</span>
 </code></pre></div>
 
 <h2 id="prefix">Prefix<a class="headerlink" href="#prefix" title="Permanent link">¶</a></h2>
@@ -116,16 +116,16 @@ that it follows a prefix order. This means that each node will be matched before
 each of its children. This doesn't have much significance yet because we're not
 manipulating the graph, but it may make other transforms easier later. Consider
 it more of a note of an intentional design to revisit later.</p>
-<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span><span class="w"/>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"> </span><span class="c1"># prefix</span><span class="w"/>
-<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"/>
+<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"> </span><span class="c1"># prefix</span>
+<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span><span class="w"/>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span><span class="w"/>
-<span class="w">            </span><span class="nb">yield</span><span class="w"> </span><span class="n">result</span><span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">):</span>
+<span class="w">            </span><span class="nb">yield</span><span class="w"> </span><span class="n">result</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"> </span><span class="c1"># postfix</span><span class="w"/>
-<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"/>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span><span class="w"> </span><span class="c1"># postfix</span>
+<span class="w">        </span><span class="nb">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>
 </code></pre></div>
 
 <h2 id="naming-and-a-sub-graph">Naming and a Sub-Graph<a class="headerlink" href="#naming-and-a-sub-graph" title="Permanent link">¶</a></h2>
@@ -137,16 +137,16 @@ heritage. When visiting the child of each node, add the index of the child in
 the parents list of arguments to the operator. In this way, each child is
 uniquely identified from its siblings (by different indices) and each child is
 uniquely identified from its parent (by different length of the list).</p>
-<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="o">=</span><span class="k">None</span><span class="p">)</span><span class="err">:</span><span class="w"/>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">None</span><span class="err">:</span><span class="w"/>
-<span class="w">        </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="w"/>
+<div class="codehilite"><pre><span/><code><span class="n">def</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="o">=</span><span class="k">None</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
+<span class="w">        </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="err">:</span><span class="w"/>
-<span class="w">        </span><span class="n">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="w"/>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">matcher</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="n">yield</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="p">.</span><span class="n">args</span><span class="p">)</span><span class="err">:</span><span class="w"/>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span><span class="err">:</span><span class="w"/>
-<span class="w">            </span><span class="n">yield</span><span class="w"> </span><span class="k">result</span><span class="w"/>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="p">.</span><span class="n">args</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">visit_sympy_expr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">matcher</span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span><span class="err">:</span>
+<span class="w">            </span><span class="n">yield</span><span class="w"> </span><span class="k">result</span>
 </code></pre></div>
 
 <p>This form of unique identifier also allows us to build a sub-graph of the
