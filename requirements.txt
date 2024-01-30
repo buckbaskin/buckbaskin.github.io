@@ -1,5 +1,5 @@
 pelican==4.0.1
-Pygments
+Pygments==2.13.0
 Jinja2<2.10.1
 markupsafe==2.0.1
 markdown

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Hyperparameter Selection - New FormaK Feature - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;A new feature for FormaK has landed: Hyperparameter selection. Automatically select optimal parameters based on data from the modeled system.&lt;/p&gt;" />
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+    <meta name="tags" content="Kalman Filter" />
+    <meta name="tags" content="scikit-learn" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Hyperparameter Selection - New FormaK Feature - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2024-01-30T00:00:00-08:00">
+      Tue 30 January 2024
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+            <a href="/blog/tag/kalman-filter.html">Kalman Filter</a>
+            <a href="/blog/tag/scikit-learn.html">scikit-learn</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/hyperparameter-selection-new-formak-feature.html" rel="bookmark"
+         title="Permalink to Hyperparameter Selection - New FormaK Feature">permalink</a></p>
+    <p>FormaK aims to combine symbolic modeling for fast, efficient system modelling
+with code generation to create performant code that is easy to use.</p>
+<p>This design focuses on "Integration to scikit-learn to leverage the model
+selection and parameter tuning functions". More specifically, this design
+focuses on using scikit-learn tooling to automatically select the innovation
+filtering level from data.</p>
+<p>The promise of this design is that all parameters could be selected
+automatically based on data instead of requiring hand tuning; however, this
+design will focus narrowly on selecting the innovation filtering level as a
+motivating example.</p>
+<p>Pull Request: <a href="https://github.com/buckbaskin/formak/pull/21">#21</a>
+Commit: <a href="https://github.com/buckbaskin/formak/commit/5ce60afe2bc82c04d99de3b87fde2c9a72256411">5ce60af</a></p>
+<h1 id="why">Why?<a class="headerlink" href="#why" title="Permanent link">¶</a></h1>
+<p>The Kalman Filter has a number of selectable parameters:
+- process noise for each reading of the state vector
+- sensor noise for each element of the reading vector</p>
+<p>The
+<a href="/blog/innovation-filtering-new-formak-feature.html">innovation filtering
+approach</a> also introduces an
+additional parameter and future designs will likely introduce additional
+parameters as well.</p>
+<p>This could be treated as a magic number or a human-tuned parameter; however,
+machine learning provides a better process: <a href="https://scikit-learn.org/stable/modules/grid_search.html">cross
+validation</a>.</p>
+<p>Given data and a measure of fit (innovation), we can select different sets of
+parameters based on training data, validate it against other training data and
+cross-validate it against a held-out test set. This means that data can point
+us to the correct parameters for the filter and the cross validation approach
+should reduce the risk of overfitting.</p>
+<p>All of this is of some complexity to set up and get running, so integrating it
+into FormaK will allow for easily expanding its use and re-use in my own work,
+sharing the process with other people without having to re-implement the
+process.</p>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h1>
+<p>As a next step, I'm opening up the roadmap for FormaK via <a href="https://github.com/buckbaskin/formak/issues">Github
+Issues</a>. For each proposal, I'm
+outlining the overview of the concept, how it fits into the FormaK project
+goals, design decisions that will need to be made and seeking feedback.</p>
+<p>After getting that part of the project set up, I'll move onto the next feature.
+I suspect the next feature will be implementing some portion of the <a href="https://github.com/buckbaskin/formak/issues/24">netcode
+enhancement</a>, but that's still
+to-be-determined.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
