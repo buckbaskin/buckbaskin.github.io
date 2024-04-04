@@ -1,7 +1,7 @@
 ---
 Title: Starting the random-code journey
 Category: Building
-Tags: Open Source, random-python, Project Random
+Tags: Open Source, random-python, Project Random, hypothesis, Python
 Date: 2022-07-29
 Updated: 2023-10-30
 Summary: Let's automatically construct programs for testing

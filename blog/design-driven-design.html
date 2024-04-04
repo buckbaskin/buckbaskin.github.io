@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Design Driven Design - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Design Driven Design builds feedback loops that allow for continuous improvements to open source projects during each pull request. The loops are: Design Writing informs Feature Testing which in turn informs the Design, Feature Testing informs Unit Testing which in turn informs the Feature Testing, Unit Testing informs Design Writing which in turn informs the Unit Testing. These loops form seams for collaboration across partners or for self-re-evaluation at mindful points in the process to maximize success.&lt;/p&gt;" />
+
+    <meta name="tags" content="FormaK" />
+    <meta name="tags" content="Project FormaK" />
+    <meta name="tags" content="Design" />
+    <meta name="tags" content="Python" />
+    <meta name="tags" content="C++" />
+    <meta name="tags" content="hypothesis" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Design Driven Design - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2024-04-03T00:00:00-07:00">
+      Wed 03 April 2024
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/formak.html">FormaK</a>
+            <a href="/blog/tag/project-formak.html">Project FormaK</a>
+            <a href="/blog/tag/design.html">Design</a>
+            <a href="/blog/tag/python.html">Python</a>
+            <a href="/blog/tag/c.html">C++</a>
+            <a href="/blog/tag/hypothesis.html">hypothesis</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/design-driven-design.html" rel="bookmark"
+         title="Permalink to Design Driven Design">permalink</a></p>
+    <p>Design Driven Design builds feedback loops that allow for continuous
+improvements to open source projects during each pull request.
+The loops are:
+- Design Writing informs Feature Testing which in turn informs the Design
+- Feature Testing informs Unit Testing which in turn informs the Feature Testing
+- Unit Testing informs Design Writing which in turn informs the Unit Testing</p>
+<p>These loops form seams for collaboration across partners or for
+self-re-evaluation at mindful points in the process to maximize success.</p>
+<h1 id="outline">Outline<a class="headerlink" href="#outline" title="Permanent link">¶</a></h1>
+<p>The Design Driven Design process follows three stages:
+1. Write a design document about the feature, its benefits and key details for
+   the solution approach
+2. Write a feature test (or tests) that capture the essential behavior of the
+   feature
+3. Implement a prototype version that makes the 
+3. Write unit tests that more completely specify the detailed behavior of the
+   feature</p>
+<p>But wait, where are the loops? This looks kind of like waterfall!</p>
+<h1 id="the-design-and-feature-testing-loop">The Design and Feature Testing Loop<a class="headerlink" href="#the-design-and-feature-testing-loop" title="Permanent link">¶</a></h1>
+<p>The first loop is between writing the design and implementing a feature test.</p>
+<p>When writing the design, it's helpful to think about how you'd know if a feature
+was working. This test for if the feature seems to be working is the first
+feature test.</p>
+<p>Writing the feature test will expose vagueness in writing or missing portions of
+the design when it fails to convert nicely to code. The feature test will also
+expose if an interface is hard to use correctly, which can inform updates to the
+design.</p>
+<p>Together, the design can be improved and the initial testing can be improved by
+working on the two in an alternating loop. This improved end state after
+looping makes it easier to proceed with an implementation knowing the interface
+is more likely to be settled in a good state and the implementation can have
+initial feedback on a pass-fail basis (or even better, multiple assertion
+conditions) based on the feature test.</p>
+<p>Unit testing can expand on this loop to surface additional poorly specified
+aspects of the design, missing features from the solution approach and other
+aspects. It should also be used to inform feedback in the design.</p>
+<h1 id="the-feature-testing-and-unit-testing-loop">The Feature Testing and Unit Testing Loop<a class="headerlink" href="#the-feature-testing-and-unit-testing-loop" title="Permanent link">¶</a></h1>
+<p>Often times a feature test can provide a high level view that informs initial
+development, but it takes unit testing to make the implement concrete and fully
+thought out. For example, it is often burdensome to capture all possible edge
+cases in an end to end feature test (and attempting this also reduces the value
+of the feature test as a demonstration of how to use the feature). Unit tests
+can step in to fill this gap by defining the expected behavior in code.</p>
+<p>Unit testing the feature can also provide feedback in cases where the design is
+hard to test. This helps improve the implementation and the feature test by
+encouraging splitting the implementation into smaller and/or more testable
+parts. This can often lead to splitting the feature test into multiple parts that
+make for more illustrative examples. This can also lead to opportunities to
+simplify the feature test by offloading some behavioral checks to unit tests</p>
+<h1 id="bonus-cross-language-improvement-loops">Bonus: Cross-Language Improvement Loops<a class="headerlink" href="#bonus-cross-language-improvement-loops" title="Permanent link">¶</a></h1>
+<p>The <a href="https://buckbaskin.com/blog/tag/project-formak.html">FormaK</a> library
+(<a href="https://github.com/buckbaskin/formak">Github</a>) adds an additional feedback
+loop by cross-pollinating improvements between C++ and Python. While writing
+Python functionality, the algorithms or data structures can often be improved by
+thinking through how I'd have to implement the same algorithm in C++ or by
+adding types to make interfaces self-documenting. The C++ benefits from a first
+pass of an algorithm in Python where an algorithm can often be written closer to
+pseudo-code and complications and failed implementation approaches in Python can
+inform areas where specific C++ patterns could be helpful (e.g. where to
+introduce strong types so two quantities aren't mixed).</p>
+<p>One concrete example of this feedback loop is property-based testing, which
+originated as a Python testing feature with the
+<a href="https://hypothesis.readthedocs.io/en/latest/"><code>hypothesis</code></a> library and then
+expanded to a C++ testing feature
+<a href="https://github.com/emil-e/rapidcheck"><code>rapidcheck</code></a>.</p>
+<h1 id="the-bonus-nobody-wanted">The Bonus Nobody Wanted<a class="headerlink" href="#the-bonus-nobody-wanted" title="Permanent link">¶</a></h1>
+<p>Wikipedia actually indicates that 
+<a href="https://en.wikipedia.org/wiki/Waterfall_model">"Royce's final model"</a>
+of waterfall actually incorporated these feedback loops.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
