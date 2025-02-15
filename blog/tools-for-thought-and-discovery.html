@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Tools for thought and discovery - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;I&#39;m focusing on starting 2025 by getting more actively connected to research in a variety of fields for the year.&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Practices" />
+    <meta name="tags" content="Discovery" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Tools for thought and discovery - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-14T00:00:00-08:00">
+      Fri 14 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/practices.html">Practices</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/tools-for-thought-and-discovery.html" rel="bookmark"
+         title="Permalink to Tools for thought and discovery">permalink</a></p>
+    <p>I've always been interested in increasing the number of research papers that I
+read and using that to speed up how quickly I can learn different knowledge
+areas.</p>
+<p>This continues the Discovery angle from the post 
+<a href="blog/research-areas-for-2025.html">Research Areas for 2025</a></p>
+<p>The problem I have is that I'm aware of large sources of papers (e.g. Mastodon,
+arXiv.org, and toward my specific interests, the robotics and software
+engineering topics within arXiv), but don't know what I don't know about
+content that I'm missing. Where I'd like to end up is that I can be working on
+writing a topic and in parallel tools can be working to help me surface
+references that can either be immediately cited or extend my learning on the
+topic in a tight loop with my writing.</p>
+<p>An example of where I've ended up so far:</p>
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h1>
+<p>The tool can be run something like this</p>
+<p><code>$ echo content/research-areas.md | entr python interactive.py compiler content/research-areas-for-2025.md</code></p>
+<p>A quick aside, <code>entr</code> is a tool that runs the given command when the file (or
+files) change.  There's an option to include a topic as context, but I haven't
+gotten to using it for anything helpful yet</p>
+<p>Taking some example content from the post
+<a href="blog/research-areas-for-2025.html">Research Areas for 2025</a></p>
+<p>```</p>
+<h2 id="drones">Drones<a class="headerlink" href="#drones" title="Permanent link">¶</a></h2>
+<ul>
+<li>Visual Odometry</li>
+<li>Visual Inertial Odometry</li>
+<li>VI SLAM w/ Factor Graphs
+```</li>
+</ul>
+<p>The tool outputs a recommendation like the following (currently per-paragraph)</p>
+<p>```
+=== Content Batch 6 ===
+- Visual Odometry - Visual Ine...try - VI SLAM w/ Factor Graphs</p>
+<p>-- Recommendations --
+  If you're not finding helpful recommendations, try searching for one of:
+    - computer vision navigation</p>
+<p>(0.343) Multirobot rendezvous with visibility sensors in nonconvex environments http://arxiv.org/abs/cs/0611022v1
+  Preview:
+    This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...</p>
+<p>(0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
+  and Navigation http://arxiv.org/abs/cs/0601064v1
+  Preview:
+    This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...</p>
+<p>(0.335) Asymptotic constant-factor approximation algorithm for the Traveling
+  Salesperson Problem for Dubins' vehicle http://arxiv.org/abs/cs/0603010v1
+  Preview:
+    This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
+```</p>
+<p>Key parts:
+- The initial header shows a preview of the content for easy matching to the current document
+- The first recommendation is an "inversion" of the content's embedded concept into the phrase that best matches it, to be used (in the future) for searching for new content
+- The remaining recommendations are individual documents presented with a match score, title, a content preview and a link to read more</p>
+<p>The current source for this is arXiv, performing a search on a small subset of
+the Robotics category of papers.</p>
+<p>Out of this, I'm actually interested in the first two links as extensions to
+the research direction I'm aiming for while writing about the topic. This
+search should also monotonically improve as I add additional documents to the
+database.</p>
+<h1 id="under-the-hood">Under The Hood<a class="headerlink" href="#under-the-hood" title="Permanent link">¶</a></h1>
+<h2 id="search">Search<a class="headerlink" href="#search" title="Permanent link">¶</a></h2>
+<p>Search is performed by embedding every paragraph of every document into a
+vector search database, along with metadata about a link to the source, a
+unique identifier and a title. For the most part, each document is a single
+paragraph for the abstract of the paper.</p>
+<p>The vector search database takes care of most of the rest. A perk of taking
+this approach is that I could also integrate other content sources (such as
+Mastodon posts) without having to change this pattern</p>
+<p>The downside to this approach in its current implementation is that it rebuilds
+the vector database each time the script launches instead of loading it from a
+stored file.</p>
+<h2 id="library-extensions">Library Extensions<a class="headerlink" href="#library-extensions" title="Permanent link">¶</a></h2>
+<p>The vector database is built on the
+<a href="https://github.com/kagisearch/vectordb">vectordb2</a> library by Kagi. I added
+additional extensions to the interface (mostly repackaging existing logic) to
+allow for embedding content without searching, searching an embedding,
+inverting an embedding and finding the distance from an embedding to a topic
+(really any string).</p>
+<h2 id="search-recommendation-embedding-inversion">Search Recommendation / Embedding Inversion<a class="headerlink" href="#search-recommendation-embedding-inversion" title="Permanent link">¶</a></h2>
+<p>To invert embeddings and recover a phrase, all document contents are chunked
+into length-3 chunks and put into a separate vector database. The same
+embeddings are used, and the closest 3 word phrase to the given embedding is
+used as the approximate concept, phrase or text representation for the
+embedding. This allows use with encode-only models, at the expense of having to
+push a lot more encodings into a sidecar database.</p>
+<h2 id="shelves">Shelves<a class="headerlink" href="#shelves" title="Permanent link">¶</a></h2>
+<p>"Today I learned" about the Python built in library <code>shelves</code>. It functions as
+a dictionary, except that the dictionary concepts are saved (pickled) to a file
+to be persisted across script runs. This has allowed me to immediately
+implement a "kind" content downloader that stops as soon as it recognizes its
+already saved the content instead of querying for it again by persisting saved
+records without having to switch mental models to a database.</p>
+<h1 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h1>
+<ul>
+<li>Better saving/storing of the vector database, which will save ~100 seconds for each script invocation and bring the script down to ~20 seconds</li>
+<li>Expanding the database source, ideally to encapsulate a large fraction of the arXiv metadata for relevant topics (robotics, artificial intelligence, machine learning, compilers, symbolic computation, software engineering)</li>
+<li>Running a daily script that can download articles (maybe from the topic RSS feed) as a daily incremental update</li>
+<li>For some documents, it may be helpful to invert the output, so you can show documents that matched multiple chunks of the text, and then which chunks of text were matched instead of having to go chunk by chunk and remember if a document might match multiple areas of interest</li>
+</ul>
+<h1 id="post-script">Post Script<a class="headerlink" href="#post-script" title="Permanent link">¶</a></h1>
+<p>While running the tool against this document, I got a few recommendations which
+will be interesting topics (if not exactly related to extending this post):</p>
+<p>Unmanned Aerial Vehicle Instrumentation for Rapid Aerial Photo System http://arxiv.org/abs/0804.3894v1</p>
+<p>Replay Debugging of Complex Real-Time Systems: Experiences from Two Industrial Case Studies http://arxiv.org/abs/cs/0311019v1</p>
+<p>Iterative MILP Methods for Vehicle Control Problems http://arxiv.org/abs/cs/0505042v1</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
