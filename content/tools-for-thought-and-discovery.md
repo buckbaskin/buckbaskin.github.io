@@ -15,7 +15,7 @@ This continues the Discovery angle from the post
 [Research Areas for 2025](blog/research-areas-for-2025.html)
 
 The problem I have is that I'm aware of large sources of papers (e.g. Mastodon,
-arXiv.org, and toward my specific interests, the robotics and software
+[arXiv.org](https://arXiv.org), and toward my specific interests, the robotics and software
 engineering topics within arXiv), but don't know what I don't know about
 content that I'm missing. Where I'd like to end up is that I can be working on
 writing a topic and in parallel tools can be working to help me surface
@@ -52,17 +52,17 @@ The tool outputs a recommendation like the following (currently per-paragraph)
       If you're not finding helpful recommendations, try searching for one of:
         - computer vision navigation
     
-      (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments http://arxiv.org/abs/cs/0611022v1
+      (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments [http://arxiv.org/abs/cs/0611022v1](http://arxiv.org/abs/cs/0611022v1)
       Preview:
         This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...
     
       (0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
-      and Navigation http://arxiv.org/abs/cs/0601064v1
+      and Navigation [http://arxiv.org/abs/cs/0601064v1](http://arxiv.org/abs/cs/0601064v1)
       Preview:
         This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...
     
       (0.335) Asymptotic constant-factor approximation algorithm for the Traveling
-      Salesperson Problem for Dubins' vehicle http://arxiv.org/abs/cs/0603010v1
+      Salesperson Problem for Dubins' vehicle [http://arxiv.org/abs/cs/0603010v1](http://arxiv.org/abs/cs/0603010v1)
       Preview:
         This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
 
@@ -126,7 +126,7 @@ records without having to switch mental models to a database.
 # Next Steps
 
 - Better saving/storing of the vector database, which will save ~100 seconds for each script invocation and bring the script down to ~20 seconds
-- Expanding the database source, ideally to encapsulate a large fraction of the arXiv metadata for relevant topics (robotics, artificial intelligence, machine learning, compilers, symbolic computation, software engineering)
+- Expanding the database source, ideally to encapsulate a large fraction of the arXiv metadata for [relevant topics](https://arxiv.org/category_taxonomy) (robotics, artificial intelligence, machine learning, compilers, symbolic computation, software engineering)
 - Running a daily script that can download articles (maybe from the topic RSS feed) as a daily incremental update
 - For some documents, it may be helpful to invert the output, so you can show documents that matched multiple chunks of the text, and then which chunks of text were matched instead of having to go chunk by chunk and remember if a document might match multiple areas of interest
 
@@ -135,10 +135,10 @@ records without having to switch mental models to a database.
 While running the tool against this document, I got a few recommendations which
 will be interesting topics (if not exactly related to extending this post):
 
-Unmanned Aerial Vehicle Instrumentation for Rapid Aerial Photo System http://arxiv.org/abs/0804.3894v1
+Unmanned Aerial Vehicle Instrumentation for Rapid Aerial Photo System [http://arxiv.org/abs/0804.3894v1](http://arxiv.org/abs/0804.3894v1)
 
-Replay Debugging of Complex Real-Time Systems: Experiences from Two Industrial Case Studies http://arxiv.org/abs/cs/0311019v1
+Replay Debugging of Complex Real-Time Systems: Experiences from Two Industrial Case Studies [http://arxiv.org/abs/cs/0311019v1](http://arxiv.org/abs/cs/0311019v1)
 
-Iterative MILP Methods for Vehicle Control Problems http://arxiv.org/abs/cs/0505042v1
+Iterative MILP Methods for Vehicle Control Problems [http://arxiv.org/abs/cs/0505042v1](http://arxiv.org/abs/cs/0505042v1)
 
 
