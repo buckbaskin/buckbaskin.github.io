@@ -28,9 +28,7 @@ An example of where I've ended up so far:
 
 The tool can be run something like this
 
-```
-$ echo content/research-areas.md | entr python interactive.py compiler content/research-areas-for-2025.md 
-```
+    $ echo content/research-areas.md | entr python interactive.py compiler content/research-areas-for-2025.md 
 
 A quick aside, `entr` is a tool that runs the given command when the file (or
 files) change.  There's an option to include a topic as context, but I haven't
@@ -39,38 +37,34 @@ gotten to using it for anything helpful yet
 Taking some example content from the post
 [Research Areas for 2025](blog/research-areas-for-2025.html)
 
-```
-## Drones
-
-- Visual Odometry
-- Visual Inertial Odometry
-- VI SLAM w/ Factor Graphs
-```
+    ## Drones
+    
+    - Visual Odometry
+    - Visual Inertial Odometry
+    - VI SLAM w/ Factor Graphs
 
 The tool outputs a recommendation like the following (currently per-paragraph)
 
-```
-=== Content Batch 6 ===
-- Visual Odometry - Visual Ine...try - VI SLAM w/ Factor Graphs
-
- -- Recommendations --
-  If you're not finding helpful recommendations, try searching for one of:
-    - computer vision navigation
-
-  (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments http://arxiv.org/abs/cs/0611022v1
-  Preview:
-    This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...
-
-  (0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
-  and Navigation http://arxiv.org/abs/cs/0601064v1
-  Preview:
-    This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...
-
-  (0.335) Asymptotic constant-factor approximation algorithm for the Traveling
-  Salesperson Problem for Dubins' vehicle http://arxiv.org/abs/cs/0603010v1
-  Preview:
-    This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
-```
+    === Content Batch 6 ===
+    - Visual Odometry - Visual Ine...try - VI SLAM w/ Factor Graphs
+    
+     -- Recommendations --
+      If you're not finding helpful recommendations, try searching for one of:
+        - computer vision navigation
+    
+      (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments http://arxiv.org/abs/cs/0611022v1
+      Preview:
+        This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...
+    
+      (0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
+      and Navigation http://arxiv.org/abs/cs/0601064v1
+      Preview:
+        This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...
+    
+      (0.335) Asymptotic constant-factor approximation algorithm for the Traveling
+      Salesperson Problem for Dubins' vehicle http://arxiv.org/abs/cs/0603010v1
+      Preview:
+        This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
 
 Key parts:
 - The initial header shows a preview of the content for easy matching to the current document

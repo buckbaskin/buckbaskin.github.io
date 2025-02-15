@@ -59,39 +59,44 @@ topic in a tight loop with my writing.</p>
 <p>An example of where I've ended up so far:</p>
 <h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h1>
 <p>The tool can be run something like this</p>
-<p><code>$ echo content/research-areas.md | entr python interactive.py compiler content/research-areas-for-2025.md</code></p>
+<div class="codehilite"><pre><span/><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>content/research-areas.md<span class="w"> </span><span class="p">|</span><span class="w"> </span>entr<span class="w"> </span>python<span class="w"> </span>interactive.py<span class="w"> </span>compiler<span class="w"> </span>content/research-areas-for-2025.md
+</code></pre></div>
+
 <p>A quick aside, <code>entr</code> is a tool that runs the given command when the file (or
 files) change.  There's an option to include a topic as context, but I haven't
 gotten to using it for anything helpful yet</p>
 <p>Taking some example content from the post
 <a href="blog/research-areas-for-2025.html">Research Areas for 2025</a></p>
-<p>```</p>
-<h2 id="drones">Drones<a class="headerlink" href="#drones" title="Permanent link">¶</a></h2>
-<ul>
-<li>Visual Odometry</li>
-<li>Visual Inertial Odometry</li>
-<li>VI SLAM w/ Factor Graphs
-```</li>
-</ul>
+<div class="codehilite"><pre><span/><code>## Drones
+
+- Visual Odometry
+- Visual Inertial Odometry
+- VI SLAM w/ Factor Graphs
+</code></pre></div>
+
 <p>The tool outputs a recommendation like the following (currently per-paragraph)</p>
-<p>```
-=== Content Batch 6 ===
-- Visual Odometry - Visual Ine...try - VI SLAM w/ Factor Graphs</p>
-<p>-- Recommendations --
-  If you're not finding helpful recommendations, try searching for one of:
-    - computer vision navigation</p>
-<p>(0.343) Multirobot rendezvous with visibility sensors in nonconvex environments http://arxiv.org/abs/cs/0611022v1
-  Preview:
-    This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...</p>
-<p>(0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
-  and Navigation http://arxiv.org/abs/cs/0601064v1
-  Preview:
-    This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...</p>
-<p>(0.335) Asymptotic constant-factor approximation algorithm for the Traveling
-  Salesperson Problem for Dubins' vehicle http://arxiv.org/abs/cs/0603010v1
-  Preview:
-    This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
-```</p>
+<div class="codehilite"><pre><span/><code><span class="o">===</span><span class="w"> </span><span class="n">Content</span><span class="w"> </span><span class="n">Batch</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">===</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Visual</span><span class="w"> </span><span class="n">Odometry</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Visual</span><span class="w"> </span><span class="n">Ine</span><span class="o">...</span><span class="n">try</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">VI</span><span class="w"> </span><span class="n">SLAM</span><span class="w"> </span><span class="n">w</span><span class="o">/</span><span class="w"> </span><span class="n">Factor</span><span class="w"> </span><span class="n">Graphs</span>
+
+<span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">Recommendations</span><span class="w"> </span><span class="o">--</span>
+<span class="w">  </span><span class="n">If</span><span class="w"> </span><span class="n">you</span><span class="s1">'re not finding helpful recommendations, try searching for one of:</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">computer</span><span class="w"> </span><span class="n">vision</span><span class="w"> </span><span class="n">navigation</span>
+
+<span class="w">  </span><span class="p">(</span><span class="mf">0.343</span><span class="p">)</span><span class="w"> </span><span class="n">Multirobot</span><span class="w"> </span><span class="n">rendezvous</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">visibility</span><span class="w"> </span><span class="n">sensors</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">nonconvex</span><span class="w"> </span><span class="n">environments</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">arxiv</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="nb">abs</span><span class="o">/</span><span class="n">cs</span><span class="o">/</span><span class="mi">0611022</span><span class="n">v1</span>
+<span class="w">  </span><span class="n">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="n">This</span><span class="w"> </span><span class="n">paper</span><span class="w"> </span><span class="n">presents</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">coordination</span><span class="w"> </span><span class="n">algorithm</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">mobile</span><span class="w"> </span><span class="n">autonomous</span><span class="w"> </span><span class="n">robots</span><span class="o">.</span><span class="w"> </span><span class="n">Relying</span><span class="w"> </span><span class="n">upon</span><span class="w"> </span><span class="n">distributed</span><span class="w"> </span><span class="n">sensing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">robots</span><span class="w"> </span><span class="n">achieve</span><span class="w"> </span><span class="n">rendezvous</span><span class="p">,</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">is</span><span class="p">,</span><span class="w"> </span><span class="n">th</span><span class="o">...</span>
+
+<span class="w">  </span><span class="p">(</span><span class="mf">0.338</span><span class="p">)</span><span class="w"> </span><span class="n">Robotics</span><span class="w"> </span><span class="n">Vision</span><span class="o">-</span><span class="n">based</span><span class="w"> </span><span class="n">Heuristic</span><span class="w"> </span><span class="n">Reasoning</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Underwater</span><span class="w"> </span><span class="n">Target</span><span class="w"> </span><span class="n">Tracking</span>
+<span class="w">  </span><span class="ow">and</span><span class="w"> </span><span class="n">Navigation</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">arxiv</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="nb">abs</span><span class="o">/</span><span class="n">cs</span><span class="o">/</span><span class="mi">0601064</span><span class="n">v1</span>
+<span class="w">  </span><span class="n">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="n">This</span><span class="w"> </span><span class="n">paper</span><span class="w"> </span><span class="n">presents</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">robotics</span><span class="w"> </span><span class="n">vision</span><span class="o">-</span><span class="n">based</span><span class="w"> </span><span class="n">heuristic</span><span class="w"> </span><span class="n">reasoning</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">underwater</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">tracking</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">navigation</span><span class="o">.</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">introduced</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">imp</span><span class="o">...</span>
+
+<span class="w">  </span><span class="p">(</span><span class="mf">0.335</span><span class="p">)</span><span class="w"> </span><span class="n">Asymptotic</span><span class="w"> </span><span class="n">constant</span><span class="o">-</span><span class="n">factor</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">algorithm</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Traveling</span>
+<span class="w">  </span><span class="n">Salesperson</span><span class="w"> </span><span class="n">Problem</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Dubins</span><span class="s1">' vehicle http://arxiv.org/abs/cs/0603010v1</span>
+<span class="w">  </span><span class="n">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="n">This</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">proposes</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">known</span><span class="w"> </span><span class="n">algorithm</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">achieves</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">constant</span><span class="o">-</span><span class="n">factor</span><span class="w"> </span><span class="n">approximation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">minimum</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">tour</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">Dubins</span><span class="s1">' vehicle through...</span>
+</code></pre></div>
+
 <p>Key parts:
 - The initial header shows a preview of the content for easy matching to the current document
 - The first recommendation is an "inversion" of the content's embedded concept into the phrase that best matches it, to be used (in the future) for searching for new content
