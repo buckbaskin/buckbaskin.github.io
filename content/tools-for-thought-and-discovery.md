@@ -12,7 +12,7 @@ read and using that to speed up how quickly I can learn different knowledge
 areas.
 
 This continues the Discovery angle from the post 
-[Research Areas for 2025](blog/research-areas-for-2025.html)
+[Research Areas for 2025]({filename}/research-areas-for-2025.md)
 
 The problem I have is that I'm aware of large sources of papers (e.g. Mastodon,
 [arXiv.org](https://arXiv.org), and toward my specific interests, the robotics and software
@@ -35,7 +35,7 @@ files) change.  There's an option to include a topic as context, but I haven't
 gotten to using it for anything helpful yet
 
 Taking some example content from the post
-[Research Areas for 2025](blog/research-areas-for-2025.html)
+[Research Areas for 2025]({filename}/research-areas-for-2025.md)
 
     ## Drones
     

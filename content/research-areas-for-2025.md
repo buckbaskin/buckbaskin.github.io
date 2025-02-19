@@ -1,9 +1,9 @@
 ---
 Title: Research Areas for 2025
 Category: Building
-Tags: Research, SSA, EKF, Factor Graph, Drone, Compiler, SSA, SIMD, Practices, Discovery, SLAM, Visual Odometry
+Tags: Research, SSA, EKF, Factor Graph, Drone, Compiler, SSA, SIMD, Practices, Discovery, SLAM, Visual Odometry, Celestial Navigation
 Date: 2025-02-11
-Updated: 2025-02-11
+Updated: 2025-02-18
 Summary: I'm focusing on starting 2025 by getting more actively connected to research in a variety of fields for the year.
 ---
 
@@ -22,6 +22,14 @@ a variety of fields for the year.
 - Visual Odometry
 - Visual Inertial Odometry
 - VI SLAM w/ Factor Graphs
+
+One topic that I rediscovered because of drones, but originally connected with
+because of sailing and history is celestial navigation. Specifically, celestial
+navigation for drones made it to Hacker News 
+([discussion link](https://news.ycombinator.com/item?id=42767797)), and I quite
+enjoyed reading the paper ([DOI](https://doi.org/10.3390/drones8110652), open
+access via the MDPI journal). It sparked some new ideas for me and generally
+renewed my interest in learning celestial navigation as a skill
 
 # Learning Practices
 
