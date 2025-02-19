@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Celestial Navigation, starting with drones - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Research notes for exploring celestial navigation&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Drone" />
+    <meta name="tags" content="Celestial Navigation" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Celestial Navigation, starting with drones - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-18T00:00:00-08:00">
+      Tue 18 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/drone.html">Drone</a>
+            <a href="/blog/tag/celestial-navigation.html">Celestial Navigation</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/celestial-navigation-starting-with-drones.html" rel="bookmark"
+         title="Permalink to Celestial Navigation, starting with drones">permalink</a></p>
+    <p>Recently, the paper 
+<a href="https://doi.org/10.3390/drones8110652">"An Algorithm for Affordable Vision-Based GNSS-Denied Strapdown Celestial Navigation"</a>
+came across Hacker News 
+(<a href="https://news.ycombinator.com/item?id=42767797">discussion link</a>),</p>
+<p>This post is focused on research starting from the paper but focusing on nearby
+topics. A separate post will review the paper in more detail 
+(<a href="/blog/drafts/an-algorithm-for-affordable-vision-based-gnss-denied-strapdown-celestial-navigation-a-review.html">An Algorithm for Affordable Vision-Based GNSS-Denied Strapdown Celestial Navigation, A Review</a>)</p>
+<p>Citation: Teague, S.; Chahl, J. An Algorithm for Affordable Vision-Based GNSS-Denied Strapdown Celestial Navigation. Drones 2024, 8, 11.</p>
+<h1 id="paper-references">Paper References<a class="headerlink" href="#paper-references" title="Permanent link">¶</a></h1>
+<p>I found the paper's references to be useful in addition to finding the paper
+interesting itself</p>
+<h2 id="the-math">The Math<a class="headerlink" href="#the-math" title="Permanent link">¶</a></h2>
+<p>Van Allen, J.A. Basic principles of celestial navigation. Am. J. Phys. 2004, 72, 1418–1424.</p>
+<p>This paper was cited for the math for projecting star observations onto the
+terrestrial sphere</p>
+<h2 id="other-celestial-methods">Other Celestial Methods<a class="headerlink" href="#other-celestial-methods" title="Permanent link">¶</a></h2>
+<p>Wang, J.; Chun, J. Attitude determination using a single star sensor and a star density table. J. Guid. Control Dyn. 2006, 29, 1329–1338.</p>
+<p>This paper was cited as an example of a space application that uses celestial
+positioning for attitude reference</p>
+<h2 id="simulation">Simulation<a class="headerlink" href="#simulation" title="Permanent link">¶</a></h2>
+<p>Teague, S.; Chahl, J. Imagery synthesis for drone celestial navigation simulation. Drones 2022, 6, 207.</p>
+<p>This paper was used to simulate measurements in the parent paper, including
+testing against motion blur effects and testing the effect of wind conditions
+on accuracy. My interest comes in learning to create simulated imagery of
+celestial bodies for position estimation simulation, which seems like a subset
+of the application already covered in the paper. The imagery synthesis also
+covers converting a star's database information into the theoretical observed
+position</p>
+<h2 id="star-databases">Star Databases<a class="headerlink" href="#star-databases" title="Permanent link">¶</a></h2>
+<p>Wei, X.; Zhang, G.; Jiang, J. Star identification algorithm based on log-polar transform. J. Aerosp. Comput. Inf. Commun. 2009, 6, 483–490.</p>
+<p>From the paper: "During the instantiation of the star tracker, a lost-in-space
+log-polar star identification algorithm is used to determine the IDs of each
+star in the frame". This initialization of the star tracker and generic star
+identification seems quite useful to run in a parallel loop as a 
+<a href="https://en.wikipedia.org/wiki/Kidnapped_robot_problem">kidnapped robot</a>
+recovery process.</p>
+<p>In addition to what's cited by the original paper, I also found a
+recommendation for the <a href="https://astronexus.com/projects/hyg">HYG Database</a>
+(also on <a href="https://codeberg.org/astronexus/hyg">Codeberg</a>). From Codeberg</p>
+<blockquote>
+<p>HYG combines every identifiable star in the HIPPARCOS, Yale Bright Star, and Gliese (nearby star) catalogs into a combined dataset of the stars' currently best-known positions, brightnesses, spectral types, and various additional catalog IDs such as traditional names and Bayer designations.</p>
+</blockquote>
+<h1 id="tools-for-thought-related-papers">Tools for thought related papers<a class="headerlink" href="#tools-for-thought-related-papers" title="Permanent link">¶</a></h1>
+<p>This content was surfaced by integrating with my own tools that search
+arXiv.org to help find interesting and related content.</p>
+<h2 id="history-of-celestial-navigation">History of Celestial Navigation<a class="headerlink" href="#history-of-celestial-navigation" title="Permanent link">¶</a></h2>
+<p>The beginning of celestial navigation http://arxiv.org/abs/2209.02371v1</p>
+<h2 id="celestial-navigation-system-design">Celestial Navigation System Design<a class="headerlink" href="#celestial-navigation-system-design" title="Permanent link">¶</a></h2>
+<p>Conceptual Design on the Field of View of Celestial Navigation Systems for Maritime Autonomous Surface Ships http://arxiv.org/abs/2408.15765v1</p>
+<p>Orbit Estimation Using a Horizon Detector in the Presence of Uncertain Celestial Body Rotation and Geometry http://arxiv.org/abs/1804.04401v2</p>
+<h2 id="compressive-sensing-for-efficient-representation">Compressive Sensing for Efficient Representation<a class="headerlink" href="#compressive-sensing-for-efficient-representation" title="Permanent link">¶</a></h2>
+<p>Compressive Sensing with Local Geometric Features http://arxiv.org/abs/1208.2447v1</p>
+<p>Taking from the abstract:</p>
+<blockquote>
+<p>We propose a framework for compressive sensing of images with local distinguishable objects, such as stars, and apply it to solve a problem in celestial navigation. Specifically, let x be an N-pixel real-valued image, consisting of a small number of local distinguishable objects plus noise. Our goal is to design an m-by-N measurement matrix A with m &lt;&lt; N, such that we can recover an approximation to x from the measurements Ax. </p>
+</blockquote>
+<p>This seems like an immediately useful application for finding an efficient
+representation of different views of the sky. Without the tool, I was
+peripherally aware of compressive sensing, but would not have thought that it
+related to my interest in celestial navigation.</p>
+<p>CELESTIAL: Classification Enabled via Labelless Embeddings with Self-supervised Telescope Image Analysis Learning http://arxiv.org/abs/2201.08001v1</p>
+<p>This paper covers using extensive (petabytes) of unlabelled data to learn a
+[compressed] representation of the image class, which feels like it could be
+useful for learning a compressed representation of star observations.</p>
+<h2 id="space-vision-applications">Space Vision Applications<a class="headerlink" href="#space-vision-applications" title="Permanent link">¶</a></h2>
+<p>AstroVision: Towards Autonomous Feature Detection and Description for Missions to Small Bodies Using Deep Learning http://arxiv.org/abs/2208.02053v1</p>
+<p>This paper seems interesting if a bit off-topic for Earth-based navigation;
+however, the visual navigation feels like it would overlap with my other
+visual-odometry <a href="/blog/research-areas-for-2025.html">research interests</a></p>
+<h1 id="additional-special-issue-topics">Additional Special Issue Topics<a class="headerlink" href="#additional-special-issue-topics" title="Permanent link">¶</a></h1>
+<p>Paper by the MDPI journal Drones, specifically a special issue on 
+<a href="https://www.mdpi.com/journal/drones/special_issues/uav_navori">Drones Navigation and Orientation</a></p>
+<p>... Written with 
+<a href="/blog/tools-for-thought-and-discovery.html">tools for thought</a> to help
+connect to new ideas I wouldn't have found otherwise</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

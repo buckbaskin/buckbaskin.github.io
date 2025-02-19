@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Tools for thought - Trip Report 1 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;I started with exploring celestial navigation as an initial use case for the tools for thought. My primary takeaways were that the database creation speed really limits the interactive nature of the tool and that the user interface could be improved.&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Practices" />
+    <meta name="tags" content="Discovery" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Tools for thought - Trip Report 1 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-18T00:00:00-08:00">
+      Tue 18 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/practices.html">Practices</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/tools-for-thought-trip-report-1.html" rel="bookmark"
+         title="Permalink to Tools for thought - Trip Report 1">permalink</a></p>
+    <p>I started with exploring 
+<a href="celestial-navigation-for-drones.md">celestial navigation</a> as an initial use
+case for the 
+<a href="/blog/tools-for-thought-and-discovery.html">tools for thought</a>. My primary
+takeaways were that the database creation speed really limits the interactive
+nature of the tool and that the user interface could be improved.</p>
+<h1 id="speed">Speed<a class="headerlink" href="#speed" title="Permanent link">¶</a></h1>
+<p>The latest run with an expanded search area led to an almost 800 second
+database creation time (for ~800 documents). This essentially turns an
+"interactive" script into a batch script, which defeats the purpose of being
+able to use it "inline" while thinking and writing.</p>
+<p>I think I can achieve this level of interactivity (say less than 1 minute from
+save to recommendations) by saving the vector database locally and then
+updating it incrementally at download time</p>
+<h1 id="other-improvements">Other Improvements<a class="headerlink" href="#other-improvements" title="Permanent link">¶</a></h1>
+<h2 id="user-interface">User Interface<a class="headerlink" href="#user-interface" title="Permanent link">¶</a></h2>
+<p>Right now the recommendations are batched per paragraph; however, in practice
+I've found that across, say, the first 10 paragraphs, there are actually 3
+papers that are relevant to multiple paragraphs and it'd be more helpful to
+surface the top papers (with references to which paragraph they're useful for)
+instead of having to read through each paragraph and figure out if I'm seeing
+the same information again or considering a new paper.</p>
+<h2 id="markdown-parsing">Markdown parsing<a class="headerlink" href="#markdown-parsing" title="Permanent link">¶</a></h2>
+<p>I'd also like to use Markdown parsing to help skip some of the content that's
+less likely to be useful (e.g. headers that are more generic such as "The
+Math". In the future, if I've integrated context more then I could integrate
+the stack up of headers so that it's something like "Celestial Navigation &gt; The
+Math" but for now it's just generic content. In the intervening time, the
+proposed document-first organization of the user interface would help avoid
+this, where content that's relevant to multiple paragraphs would be surfaced
+first</p>
+<h2 id="easier-downloads-scripting">Easier downloads scripting<a class="headerlink" href="#easier-downloads-scripting" title="Permanent link">¶</a></h2>
+<p>I'd like to be able to write some sort of fairly minimal download script with
+content that is like "all:compilers" and n = 100 results and run it. Right now
+it takes modifying an existing script in place that was intended more as a
+proof of concept</p>
+<p>The downloading friction is secondary because the speed is slow enough that I
+feel incentivized to not add additional content except in areas where there are
+absolutely no results</p>
+<h2 id="staying-on-topic">"Staying on topic"<a class="headerlink" href="#staying-on-topic" title="Permanent link">¶</a></h2>
+<p>Another approach to staying on topic would be to calculate the distance from
+the topic embedding to the paragraph embedding, and skipping those paragraphs
+that don't stay within a finite region around the topic. These can be reported
+with their distance from the topic at the end (e.g. "The Math" had a distance
+of 0.8 and was skipped). This would allow for manual searching of topics that
+were accidentally deemed too far away, but hopefully limit noise from papers
+that are 99% likely to never be useful</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
