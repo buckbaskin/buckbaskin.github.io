@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Tools for thought - Trip Report 2 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Building on the learnings from last time, I&#39;m working on speedups to significantly reduce the time to launch the interactive features to make them more, well, interactive. Previously, the script was taking 800 seconds! on startup and that has been improved significantly.&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Practices" />
+    <meta name="tags" content="Discovery" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Tools for thought - Trip Report 2 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-19T00:00:00-08:00">
+      Wed 19 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/practices.html">Practices</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/tools-for-thought-trip-report-2.html" rel="bookmark"
+         title="Permalink to Tools for thought - Trip Report 2">permalink</a></p>
+    <p>Building on the learnings from 
+<a href="/blog/tools-for-thought-trip-report-2.html">last time</a>, I'm working on
+speedups to significantly reduce the time to launch the interactive features to
+make them more, well, interactive. Previously, the script was taking 800
+seconds! on startup and that has been improved significantly.</p>
+<h1 id="speed-part-2">Speed - Part 2<a class="headerlink" href="#speed-part-2" title="Permanent link">¶</a></h1>
+<p>The latest run with an expanded search area led to an almost 800 second
+database creation time (for ~800 documents). This essentially turns an
+"interactive" script into a batch script, which defeats the purpose of being
+able to use it "inline" while thinking and writing.</p>
+<p>I think I can achieve this level of interactivity (say less than 1 minute from
+save to recommendations) by saving the vector database locally and then
+updating it incrementally at download time...</p>
+<p>And the results (with the same documents, and 39 recommendations)</p>
+<div class="codehilite"><pre><span/><code>Times
+Import Time 5.9 sec
+Memory Construction Time 6.1 sec
+Vector Load Time 794.3 sec
+File Read Time 0.0 sec
+File Embed Time 1.3 sec
+Recommendation Time 73.4 sec
+</code></pre></div>
+
+<p>When rerunning, the times are:</p>
+<div class="codehilite"><pre><span/><code>Times
+Import Time 6.0 sec
+Memory Construction Time 22.4 sec
+Vector Load Time 0.0 sec
+File Read Time 0.0 sec
+File Embed Time 1.8 sec
+Recommendation Time 70.4 sec
+</code></pre></div>
+
+<p>This shows that I've exchanged 800 seconds of saving new vectors for ~20
+seconds of loading them from a local file. That seems like a worthwhile trade.</p>
+<p>The new longest pole in the experience is the recommendations; however, these
+are done in an incremental approach with the current UI, so the user can still
+get some value before the 70 seconds of recommendations are complete.</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
