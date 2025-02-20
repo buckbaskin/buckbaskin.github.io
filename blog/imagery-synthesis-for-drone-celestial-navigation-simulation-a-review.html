@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Imagery Synthesis for Drone Celestial Navigation Simulation, A Review - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Research notes for exploring celestial navigation&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Celestial Navigation" />
+    <meta name="tags" content="Drone" />
+    <meta name="tags" content="Paper Review" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Imagery Synthesis for Drone Celestial Navigation Simulation, A Review - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-19T00:00:00-08:00">
+      Wed 19 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/celestial-navigation.html">Celestial Navigation</a>
+            <a href="/blog/tag/drone.html">Drone</a>
+            <a href="/blog/tag/paper-review.html">Paper Review</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/imagery-synthesis-for-drone-celestial-navigation-simulation-a-review.html" rel="bookmark"
+         title="Permalink to Imagery Synthesis for Drone Celestial Navigation Simulation, A Review">permalink</a></p>
+    <p>Citation: Teague, S.; Chahl, J. Imagery synthesis for drone celestial navigation simulation. Drones 2022, 6, 207.</p>
+<p>This paper was cited for imagery generation in the strapdown celestial
+navigation paper (
+<a href="/blog/celestial-navigation-starting-with-drones.html">topic exploration</a>,
+<a href="/blog/drafts/an-algorithm-for-affordable-vision-based-gnss-denied-strapdown-celestial-navigation-a-review.html">review</a>)</p>
+<p>https://doi.org/10.3390/drones6080207</p>
+<h1 id="star-catalog">Star Catalog<a class="headerlink" href="#star-catalog" title="Permanent link">¶</a></h1>
+<blockquote>
+<p>A star catalog must be used as a reference for the location of stars. While there are many star catalogues available, we selected the Yale Bright Star Catalogue (BSC) due to its minimal size. The BSC contains records of stars down to magnitude 6.5, totalling 9110 stars. This magnitude threshold is sufficient for most aircraft camera systems (including stabilized systems) [1]. For ease of implementation, the ASCII-format catalogue was converted into an SQLite database.</p>
+</blockquote>
+<p>My takeaway from this is that I can probably start with a simpler star catalog
+(Yale Bright Star) instead of <a href="https://astronexus.com/projects/hyg">HYG</a> (which
+incorporates the Yale catalog.</p>
+<h1 id="initial-corrections">Initial Corrections<a class="headerlink" href="#initial-corrections" title="Permanent link">¶</a></h1>
+<blockquote>
+<p>On initialization, adjustments are made for the right ascension and declination of stars due to annual proper motion (the apparent motion of stars), precession (changes in the Earth’s rotational axis over time), nutation (axial changes due to the Moon’s gravitational pull) and aberration (due to the velocity of the Earth’s orbit).</p>
+</blockquote>
+<p>This is interesting information that I wouldn't have thought about. I wonder if
+this type of correction can be performed once for an online application or
+skipped entirely and incorporated into a noise model. It seems like something
+I'd definitely want to include when building a batch online system.</p>
+<p>There's also a large number of units floating around, so a type system of
+measurement seems like it'd be useful for correctness (e.g. arcseconds, Julian
+centuries, degrees, etc)</p>
+<blockquote>
+<p>The observed elevation of a celestial body is altered due to the effects of atmospheric refraction. Consequently, objects in the sky appear at a greater elevation than they would without the atmospheric effects. This effect is exaggerated at lower elevations (closer to the horizon), which leads to an angular displacement of up to 0.5 degrees</p>
+</blockquote>
+<h1 id="attitude">Attitude<a class="headerlink" href="#attitude" title="Permanent link">¶</a></h1>
+<p>Project stars to the aircraft North-East-Down (NED) frame, then rotated by the
+aircraft's rotation matrix relative to NED. Maybe more correctly, it's rotated
+into the camera's frame. </p>
+<h1 id="camera-model">Camera Model<a class="headerlink" href="#camera-model" title="Permanent link">¶</a></h1>
+<p>The model assumes a camera intrinsic matrix K is known. This seems reasonable
+given that the camera can be calibrated on the ground before launch. Earlier
+on, the camera extrinsics relative to the aircraft were also given. This seems
+like something that could be calibrated, but would be subject to vibration or
+other errors in a real application.</p>
+<p>Open question: how feasible is it to estimate camera intrinsics online in a
+strapdown visual inertial odometry system?</p>
+<div class="codehilite"><pre><span/><code><span class="nx">TFT</span><span class="w"> </span><span class="p">[</span><span class="nx">interesting</span><span class="w"> </span><span class="nx">papers</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">none</span><span class="w"> </span><span class="nx">covering</span><span class="w"> </span><span class="nx">camera</span><span class="w"> </span><span class="nx">intrinsic</span><span class="w"> </span><span class="nx">calibration</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">estimation</span><span class="p">]</span>
+<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">90</span><span class="p">)</span><span class="w"> </span><span class="nx">RoNIN</span><span class="p">:</span><span class="w"> </span><span class="nx">Robust</span><span class="w"> </span><span class="nx">Neural</span><span class="w"> </span><span class="nx">Inertial</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Wild</span><span class="p">:</span><span class="w"> </span><span class="nx">Benchmark</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">Evaluations</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">New</span><span class="w"> </span><span class="nx">Methods</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//arxiv.org/abs/1905.12853v1</span>
+<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">This</span><span class="w"> </span><span class="nx">paper</span><span class="w"> </span><span class="nx">sets</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">foundation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">data</span><span class="o">-</span><span class="nx">driven</span><span class="w"> </span><span class="nx">inertial</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="nx">research</span><span class="p">,</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">task</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">estimation</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">positions</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">orientations</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">mov</span><span class="o">...</span>
+
+<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">81</span><span class="p">)</span><span class="w"> </span><span class="nx">Pluto</span><span class="p">:</span><span class="w"> </span><span class="nx">Motion</span><span class="w"> </span><span class="nx">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">VR</span><span class="w"> </span><span class="nx">Headset</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2107.12030v2</span>
+<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">Untethered</span><span class="p">,</span><span class="w"> </span><span class="nx">inside</span><span class="o">-</span><span class="nx">out</span><span class="w"> </span><span class="nx">tracking</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">considered</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">goalpost</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="kd">virtual</span><span class="w"> </span><span class="nx">reality</span><span class="p">,</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">became</span><span class="w"> </span><span class="nx">attainable</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">advent</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">machine</span><span class="w"> </span><span class="nx">learning</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">SLAM</span><span class="p">.</span><span class="w"> </span><span class="nx">Yet</span><span class="o">...</span>
+
+<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">74</span><span class="p">)</span><span class="w"> </span><span class="nx">Iterative</span><span class="w"> </span><span class="nx">Smoothing</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">Outlier</span><span class="w"> </span><span class="nx">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">Underwater</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2109.14220v1</span>
+<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">Underwater</span><span class="w"> </span><span class="nx">visual</span><span class="o">-</span><span class="nx">inertial</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">challenging</span><span class="w"> </span><span class="nx">due</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">poor</span><span class="w"> </span><span class="nx">visibility</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">presence</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">outliers</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">underwater</span><span class="w"> </span><span class="nx">environments</span><span class="p">.</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="nx">pe</span><span class="o">...</span>
+
+<span class="nx">arXiv</span><span class="w"> </span><span class="nx">search</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2201.09170 "Online Self-Calibration for Visual-Inertial Navigation Systems: Models, Analysis and Degeneracy"</span>
+</code></pre></div>
+
+<p>Points behind the camera (negative z in the camera frame) are ignored (seems
+sensible).</p>
+<p>There is a simplified model of atmospheric attenuation that lets you scale all
+observations based on the relative intensity of a single reference observation
+vs its nominal value in the database. This seems important to pick a reasonable
+value (is this covered in the paper), but for my use case I'm not interested in
+exactly rendering an image. </p>
+<p>Open question: Instead of aiming for perfect rendering accuracy, could I make
+the sky fingerprinting intensity independent? I'm imagining something similar
+to making image features rotation independent (perhaps by processing all
+intensities into a finite 0 to 1 scale)</p>
+<div class="codehilite"><pre><span/><code>TFT
+(0.522) Compressive Sensing with Local Geometric Features http://arxiv.org/abs/1208.2447v1
+</code></pre></div>
+
+<p>Pixel intensities and star sizing are taken from a reference image; however,
+the ideal model for a star is a point light source. Noise levels are also taken
+from the reference image by masking out stars and then using the remaining
+variation to fit a Gaussian</p>
+<p>Open question: Would it be helpful to perform some sort of sub-pixel
+optimization for star pose? I'm not sure what this would get me for my goal,
+but it seems interesting. In the images shown, the scale of stars for an
+in-motion exposure seems to blur over multiple pixels anyway, so I don't know
+if identifying a sub-pixel is as helpful for this use case</p>
+<div class="codehilite"><pre><span/><code><span class="nv">TFT</span>
+<span class="ss">(</span><span class="mi">0</span>.<span class="mi">556</span><span class="ss">)</span><span class="w"> </span><span class="nv">Conceptual</span><span class="w"> </span><span class="nv">Design</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">Field</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">View</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">Celestial</span><span class="w"> </span><span class="nv">Navigation</span><span class="w"> </span><span class="nv">Systems</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Maritime</span><span class="w"> </span><span class="nv">Autonomous</span><span class="w"> </span><span class="nv">Surface</span><span class="w"> </span><span class="nv">Ships</span><span class="w"> </span><span class="nv">http</span>:<span class="o">//</span><span class="nv">arxiv</span>.<span class="nv">org</span><span class="o">/</span><span class="nv">abs</span><span class="o">/</span><span class="mi">2408</span>.<span class="mi">15765</span><span class="nv">v1</span>
+</code></pre></div>
+
+<blockquote>
+<p>One may be able to determine an appropriate magnitude threshold for the observability of stars in-flight and bias the calibration towards the brighter stars, which are more likely to be detected.</p>
+</blockquote>
+<h1 id="lens-distortion">Lens Distortion<a class="headerlink" href="#lens-distortion" title="Permanent link">¶</a></h1>
+<p>Lens distortion may also be included in the model. Lens distortion models are typically
+non-linear, and expressed as a function of displacement from the principal point. Various
+models exist for lens distortion, and should be chosen according to the level of precision
+required [18]. If using a lens distortion model, this should be applied after the star is
+rendered, so as to capture the resultant eccentricities from the distortion.</p>
+<p>Reference 18: Tang, Z.; Von Gioi, R.G.; Monasse, P.; Morel, J.M. A precision analysis of camera distortion models. IEEED 2017, 26, 2694–2704.</p>
+<h1 id="motion-effects">Motion Effects<a class="headerlink" href="#motion-effects" title="Permanent link">¶</a></h1>
+<p>Spherical linear interpolation between quaternions is used to supersample the
+known states to get 5 millisecond time steps, which can be aggregated across
+the exposure time to composite a blurred motion</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

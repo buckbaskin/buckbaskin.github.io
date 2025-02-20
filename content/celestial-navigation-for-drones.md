@@ -28,6 +28,7 @@ interesting itself
 ## The Math
 
 Van Allen, J.A. Basic principles of celestial navigation. Am. J. Phys. 2004, 72, 1418–1424.
+[Link](https://doi.org/10.1119/1.1778391)
 
 This paper was cited for the math for projecting star observations onto the
 terrestrial sphere
@@ -42,6 +43,8 @@ positioning for attitude reference
 ## Simulation
 
 Teague, S.; Chahl, J. Imagery synthesis for drone celestial navigation simulation. Drones 2022, 6, 207.
+[DOI](https://doi.org/10.3390/drones6080207)
+[Review]({filename}/imagery-synthesis-for-drone-celestial-navigation-simulation-review.md)
 
 This paper was used to simulate measurements in the parent paper, including
 testing against motion blur effects and testing the effect of wind conditions
