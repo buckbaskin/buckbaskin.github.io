@@ -3,7 +3,7 @@ Title: Tools for thought and discovery
 Category: Building
 Tags: Research, Practices, Discovery
 Date: 2025-02-14
-Updated: 2025-02-14
+Updated: 2025-02-21
 Summary: I've always been interested in increasing the number of research papers that I read and using that to speed up how quickly I can learn different knowledge areas. The problem I have is that I'm aware of large sources of papers (e.g. Mastodon, arXiv.org, and toward my specific interests, the robotics and software engineering topics within arXiv), but don't know what I don't know about content that I'm missing. Where I'd like to end up is that I can be working on writing a topic and in parallel tools can be working to help me surface references that can either be immediately cited or extend my learning on the topic in a tight loop with my writing.
 ---
 
@@ -117,12 +117,13 @@ push a lot more encodings into a sidecar database.
 
 ## Shelves
 
-"Today I learned" about the Python built in library `shelves`. It functions as
-a dictionary, except that the dictionary concepts are saved (pickled) to a file
-to be persisted across script runs. This has allowed me to immediately
+"Today I learned" about the Python built in library 
+[`shelve`](https://docs.python.org/3/library/shelve.html). Each shelf functions
+as a dictionary, except that the dictionary contents are saved (pickled) to a
+file to be persisted across script runs. This has allowed me to immediately
 implement a "kind" content downloader that stops as soon as it recognizes its
-already saved the content instead of querying for it again by persisting saved
-records without having to switch mental models to a database.
+already saved the content. This was pretty trivial to implement and I didn't
+need to go all the way to creating a database.
 
 # Next Steps
 

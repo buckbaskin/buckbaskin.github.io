@@ -3,7 +3,7 @@ Title: Celestial Navigation, starting with drones
 Category: Building
 Tags: Research, Drone, Celestial Navigation
 Date: 2025-02-18
-Updated: 2025-02-18
+Updated: 2025-02-21
 Summary: Research notes for exploring celestial navigation
 ---
 

@@ -1,9 +1,9 @@
 ---
-Title: Tools for thought - Trip Report 1
+Title: Tools for thought - Ship's Log 1
 Category: Building
 Tags: Research, Practices, Discovery
 Date: 2025-02-18
-Updated: 2025-02-18
+Updated: 2025-02-21
 Summary: I started with exploring celestial navigation as an initial use case for the tools for thought. My primary takeaways were that the database creation speed really limits the interactive nature of the tool and that the user interface could be improved.
 ---
 

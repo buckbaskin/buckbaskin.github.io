@@ -136,12 +136,13 @@ used as the approximate concept, phrase or text representation for the
 embedding. This allows use with encode-only models, at the expense of having to
 push a lot more encodings into a sidecar database.</p>
 <h2 id="shelves">Shelves<a class="headerlink" href="#shelves" title="Permanent link">¶</a></h2>
-<p>"Today I learned" about the Python built in library <code>shelves</code>. It functions as
-a dictionary, except that the dictionary concepts are saved (pickled) to a file
-to be persisted across script runs. This has allowed me to immediately
+<p>"Today I learned" about the Python built in library 
+<a href="https://docs.python.org/3/library/shelve.html"><code>shelve</code></a>. Each shelf functions
+as a dictionary, except that the dictionary contents are saved (pickled) to a
+file to be persisted across script runs. This has allowed me to immediately
 implement a "kind" content downloader that stops as soon as it recognizes its
-already saved the content instead of querying for it again by persisting saved
-records without having to switch mental models to a database.</p>
+already saved the content. This was pretty trivial to implement and I didn't
+need to go all the way to creating a database.</p>
 <h1 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h1>
 <ul>
 <li>Better saving/storing of the vector database, which will save ~100 seconds for each script invocation and bring the script down to ~20 seconds</li>

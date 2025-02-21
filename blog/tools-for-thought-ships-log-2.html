@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-          <title>Tools for thought - Trip Report 2 - Building and Breaking</title>
+          <title>Tools for thought - Ship's Log 2 - Building and Breaking</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/blog/theme/css/si
 te.css" />
@@ -25,7 +25,7 @@ te.css" />
         <main id="content" aria-labelledby="main-title">
 <div class="body">
   <header>
-    <h1 id="main-title" class="entry-title">Tools for thought - Trip Report 2 - <a href="/blog/category/building.html">Building</a></h1>
+    <h1 id="main-title" class="entry-title">Tools for thought - Ship's Log 2 - <a href="/blog/category/building.html">Building</a></h1>
  
   </header>
   <footer class="post-info">
@@ -42,22 +42,26 @@ te.css" />
     </div>
   </footer><!-- /.post-info -->
   <div class="entry-content">
-    <p><a href="/blog/tools-for-thought-trip-report-2.html" rel="bookmark"
-         title="Permalink to Tools for thought - Trip Report 2">permalink</a></p>
+    <p><a href="/blog/tools-for-thought-ships-log-2.html" rel="bookmark"
+         title="Permalink to Tools for thought - Ship's Log 2">permalink</a></p>
     <p>Building on the learnings from 
-<a href="/blog/tools-for-thought-trip-report-2.html">last time</a>, I'm working on
+<a href="/blog/tools-for-thought-ships-log-1.html">last time</a>, I'm working on
 speedups to significantly reduce the time to launch the interactive features to
 make them more, well, interactive. Previously, the script was taking 800
-seconds! on startup and that has been improved significantly.</p>
+seconds (800!) on startup and that has been improved significantly.</p>
 <h1 id="speed-part-2">Speed - Part 2<a class="headerlink" href="#speed-part-2" title="Permanent link">¶</a></h1>
+<p><a href="/blog/tools-for-thought-ships-log-1.html#speed">Part 1</a></p>
+<p>Previously...</p>
+<blockquote>
 <p>The latest run with an expanded search area led to an almost 800 second
 database creation time (for ~800 documents). This essentially turns an
 "interactive" script into a batch script, which defeats the purpose of being
-able to use it "inline" while thinking and writing.</p>
+able to use it while thinking and writing.</p>
 <p>I think I can achieve this level of interactivity (say less than 1 minute from
 save to recommendations) by saving the vector database locally and then
-updating it incrementally at download time...</p>
-<p>And the results (with the same documents, and 39 recommendations)</p>
+updating it incrementally at download time</p>
+</blockquote>
+<p>... And the results (with the same documents, and 39 recommendations)</p>
 <div class="codehilite"><pre><span/><code>Times
 Import Time 5.9 sec
 Memory Construction Time 6.1 sec
@@ -78,15 +82,20 @@ Recommendation Time 70.4 sec
 </code></pre></div>
 
 <p>This shows that I've exchanged 800 seconds of saving new vectors for ~20
-seconds of loading them from a local file. That seems like a worthwhile trade.</p>
+seconds of loading them from a local file. A worthwhile trade</p>
 <p>The new longest pole in the experience is the recommendations; however, these
 are done in an incremental approach with the current UI, so the user can still
 get some value before the 70 seconds of recommendations are complete.</p>
 <h1 id="easier-downloads-scripting-part-2">Easier downloads scripting - Part 2<a class="headerlink" href="#easier-downloads-scripting-part-2" title="Permanent link">¶</a></h1>
+<p><a href="/blog/tools-for-thought-ships-log-1.html#easier-downloads-scripting">Part 1</a></p>
 <p>As I'm writing, I've identified topic areas where I'm getting no matches (in
-this case, camera intrinsics and online estimation of those camera intrinsics).
+this case, camera intrinsics and online estimation of said camera intrinsics).
 I'd like to be able to do something like</p>
 <div class="codehilite"><pre><span/><code><span class="n">python</span><span class="w"> </span><span class="n">keyword_search</span><span class="o">.</span><span class="n">py</span><span class="w"> </span><span class="s2">"online estimation camera intrinsics"</span>
+</code></pre></div>
+
+<p>In the same vein, I'd like to be able to gather a broad category</p>
+<div class="codehilite"><pre><span/><code>python category.py "cs:RO"
 </code></pre></div>
 
 <h1 id="other-notes">Other Notes<a class="headerlink" href="#other-notes" title="Permanent link">¶</a></h1>

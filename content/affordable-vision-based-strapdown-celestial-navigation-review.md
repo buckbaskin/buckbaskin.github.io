@@ -3,7 +3,7 @@ Title: An Algorithm for Affordable Vision-Based GNSS-Denied Strapdown Celestial 
 Category: Building
 Tags: Research, Drone, Celestial Navigation, Paper Review
 Date: 2025-02-18
-Updated: 2025-02-18
+Updated: 2025-02-19
 Status: Draft
 Summary: Research notes for the paper An Algorithm for Affordable Vision-Based GNSS-Denied Strapdown Celestial Navigation from the open journal Drones
 ---

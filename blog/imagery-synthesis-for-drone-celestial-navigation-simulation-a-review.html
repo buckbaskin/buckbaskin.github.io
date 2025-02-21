@@ -56,59 +56,36 @@ navigation paper (
 <blockquote>
 <p>A star catalog must be used as a reference for the location of stars. While there are many star catalogues available, we selected the Yale Bright Star Catalogue (BSC) due to its minimal size. The BSC contains records of stars down to magnitude 6.5, totalling 9110 stars. This magnitude threshold is sufficient for most aircraft camera systems (including stabilized systems) [1]. For ease of implementation, the ASCII-format catalogue was converted into an SQLite database.</p>
 </blockquote>
-<p>My takeaway from this is that I can probably start with a simpler star catalog
-(Yale Bright Star) instead of <a href="https://astronexus.com/projects/hyg">HYG</a> (which
-incorporates the Yale catalog.</p>
-<h1 id="initial-corrections">Initial Corrections<a class="headerlink" href="#initial-corrections" title="Permanent link">¶</a></h1>
+<p>My takeaway from this is that I can probably start with a simpler star catalog,
+Yale Bright Star, instead of <a href="https://astronexus.com/projects/hyg">HYG</a> (HYG is
+a superset of the incorporates the Yale catalog)</p>
+<h1 id="initial-corrections-to-star-position">Initial Corrections to Star Position<a class="headerlink" href="#initial-corrections-to-star-position" title="Permanent link">¶</a></h1>
 <blockquote>
 <p>On initialization, adjustments are made for the right ascension and declination of stars due to annual proper motion (the apparent motion of stars), precession (changes in the Earth’s rotational axis over time), nutation (axial changes due to the Moon’s gravitational pull) and aberration (due to the velocity of the Earth’s orbit).</p>
+<p>The observed elevation of a celestial body is altered due to the effects of atmospheric refraction. Consequently, objects in the sky appear at a greater elevation than they would without the atmospheric effects. This effect is exaggerated at lower elevations (closer to the horizon), which leads to an angular displacement of up to 0.5 degrees</p>
 </blockquote>
 <p>This is interesting information that I wouldn't have thought about. I wonder if
 this type of correction can be performed once for an online application or
 skipped entirely and incorporated into a noise model. It seems like something
-I'd definitely want to include when building a batch online system.</p>
-<p>There's also a large number of units floating around, so a type system of
-measurement seems like it'd be useful for correctness (e.g. arcseconds, Julian
-centuries, degrees, etc)</p>
-<blockquote>
-<p>The observed elevation of a celestial body is altered due to the effects of atmospheric refraction. Consequently, objects in the sky appear at a greater elevation than they would without the atmospheric effects. This effect is exaggerated at lower elevations (closer to the horizon), which leads to an angular displacement of up to 0.5 degrees</p>
-</blockquote>
-<h1 id="attitude">Attitude<a class="headerlink" href="#attitude" title="Permanent link">¶</a></h1>
-<p>Project stars to the aircraft North-East-Down (NED) frame, then rotated by the
-aircraft's rotation matrix relative to NED. Maybe more correctly, it's rotated
-into the camera's frame. </p>
+I'd definitely want to include when building a batch online system without a
+direct compute constraint.</p>
+<p>There's also a large number of units floating around in this discussion of
+corrections, so a type system of measurement seems like it'd be useful for
+correctness (e.g. arcseconds, Julian centuries, degrees, etc).</p>
 <h1 id="camera-model">Camera Model<a class="headerlink" href="#camera-model" title="Permanent link">¶</a></h1>
 <p>The model assumes a camera intrinsic matrix K is known. This seems reasonable
 given that the camera can be calibrated on the ground before launch. Earlier
-on, the camera extrinsics relative to the aircraft were also given. This seems
-like something that could be calibrated, but would be subject to vibration or
-other errors in a real application.</p>
+on, the camera extrinsics relative to the aircraft were also given. The
+extrinsic calibration seems like it can be done once "offline", but would be
+subject to vibration or other errors in a real application where online
+estimation of small corrections would be helpful</p>
 <p>Open question: how feasible is it to estimate camera intrinsics online in a
 strapdown visual inertial odometry system?</p>
-<div class="codehilite"><pre><span/><code><span class="nx">TFT</span><span class="w"> </span><span class="p">[</span><span class="nx">interesting</span><span class="w"> </span><span class="nx">papers</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="nx">none</span><span class="w"> </span><span class="nx">covering</span><span class="w"> </span><span class="nx">camera</span><span class="w"> </span><span class="nx">intrinsic</span><span class="w"> </span><span class="nx">calibration</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">estimation</span><span class="p">]</span>
-<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">90</span><span class="p">)</span><span class="w"> </span><span class="nx">RoNIN</span><span class="p">:</span><span class="w"> </span><span class="nx">Robust</span><span class="w"> </span><span class="nx">Neural</span><span class="w"> </span><span class="nx">Inertial</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Wild</span><span class="p">:</span><span class="w"> </span><span class="nx">Benchmark</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">Evaluations</span><span class="p">,</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">New</span><span class="w"> </span><span class="nx">Methods</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//arxiv.org/abs/1905.12853v1</span>
-<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">This</span><span class="w"> </span><span class="nx">paper</span><span class="w"> </span><span class="nx">sets</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">foundation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">data</span><span class="o">-</span><span class="nx">driven</span><span class="w"> </span><span class="nx">inertial</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="nx">research</span><span class="p">,</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">task</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">estimation</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">positions</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">orientations</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">mov</span><span class="o">...</span>
-
-<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">81</span><span class="p">)</span><span class="w"> </span><span class="nx">Pluto</span><span class="p">:</span><span class="w"> </span><span class="nx">Motion</span><span class="w"> </span><span class="nx">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">VR</span><span class="w"> </span><span class="nx">Headset</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2107.12030v2</span>
-<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">Untethered</span><span class="p">,</span><span class="w"> </span><span class="nx">inside</span><span class="o">-</span><span class="nx">out</span><span class="w"> </span><span class="nx">tracking</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">considered</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">goalpost</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="kd">virtual</span><span class="w"> </span><span class="nx">reality</span><span class="p">,</span><span class="w"> </span><span class="nx">which</span><span class="w"> </span><span class="nx">became</span><span class="w"> </span><span class="nx">attainable</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">advent</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">machine</span><span class="w"> </span><span class="nx">learning</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">SLAM</span><span class="p">.</span><span class="w"> </span><span class="nx">Yet</span><span class="o">...</span>
-
-<span class="w">  </span><span class="p">(</span><span class="m m-Double">0.5</span><span class="mi">74</span><span class="p">)</span><span class="w"> </span><span class="nx">Iterative</span><span class="w"> </span><span class="nx">Smoothing</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">Outlier</span><span class="w"> </span><span class="nx">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">Underwater</span><span class="w"> </span><span class="nx">Navigation</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2109.14220v1</span>
-<span class="w">  </span><span class="nx">Preview</span><span class="p">:</span>
-<span class="w">    </span><span class="nx">Underwater</span><span class="w"> </span><span class="nx">visual</span><span class="o">-</span><span class="nx">inertial</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">challenging</span><span class="w"> </span><span class="nx">due</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">poor</span><span class="w"> </span><span class="nx">visibility</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">presence</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">outliers</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">underwater</span><span class="w"> </span><span class="nx">environments</span><span class="p">.</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">navigation</span><span class="w"> </span><span class="nx">pe</span><span class="o">...</span>
-
-<span class="nx">arXiv</span><span class="w"> </span><span class="nx">search</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">https</span><span class="p">:</span><span class="c1">//arxiv.org/abs/2201.09170 "Online Self-Calibration for Visual-Inertial Navigation Systems: Models, Analysis and Degeneracy"</span>
-</code></pre></div>
-
-<p>Points behind the camera (negative z in the camera frame) are ignored (seems
-sensible).</p>
 <p>There is a simplified model of atmospheric attenuation that lets you scale all
 observations based on the relative intensity of a single reference observation
 vs its nominal value in the database. This seems important to pick a reasonable
-value (is this covered in the paper), but for my use case I'm not interested in
-exactly rendering an image. </p>
+value (is the value used provided in the paper?), but for my use case I'm not
+interested in exactly rendering an image. </p>
 <p>Open question: Instead of aiming for perfect rendering accuracy, could I make
 the sky fingerprinting intensity independent? I'm imagining something similar
 to making image features rotation independent (perhaps by processing all
@@ -144,6 +121,27 @@ rendered, so as to capture the resultant eccentricities from the distortion.</p>
 <p>Spherical linear interpolation between quaternions is used to supersample the
 known states to get 5 millisecond time steps, which can be aggregated across
 the exposure time to composite a blurred motion</p>
+<h1 id="off-topic">Off Topic<a class="headerlink" href="#off-topic" title="Permanent link">¶</a></h1>
+<p>The tools for thought output surfaced some interesting papers that ultimately
+didn't cover the topics I was looking for at the time</p>
+<h2 id="tft">TFT<a class="headerlink" href="#tft" title="Permanent link">¶</a></h2>
+<div class="codehilite"><pre><span/><code><span class="ss">(</span><span class="mi">0</span>.<span class="mi">590</span><span class="ss">)</span><span class="w"> </span><span class="nv">RoNIN</span>:<span class="w"> </span><span class="nv">Robust</span><span class="w"> </span><span class="nv">Neural</span><span class="w"> </span><span class="nv">Inertial</span><span class="w"> </span><span class="nv">Navigation</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">Wild</span>:<span class="w"> </span><span class="nv">Benchmark</span>,
+<span class="nv">Evaluations</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">New</span><span class="w"> </span><span class="nv">Methods</span><span class="w"> </span><span class="nv">https</span>:<span class="o">//</span><span class="nv">arxiv</span>.<span class="nv">org</span><span class="o">/</span><span class="nv">abs</span><span class="o">/</span><span class="mi">1905</span>.<span class="mi">12853</span><span class="nv">v1</span>
+<span class="nv">Preview</span>:
+<span class="w">  </span><span class="nv">This</span><span class="w"> </span><span class="nv">paper</span><span class="w"> </span><span class="nv">sets</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">foundation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">data</span><span class="o">-</span><span class="nv">driven</span><span class="w"> </span><span class="nv">inertial</span><span class="w"> </span><span class="nv">navigation</span><span class="w"> </span><span class="nv">research</span>,<span class="w"> </span><span class="nv">where</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">task</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">estimation</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">positions</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">orientations</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">mov</span>...
+
+<span class="ss">(</span><span class="mi">0</span>.<span class="mi">581</span><span class="ss">)</span><span class="w"> </span><span class="nv">Pluto</span>:<span class="w"> </span><span class="nv">Motion</span><span class="w"> </span><span class="nv">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Navigation</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">VR</span><span class="w"> </span><span class="nv">Headset</span><span class="w"> </span><span class="nv">https</span>:<span class="o">//</span><span class="nv">arxiv</span>.<span class="nv">org</span><span class="o">/</span><span class="nv">abs</span><span class="o">/</span><span class="mi">2107</span>.<span class="mi">12030</span><span class="nv">v2</span>
+<span class="nv">Preview</span>:
+<span class="w">  </span><span class="nv">Untethered</span>,<span class="w"> </span><span class="nv">inside</span><span class="o">-</span><span class="nv">out</span><span class="w"> </span><span class="nv">tracking</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">considered</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">goalpost</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">virtual</span><span class="w"> </span><span class="nv">reality</span>,<span class="w"> </span><span class="nv">which</span><span class="w"> </span><span class="nv">became</span><span class="w"> </span><span class="nv">attainable</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">advent</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">machine</span><span class="w"> </span><span class="nv">learning</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">SLAM</span>.<span class="w"> </span><span class="nv">Yet</span>...
+
+<span class="ss">(</span><span class="mi">0</span>.<span class="mi">574</span><span class="ss">)</span><span class="w"> </span><span class="nv">Iterative</span><span class="w"> </span><span class="nv">Smoothing</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">Outlier</span><span class="w"> </span><span class="nv">Detection</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">Underwater</span><span class="w"> </span><span class="nv">Navigation</span><span class="w"> </span><span class="nv">https</span>:<span class="o">//</span><span class="nv">arxiv</span>.<span class="nv">org</span><span class="o">/</span><span class="nv">abs</span><span class="o">/</span><span class="mi">2109</span>.<span class="mi">14220</span><span class="nv">v1</span>
+<span class="nv">Preview</span>:
+<span class="w">  </span><span class="nv">Underwater</span><span class="w"> </span><span class="nv">visual</span><span class="o">-</span><span class="nv">inertial</span><span class="w"> </span><span class="nv">navigation</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">challenging</span><span class="w"> </span><span class="nv">due</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">poor</span><span class="w"> </span><span class="nv">visibility</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">presence</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">outliers</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">underwater</span><span class="w"> </span><span class="nv">environments</span>.<span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="nv">navigation</span><span class="w"> </span><span class="nv">pe</span>...
+</code></pre></div>
+
+<h2 id="arxiv-search">arXiv search<a class="headerlink" href="#arxiv-search" title="Permanent link">¶</a></h2>
+<p>"Online Self-Calibration for Visual-Inertial Navigation Systems: Models, Analysis and Degeneracy"
+<a href="https://arxiv.org/abs/2201.09170">https://arxiv.org/abs/2201.09170</a></p>
   </div><!-- /.entry-content -->
 </div>
         </main><!-- /#content -->
