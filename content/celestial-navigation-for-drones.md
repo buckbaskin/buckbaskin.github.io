@@ -23,7 +23,8 @@ Citation: Teague, S.; Chahl, J. An Algorithm for Affordable Vision-Based GNSS-De
 # Paper References
 
 I found the paper's references to be useful in addition to finding the paper
-interesting itself
+interesting itself, so I've focused this post on interesting citations and
+adjacent topics as opposed to the paper itself.
 
 ## The Math
 
@@ -48,11 +49,15 @@ Teague, S.; Chahl, J. Imagery synthesis for drone celestial navigation simulatio
 
 This paper was used to simulate measurements in the parent paper, including
 testing against motion blur effects and testing the effect of wind conditions
-on accuracy. My interest comes in learning to create simulated imagery of
-celestial bodies for position estimation simulation, which seems like a subset
-of the application already covered in the paper. The imagery synthesis also
-covers converting a star's database information into the theoretical observed
-position
+on accuracy. 
+
+I have a few stacked interests in this topic. First, I'd like to create
+simulated imagery of celestial bodies and re-implement the paper. Second, I'd
+like to use the imagery to generate a synthetic map of the celestial sphere and
+connect that to compressive sensing topics to create a compact representation.
+From there I'd like to extend to position estimation and performing that in a
+simulated environment.  N.B. The imagery synthesis also covers converting a
+star's database information into the theoretical observed position
 
 
 ## Star Databases
@@ -64,7 +69,11 @@ log-polar star identification algorithm is used to determine the IDs of each
 star in the frame". This initialization of the star tracker and generic star
 identification seems quite useful to run in a parallel loop as a 
 [kidnapped robot](https://en.wikipedia.org/wiki/Kidnapped_robot_problem)
-recovery process.
+recovery process. As an extension of this parallel process, a more holistic
+approach to this could be to manage the estimation as a multiple-hypothesis
+filter, where the lost-in-space algorithm generates a new hypothesis at a
+regular cadence and the top N most likely hypothesis are maintained for ongoing
+estimation.
 
 In addition to what's cited by the original paper, I also found a
 recommendation for the [HYG Database](https://astronexus.com/projects/hyg)
@@ -79,38 +88,40 @@ arXiv.org to help find interesting and related content.
 
 ## History of Celestial Navigation
 
-The beginning of celestial navigation http://arxiv.org/abs/2209.02371v1
+The beginning of celestial navigation 
+[https://arxiv.org/abs/2209.02371v1](https://arxiv.org/abs/2209.02371v1)
 
 ## Celestial Navigation System Design
 
-Conceptual Design on the Field of View of Celestial Navigation Systems for Maritime Autonomous Surface Ships http://arxiv.org/abs/2408.15765v1
+Conceptual Design on the Field of View of Celestial Navigation Systems for Maritime Autonomous Surface Ships [https://arxiv.org/abs/2408.15765v1](https://arxiv.org/abs/2408.15765v1)
 
-Orbit Estimation Using a Horizon Detector in the Presence of Uncertain Celestial Body Rotation and Geometry http://arxiv.org/abs/1804.04401v2
+Orbit Estimation Using a Horizon Detector in the Presence of Uncertain Celestial Body Rotation and Geometry [https://arxiv.org/abs/1804.04401v2](https://arxiv.org/abs/1804.04401v2)
 
 
 ## Compressive Sensing for Efficient Representation
 
-Compressive Sensing with Local Geometric Features http://arxiv.org/abs/1208.2447v1
+Compressive Sensing with Local Geometric Features [https://arxiv.org/abs/1208.2447v1](https://arxiv.org/abs/1208.2447v1)
 
 Taking from the abstract:
 
 >  We propose a framework for compressive sensing of images with local distinguishable objects, such as stars, and apply it to solve a problem in celestial navigation. Specifically, let x be an N-pixel real-valued image, consisting of a small number of local distinguishable objects plus noise. Our goal is to design an m-by-N measurement matrix A with m << N, such that we can recover an approximation to x from the measurements Ax. 
 
 This seems like an immediately useful application for finding an efficient
-representation of different views of the sky. Without the tool, I was
-peripherally aware of compressive sensing, but would not have thought that it
-related to my interest in celestial navigation.
+representation of different views of the sky. Without the 
+[tools for thought]({filename}/tools-for-thought-and-discovery.md) script, I
+was only peripherally aware of compressive sensing and would not have thought
+that it related to my interest in celestial navigation.
 
 
-CELESTIAL: Classification Enabled via Labelless Embeddings with Self-supervised Telescope Image Analysis Learning http://arxiv.org/abs/2201.08001v1
+CELESTIAL: Classification Enabled via Labelless Embeddings with Self-supervised Telescope Image Analysis Learning [https://arxiv.org/abs/2201.08001v1](https://arxiv.org/abs/2201.08001v1)
 
 This paper covers using extensive (petabytes) of unlabelled data to learn a
-[compressed] representation of the image class, which feels like it could be
+[compressed?] representation of the image class, which feels like it could be
 useful for learning a compressed representation of star observations.
 
 ## Space Vision Applications
 
-AstroVision: Towards Autonomous Feature Detection and Description for Missions to Small Bodies Using Deep Learning http://arxiv.org/abs/2208.02053v1
+AstroVision: Towards Autonomous Feature Detection and Description for Missions to Small Bodies Using Deep Learning [https://arxiv.org/abs/2208.02053v1](https://arxiv.org/abs/2208.02053v1)
 
 This paper seems interesting if a bit off-topic for Earth-based navigation;
 however, the visual navigation feels like it would overlap with my other

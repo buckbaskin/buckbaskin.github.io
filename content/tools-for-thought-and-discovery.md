@@ -52,21 +52,22 @@ The tool outputs a recommendation like the following (currently per-paragraph)
       If you're not finding helpful recommendations, try searching for one of:
         - computer vision navigation
     
-      (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments [http://arxiv.org/abs/cs/0611022v1](http://arxiv.org/abs/cs/0611022v1)
+      (0.343) Multirobot rendezvous with visibility sensors in nonconvex environments [https://arxiv.org/abs/cs/0611022v1](https://arxiv.org/abs/cs/0611022v1)
       Preview:
         This paper presents a coordination algorithm for mobile autonomous robots. Relying upon distributed sensing the robots achieve rendezvous, that is, th...
     
       (0.338) Robotics Vision-based Heuristic Reasoning for Underwater Target Tracking
-      and Navigation [http://arxiv.org/abs/cs/0601064v1](http://arxiv.org/abs/cs/0601064v1)
+      and Navigation [https://arxiv.org/abs/cs/0601064v1](https://arxiv.org/abs/cs/0601064v1)
       Preview:
         This paper presents a robotics vision-based heuristic reasoning system for underwater target tracking and navigation. This system is introduced to imp...
     
       (0.335) Asymptotic constant-factor approximation algorithm for the Traveling
-      Salesperson Problem for Dubins' vehicle [http://arxiv.org/abs/cs/0603010v1](http://arxiv.org/abs/cs/0603010v1)
+      Salesperson Problem for Dubins' vehicle [https://arxiv.org/abs/cs/0603010v1](https://arxiv.org/abs/cs/0603010v1)
       Preview:
         This article proposes the first known algorithm that achieves a constant-factor approximation of the minimum length tour for a Dubins' vehicle through...
 
 Key parts:
+
 - The initial header shows a preview of the content for easy matching to the current document
 - The first recommendation is an "inversion" of the content's embedded concept into the phrase that best matches it, to be used (in the future) for searching for new content
 - The remaining recommendations are individual documents presented with a match score, title, a content preview and a link to read more
@@ -135,10 +136,10 @@ records without having to switch mental models to a database.
 While running the tool against this document, I got a few recommendations which
 will be interesting topics (if not exactly related to extending this post):
 
-Unmanned Aerial Vehicle Instrumentation for Rapid Aerial Photo System [http://arxiv.org/abs/0804.3894v1](http://arxiv.org/abs/0804.3894v1)
+Unmanned Aerial Vehicle Instrumentation for Rapid Aerial Photo System [https://arxiv.org/abs/0804.3894v1](https://arxiv.org/abs/0804.3894v1)
 
-Replay Debugging of Complex Real-Time Systems: Experiences from Two Industrial Case Studies [http://arxiv.org/abs/cs/0311019v1](http://arxiv.org/abs/cs/0311019v1)
+Replay Debugging of Complex Real-Time Systems: Experiences from Two Industrial Case Studies [https://arxiv.org/abs/cs/0311019v1](https://arxiv.org/abs/cs/0311019v1)
 
-Iterative MILP Methods for Vehicle Control Problems [http://arxiv.org/abs/cs/0505042v1](http://arxiv.org/abs/cs/0505042v1)
+Iterative MILP Methods for Vehicle Control Problems [https://arxiv.org/abs/cs/0505042v1](https://arxiv.org/abs/cs/0505042v1)
 
 

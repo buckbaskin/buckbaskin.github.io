@@ -72,17 +72,17 @@ independently from the aggregated list of most likely interesting sources. I sho
 
 matches to results with poor match scores
 
-     (0.747) Perturbation theory and canonical coordinates in celestial mechanics http://arxiv.org/abs/2209.07457v2
+     (0.747) Perturbation theory and canonical coordinates in celestial mechanics https://arxiv.org/abs/2209.07457v2
      Preview:
        In this paper, we study in-depth the problem of online self-calibration for robust and accurate visual-inertial state estimation. In particular, we fi...
     
      (0.710) Bridging Zero-shot Object Navigation and Foundation Models through
-     Pixel-Guided Navigation Skill http://arxiv.org/abs/2309.10309v2
+     Pixel-Guided Navigation Skill https://arxiv.org/abs/2309.10309v2
      Preview:
        This paper presents an online initialization method for bootstrapping the optimization-based monocular visual-inertial odometry (VIO). The method can ...
     
      (0.681) ETPNav: Evolving Topological Planning for Vision-Language Navigation in
-     Continuous Environments http://arxiv.org/abs/2304.03047v3
+     Continuous Environments https://arxiv.org/abs/2304.03047v3
      Preview:
        Visual-inertial navigation systems are powerful in their ability to accurately estimate localization of mobile systems within complex environments tha...
 

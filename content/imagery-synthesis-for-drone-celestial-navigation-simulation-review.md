@@ -14,7 +14,7 @@ navigation paper (
 [topic exploration]({filename}/celestial-navigation-for-drones.md),
 [review]({filename}/affordable-vision-based-strapdown-celestial-navigation-review.md))
 
-https://doi.org/10.3390/drones6080207
+[https://doi.org/10.3390/drones6080207](https://doi.org/10.3390/drones6080207)
 
 # Star Catalog
 
@@ -58,15 +58,15 @@ strapdown visual inertial odometry system?
 
     TFT [interesting papers but none covering camera intrinsic calibration or estimation]
       (0.590) RoNIN: Robust Neural Inertial Navigation in the Wild: Benchmark,
-      Evaluations, and New Methods http://arxiv.org/abs/1905.12853v1
+      Evaluations, and New Methods https://arxiv.org/abs/1905.12853v1
       Preview:
         This paper sets a new foundation for data-driven inertial navigation research, where the task is the estimation of positions and orientations of a mov...
     
-      (0.581) Pluto: Motion Detection for Navigation in a VR Headset http://arxiv.org/abs/2107.12030v2
+      (0.581) Pluto: Motion Detection for Navigation in a VR Headset https://arxiv.org/abs/2107.12030v2
       Preview:
         Untethered, inside-out tracking is considered a new goalpost for virtual reality, which became attainable with advent of machine learning in SLAM. Yet...
     
-      (0.574) Iterative Smoothing and Outlier Detection for Underwater Navigation http://arxiv.org/abs/2109.14220v1
+      (0.574) Iterative Smoothing and Outlier Detection for Underwater Navigation https://arxiv.org/abs/2109.14220v1
       Preview:
         Underwater visual-inertial navigation is challenging due to the poor visibility and presence of outliers in underwater environments. The navigation pe...
     
@@ -88,7 +88,7 @@ to making image features rotation independent (perhaps by processing all
 intensities into a finite 0 to 1 scale)
 
     TFT
-    (0.522) Compressive Sensing with Local Geometric Features http://arxiv.org/abs/1208.2447v1
+    (0.522) Compressive Sensing with Local Geometric Features https://arxiv.org/abs/1208.2447v1
 
 Pixel intensities and star sizing are taken from a reference image; however,
 the ideal model for a star is a point light source. Noise levels are also taken
@@ -102,7 +102,7 @@ in-motion exposure seems to blur over multiple pixels anyway, so I don't know
 if identifying a sub-pixel is as helpful for this use case
 
     TFT
-    (0.556) Conceptual Design on the Field of View of Celestial Navigation Systems for Maritime Autonomous Surface Ships http://arxiv.org/abs/2408.15765v1
+    (0.556) Conceptual Design on the Field of View of Celestial Navigation Systems for Maritime Autonomous Surface Ships https://arxiv.org/abs/2408.15765v1
 
 
 > One may be able to determine an appropriate magnitude threshold for the observability of stars in-flight and bias the calibration towards the brighter stars, which are more likely to be detected.
