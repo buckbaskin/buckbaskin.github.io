@@ -31,7 +31,7 @@ The tool can be run something like this
     $ echo content/research-areas.md | entr python interactive.py compiler content/research-areas-for-2025.md 
 
 A quick aside, `entr` is a tool that runs the given command when the file (or
-files) change.  There's an option to include a topic as context, but I haven't
+files) change. There's an option to include a topic as context, but I haven't
 gotten to using it for anything helpful yet
 
 Taking some example content from the post

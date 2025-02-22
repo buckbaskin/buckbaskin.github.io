@@ -56,7 +56,7 @@ simulated imagery of celestial bodies and re-implement the paper. Second, I'd
 like to use the imagery to generate a synthetic map of the celestial sphere and
 connect that to compressive sensing topics to create a compact representation.
 From there I'd like to extend to position estimation and performing that in a
-simulated environment.  N.B. The imagery synthesis also covers converting a
+simulated environment. N.B. The imagery synthesis also covers converting a
 star's database information into the theoretical observed position
 
 

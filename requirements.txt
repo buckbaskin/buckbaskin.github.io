@@ -10,4 +10,5 @@ pyquery==1.4.1
 latex2mathml==2.8.4
 sympy
 
-mistune
+mistune==3.1.2
+proselint==0.14.0

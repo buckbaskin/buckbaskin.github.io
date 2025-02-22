@@ -65,5 +65,5 @@ the topic embedding to the paragraph embedding, and skipping those paragraphs
 that don't stay within a finite region around the topic. These can be reported
 with their distance from the topic at the end (e.g. "The Math" had a distance
 of 0.8 and was skipped). This would allow for manual searching of topics that
-were accidentally deemed too far away, but hopefully limit noise from papers
-that are 99% likely to never be useful
+were accidentally deemed too far away, but limit noise from papers that are 99%
+likely to never be useful
