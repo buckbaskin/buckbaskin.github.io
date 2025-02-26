@@ -68,14 +68,21 @@ a variety of fields for the year.</p>
 <h2 id="compilers">Compilers<a class="headerlink" href="#compilers" title="Permanent link">¶</a></h2>
 <ul>
 <li>SSA</li>
-<li>SIMD, implicit SIMD</li>
+<li>SIMD</li>
 </ul>
+<p>I'd also like to see if I can make progress on tooling to improve code
+generation that is only intended to implicitly leverage SIMD instead of having
+to generate it explicitly. For example, if I can generate 4 independent add
+operations and write them in sequence, it should be feasible for 
+<a href="https://llvm.org/docs/Vectorizers.html#the-slp-vectorizer">Superword-Level Parallelism</a>
+tooling to match to SIMD if the cost model lines up.</p>
 <h2 id="drones">Drones<a class="headerlink" href="#drones" title="Permanent link">¶</a></h2>
 <ul>
 <li>Visual Odometry</li>
 <li>Visual Inertial Odometry</li>
 <li>VI SLAM w/ Factor Graphs</li>
 </ul>
+<h3 id="celestial-navigation">Celestial Navigation<a class="headerlink" href="#celestial-navigation" title="Permanent link">¶</a></h3>
 <p>One topic that I rediscovered because of drones, but originally connected with
 because of sailing and history is celestial navigation. Specifically, celestial
 navigation for drones made it to Hacker News 
@@ -83,6 +90,11 @@ navigation for drones made it to Hacker News
 enjoyed reading the paper (<a href="https://doi.org/10.3390/drones8110652">DOI</a>, open
 access via the MDPI journal). It sparked some new ideas for me and generally
 renewed my interest in learning celestial navigation as a skill</p>
+<h3 id="underwater-autonomy">Underwater Autonomy<a class="headerlink" href="#underwater-autonomy" title="Permanent link">¶</a></h3>
+<p>An additional topic area that I see as logically adjacent to drones is
+underwater autonomous vehicles. Once I've taken some time to explore through
+the visual odometry for flying drones, I'd also like to spend some time
+exploring similar challenges for underwater vehicles.</p>
 <h1 id="learning-practices">Learning Practices<a class="headerlink" href="#learning-practices" title="Permanent link">¶</a></h1>
 <p>The research is also taking something of an applied turn, in that in order to
 maximize my understanding, I'm aiming to implement more of the papers as I go

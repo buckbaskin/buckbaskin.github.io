@@ -3,7 +3,7 @@ Title: Research Areas for 2025
 Category: Building
 Tags: Research, SSA, EKF, Factor Graph, Drone, Compiler, SSA, SIMD, Practices, Discovery, SLAM, Visual Odometry, Celestial Navigation
 Date: 2025-02-11
-Updated: 2025-02-18
+Updated: 2025-02-25
 Summary: I'm focusing on starting 2025 by getting more actively connected to research in a variety of fields for the year.
 ---
 
@@ -15,13 +15,23 @@ a variety of fields for the year.
 ## Compilers
 
 - SSA
-- SIMD, implicit SIMD
+- SIMD
+
+I'd also like to see if I can make progress on tooling to improve code
+generation that is only intended to implicitly leverage SIMD instead of having
+to generate it explicitly. For example, if I can generate 4 independent add
+operations and write them in sequence, it should be feasible for 
+[Superword-Level Parallelism](https://llvm.org/docs/Vectorizers.html#the-slp-vectorizer)
+tooling to match to SIMD if the cost model lines up.
+
 
 ## Drones
 
 - Visual Odometry
 - Visual Inertial Odometry
 - VI SLAM w/ Factor Graphs
+
+### Celestial Navigation
 
 One topic that I rediscovered because of drones, but originally connected with
 because of sailing and history is celestial navigation. Specifically, celestial
@@ -30,6 +40,13 @@ navigation for drones made it to Hacker News
 enjoyed reading the paper ([DOI](https://doi.org/10.3390/drones8110652), open
 access via the MDPI journal). It sparked some new ideas for me and generally
 renewed my interest in learning celestial navigation as a skill
+
+### Underwater Autonomy
+
+An additional topic area that I see as logically adjacent to drones is
+underwater autonomous vehicles. Once I've taken some time to explore through
+the visual odometry for flying drones, I'd also like to spend some time
+exploring similar challenges for underwater vehicles.
 
 # Learning Practices
 

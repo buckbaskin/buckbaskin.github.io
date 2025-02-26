@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Tools for thought - Ship's Log 3 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Building on the learnings from last time, I&#39;m working on improving the download experience. The previous experience was somewhat limited when trying to incorporate new sources.&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Practices" />
+    <meta name="tags" content="Discovery" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Tools for thought - Ship's Log 3 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-21T00:00:00-08:00">
+      Fri 21 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/practices.html">Practices</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/tools-for-thought-ships-log-3.html" rel="bookmark"
+         title="Permalink to Tools for thought - Ship's Log 3">permalink</a></p>
+    <p>Building on the learnings from 
+<a href="/blog/tools-for-thought-ships-log-2.html">last time</a>, I'm working on
+improving the download experience. The previous experience was somewhat limited
+when trying to incorporate new sources.</p>
+<h1 id="nicer-downloading">Nicer Downloading<a class="headerlink" href="#nicer-downloading" title="Permanent link">¶</a></h1>
+<p>The primary focus was adding bulk downloads for existing topics. Now I can use
+one script, point it at an arXiv category like robotics ("cs.RO") and get 100s
+or 1000s of recent results.</p>
+<p>Following from that, it was pretty easy to extend this to a one-stop
+configuration-based script where I can easily run a single daily command to
+pick up papers on a range of interesting topics.</p>
+<h1 id="markdown-parsing-part-2">Markdown parsing - Part 2<a class="headerlink" href="#markdown-parsing-part-2" title="Permanent link">¶</a></h1>
+<p><a href="/blog/tools-for-thought-ships-log-1.html#markdown-parsing">Part 1</a></p>
+<p>I've partially implemented the vision for Markdown parsing as part of loading
+documents. The current simplified version just reduces the content down to
+plain text to remove some of the extraneous content. In the future, it'll
+require a little more reworking to parse out the document into a structured
+tree of texts to allow stacking context for each paragraph instead of treating
+each as an independent document.</p>
+<p>The simplified version of this tree of topics would be to start with using the
+"topic" provided to the interactive.py script as a context for each document
+(which is itself not clear how I'd achieve that but seems like an interesting
+project)</p>
+<h1 id="other-improvements-im-considering">Other Improvements I'm Considering<a class="headerlink" href="#other-improvements-im-considering" title="Permanent link">¶</a></h1>
+<h2 id="manual-entry">Manual Entry<a class="headerlink" href="#manual-entry" title="Permanent link">¶</a></h2>
+<p>I'd like to make a nice way to manually add in papers that I've read that
+predate the existing tooling so I can incorporate them into search as well</p>
+<h2 id="semantic-search">Semantic Search<a class="headerlink" href="#semantic-search" title="Permanent link">¶</a></h2>
+<p>I'd like to be able to search by topic (or topics) in the database using the
+embeddings</p>
+<h2 id="baseline-search">Baseline Search<a class="headerlink" href="#baseline-search" title="Permanent link">¶</a></h2>
+<p>I'd also like to spin up a
+<a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> search tool so I can
+have a consistent baseline for comparing if the embedding-based search is
+finding the documents that I'd like to find. I'll stick with embedding search
+if the documents it surfaces consistently are more "interesting" than the
+baseline; otherwise, it may make sense pursuing alternate embeddings to improve
+search quality.</p>
+<h2 id="other-sources">Other Sources<a class="headerlink" href="#other-sources" title="Permanent link">¶</a></h2>
+<p>This approach has a fairly generic interface (anything that can be chunked as
+one or more paragraphs of text can be used), so I'd like to consider expanding
+to other sources. For example, discussions on Mastodon could be a good way to
+explore new topics</p>
+<h2 id="user-labelling">User Labelling<a class="headerlink" href="#user-labelling" title="Permanent link">¶</a></h2>
+<p>I'd like to be able to (easily) add labels to documents such as "downloaded",
+"read", "liked" and then use that to drive recommendations (e.g. for each
+document predict the likelihood that I'd download, read and/or like the paper).
+This would allow me to use nearest neighbors voting to estimate the value I'd
+get from new papers when exploring existing topics.</p>
+<h2 id="performance-improvements">Performance Improvements<a class="headerlink" href="#performance-improvements" title="Permanent link">¶</a></h2>
+<p>One of the startup costs I haven't found a good way to reduce is the initial
+save cost. The embeddings are roughly going to be what they are, but I'm
+wondering if I could get better performance by inserting scikit-learn's
+<a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html">K-nearest neighbors regression</a>
+tooling into the database for faster lookup (and maybe faster insert too?).</p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
