@@ -1,10 +1,10 @@
 ---
 Title: Tools for thought - Ship's Log 3
-Category: Building
+Category: Breaking
 Tags: Research, Practices, Discovery
 Date: 2025-02-21
 Updated: 2025-02-25
-Summary: Building on the learnings from last time, I'm working on improving the download experience. The previous experience was somewhat limited when trying to incorporate new sources.
+Summary: Building on the learnings from last time, I'm working on improving the download experience. The previous experience was somewhat limited when trying to incorporate new sources. Unfortunately, this efficient downloading has also turned the vector database into something too big to keep in memory on my laptop, so I need to seek out other options for continued use.
 ---
 
 Building on the learnings from 
@@ -21,6 +21,10 @@ or 1000s of recent results.
 Following from that, it was pretty easy to extend this to a one-stop
 configuration-based script where I can easily run a single daily command to
 pick up papers on a range of interesting topics.
+
+Unfortunately, this efficient downloading has also turned the vector database
+into something too big to keep in memory on my laptop, so i need to seek out
+other options for continued use.
 
 # Markdown parsing - Part 2
 [Part 1]({filename}/tools-for-thought-ships-log-01.md#markdown-parsing)
