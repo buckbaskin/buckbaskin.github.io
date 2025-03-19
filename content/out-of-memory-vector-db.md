@@ -4,7 +4,7 @@ Category: Building
 Tags: Research, Discovery, Vector Database, sqlite
 Date: 2025-02-25
 Updated: 2025-03-18
-Summary: Building
+Summary: Last I left off, I had way more content that I wanted to embed and search relative to what my laptop could keep in memory, leaving me with no interactive tooling. Where to go from there? Let's start with sqlite-vec
 ---
 
 [Last I left off]({filename}/tools-for-thought-ships-log-03.md), I had way more
