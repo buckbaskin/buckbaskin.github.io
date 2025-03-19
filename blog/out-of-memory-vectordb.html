@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Out Of Memory VectorDB - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;Building&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Discovery" />
+    <meta name="tags" content="Vector Database" />
+    <meta name="tags" content="sqlite" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Out Of Memory VectorDB - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2025-02-25T00:00:00-08:00">
+      Tue 25 February 2025
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+            <a href="/blog/tag/vector-database.html">Vector Database</a>
+            <a href="/blog/tag/sqlite.html">sqlite</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/out-of-memory-vectordb.html" rel="bookmark"
+         title="Permalink to Out Of Memory VectorDB">permalink</a></p>
+    <p><a href="/blog/tools-for-thought-ships-log-3.html">Last I left off</a>, I had way more
+content that I wanted to embed and search relative to what my laptop could keep
+in memory, leaving me with no interactive tooling.</p>
+<h1 id="research">Research<a class="headerlink" href="#research" title="Permanent link">¶</a></h1>
+<p>My initial point of research is 
+<a href="https://til.simonwillison.net/sqlite/sqlite-vec">Simon Willison's post about sqlite-vec</a>
+for working with embeddings in sqlite. There are many vector databases out
+there, but I've grown quite found of sqlite and appreciate that it's available
+almost everywhere.</p>
+<ul>
+<li><a href="https://github.com/asg017/sqlite-vec">Github page for the extension</a></li>
+<li><a href="https://alexgarcia.xyz/sqlite-vec/python.html">Python documentation</a></li>
+<li><a href="https://github.com/asg017/sqlite-vec/blob/main/examples/simple-python/demo.py">Python demo.py</a></li>
+</ul>
+<p>Sqlite also has a nice benefit that the database is managed as a single file,
+so it's easy to experiment and blow away unwanted experimental directions, or
+checkpoint and restore if I'd like.</p>
+<h1 id="process">Process<a class="headerlink" href="#process" title="Permanent link">¶</a></h1>
+<p>I really did enjoy the fairly simple interface of 
+<a href="https://github.com/kagisearch/vectordb/tree/main">Kagi's vectordb</a>, 
+so I'm going to stick to re-implementing that approach (and also borrowing the
+embeddings).</p>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">¶</a></h2>
+<p>Sticking to the same interface also offers me the opportunity to write some
+fairly straightforward testing for the project by writing each test with two
+test cases: the oracle (the existing database) and the new version, based by
+sqlite.</p>
+<p>This leverages a nice feature of pytest called 
+<a href="https://docs.pytest.org/en/stable/example/parametrize.html">parameterized testing</a></p>
+<p>The process looks something like:</p>
+<ol>
+<li>Use the existing kagi Memory class as the model</li>
+<li>Implement a new class with the same interface</li>
+<li>Fill out the class implementation with sqlite-vec</li>
+<li>Assert I can reproduce the same results</li>
+</ol>
+<p>My original testing used the pytest feature
+<a href="https://docs.pytest.org/en/6.2.x/tmpdir.html">tmp_path</a> to allow for temporary
+memory files managed by the test runner; however, in the end I think it's
+easier to use sqlite's in-memory database (but allowing for me to run tests as
+if it's backed by a sqlite file.</p>
+<h1 id="links">Links<a class="headerlink" href="#links" title="Permanent link">¶</a></h1>
+<h2 id="content-to-explore">Content To Explore<a class="headerlink" href="#content-to-explore" title="Permanent link">¶</a></h2>
+<p>... once I finish this implementation tangent to expand the knowledge base size I can manage</p>
+<ul>
+<li>https://arxiv.org/category_taxonomy</li>
+<li>https://arxiv.org/search/?query=compressive+sensing&amp;searchtype=all&amp;source=header</li>
+<li>https://arxiv.org/search/?query=simd&amp;searchtype=all&amp;source=header</li>
+</ul>
+<h2 id="vectordb-implementations">VectorDB implementations<a class="headerlink" href="#vectordb-implementations" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://github.com/kagisearch/vectordb/blob/main/vectordb/memory.py</li>
+<li>https://github.com/jina-ai/vectordb/ (alternative vector db)</li>
+</ul>
+<h3 id="sqlite-vec">sqlite-vec<a class="headerlink" href="#sqlite-vec" title="Permanent link">¶</a></h3>
+<ul>
+<li>https://til.simonwillison.net/sqlite/sqlite-vec</li>
+<li>https://github.com/asg017/sqlite-vec</li>
+<li>https://github.com/asg017/sqlite-vec/blob/main/examples/simple-python/demo.py</li>
+<li>https://alexgarcia.xyz/sqlite-vec/features/vec0.html#metadata</li>
+<li>https://www.sqlite.org/vtab.html</li>
+<li>https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchone</li>
+</ul>
+<h2 id="pytest-testing">Pytest Testing<a class="headerlink" href="#pytest-testing" title="Permanent link">¶</a></h2>
+<ul>
+<li>https://docs.pytest.org/en/stable/example/parametrize.html</li>
+<li>https://docs.pytest.org/en/6.2.x/tmpdir.html</li>
+<li>https://stackoverflow.com/questions/36070031/creating-a-temporary-directory-in-pytest</li>
+</ul>
+<h2 id="python-and-makefile-curiosities">Python and Makefile Curiosities<a class="headerlink" href="#python-and-makefile-curiosities" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p>https://stackoverflow.com/questions/17330160/how-does-the-property-decorator-work-in-python</p>
+</li>
+<li>
+<p>https://stackoverflow.com/questions/3267145/makefile-execute-another-target</p>
+</li>
+</ul>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
