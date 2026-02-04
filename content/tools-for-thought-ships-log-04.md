@@ -3,8 +3,8 @@ Title: Tools for thought - Ship's Log 4
 Category: Building
 Tags: Research, Practices, Discovery
 Date: 2026-02-03
-Updated: 2026-02-03
-Summary: ABC
+Updated: 2026-02-04
+Summary: Notes on embeddings, features I've landed and what's next
 ---
 
 Building on what I learned 
