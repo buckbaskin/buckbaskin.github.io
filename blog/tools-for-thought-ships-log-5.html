@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Tools for thought - Ship's Log 5 - Building and Breaking</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/blog/theme/css/si
+te.css" />
+        <meta name="tag" content="tag data">
+        <link href="https://buckbaskin.com/blog/feed" type="application/rss+xml" rel="alternate" title="Building and Breaking Full RSS Feed" />
+
+    <meta name="description" content="&lt;p&gt;I figured out how to run SentenceTransformer models local-only without network (I think)&lt;/p&gt;" />
+
+    <meta name="tags" content="Research" />
+    <meta name="tags" content="Practices" />
+    <meta name="tags" content="Discovery" />
+    <meta name="tags" content="TIL" />
+
+</head>
+
+<body id="index" class="home">
+        <a href="#content" class="skip">Skip to main content</a>
+        <header id="banner" class="body" aria-label="Site Title">
+                <h1 class="title"><a href="/blog/">Building and Breaking <strong></strong></a></h1>
+        </header><!-- /#banner -->
+        <div class="main">
+        <main id="content" aria-labelledby="main-title">
+<div class="body">
+  <header>
+    <h1 id="main-title" class="entry-title">Tools for thought - Ship's Log 5 - <a href="/blog/category/building.html">Building</a></h1>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2026-02-04T00:00:00-08:00">
+      Wed 04 February 2026
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="/blog/author/buck-baskin.html">Buck Baskin</a>
+    </address>
+    <div class="tags">
+            <a href="/blog/tag/research.html">Research</a>
+            <a href="/blog/tag/practices.html">Practices</a>
+            <a href="/blog/tag/discovery.html">Discovery</a>
+            <a href="/blog/tag/til.html">TIL</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="/blog/tools-for-thought-ships-log-5.html" rel="bookmark"
+         title="Permalink to Tools for thought - Ship's Log 5">permalink</a></p>
+    <p>This one is a shorter post as a note to self for locally running models.</p>
+<p>The default behavior for <code>sentence_transformers</code> is to download a model from HuggingFace</p>
+<p>To make the model run locally:</p>
+<p>```
+mkdir local_models/all-MiniLM-L6-v2/</p>
+<p>pip install huggingface_hub
+hf download sentence-transformers/all-MiniLM-L6-v2 --local-dir local_models/all-MiniLM-L6-v2/
+```</p>
+<p>Then in code:</p>
+<p><code>python
+MODEL = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")</code></p>
+<p>Becomes</p>
+<p><code>python
+MODEL = SentenceTransformer("local_models/all-MiniLM-L6-v2", local_files_only=True)</code></p>
+<p><a href="https://www.sbert.net/docs/package_reference/sentence_transformer/SentenceTransformer.html#id1">Documentation for SentenceTransformer</a></p>
+  </div><!-- /.entry-content -->
+</div>
+        </main><!-- /#content -->
+        </div>
+        <footer id="contentinfo" class="body">
+                <author>
+                        If you liked this and want to see more, let me know
+                        <a href="https://fosstodon.com/@buck">@buck</a> 
+                        on Mastodon. Check out the 
+                        <a href="/blog/projects.html">projects</a>!
+                </author><!-- /#about -->
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>.
+                </address><!-- /#author -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

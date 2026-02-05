@@ -31,3 +31,5 @@ Becomes
 ```python
 MODEL = SentenceTransformer("local_models/all-MiniLM-L6-v2", local_files_only=True)
 ```
+
+[Documentation for SentenceTransformer](https://www.sbert.net/docs/package_reference/sentence_transformer/SentenceTransformer.html#id1)
